@@ -29,6 +29,7 @@ SOFTWARE.
 /* Includes */
 #include <stddef.h>
 #include "stm32l1xx.h"
+#include "dialkomer.h"
 
 
 /* Private typedef */
@@ -48,7 +49,6 @@ SOFTWARE.
 */
 int main(void)
 {
-  int i = 0;
 
   /**
   *  IMPORTANT NOTE!
@@ -68,12 +68,15 @@ int main(void)
   */
 
   /* TODO - Add your application code here */
-
+	if(init_dialkomery() == -1)
+	{
+		//error nepodarilo sa inicializovat dialkomery
+	}
+	int autobus = meraj_dialkomer(0);
 
   /* Infinite loop */
   while (1)
   {
-	i++;
   }
   return 0;
 }
