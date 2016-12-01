@@ -89,7 +89,7 @@ int main(void)
   /* Infinite loop */
 	while (1)
 	{
-		blik_kontrolka();
+
 	}
 	return 0;
 }
