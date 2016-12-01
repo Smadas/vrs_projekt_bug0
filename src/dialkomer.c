@@ -27,13 +27,7 @@ int init_dialkomery()
 	//END inicializacia pinu pre trigger
 
 
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-	gpioInitStruc.GPIO_Mode = GPIO_Mode_OUT;
-		gpioInitStruc.GPIO_OType = GPIO_OType_PP;
-		gpioInitStruc.GPIO_Pin = GPIO_Pin_5;
-		gpioInitStruc.GPIO_Speed = GPIO_Speed_400KHz;
-		//zapisanie inicializacnej struktury
-		GPIO_Init(GPIOA, &gpioInitStruc);
+
 	return 0;
 }
 
@@ -42,7 +36,6 @@ int meraj_dialkomer(int cislo_senzoru)
 {
 	GPIO_WriteBit(GPIOC, GPIO_Pin_10, Bit_SET);//vystup 3.3V
 	GPIO_WriteBit(GPIOC, GPIO_Pin_10, Bit_RESET);//vystup 0V
-	GPIO_WriteBit(GPIOA, GPIO_Pin_5, Bit_SET);//zapne led
-		GPIO_WriteBit(GPIOA, GPIO_Pin_5, Bit_RESET);
+
 	return 0;
 }

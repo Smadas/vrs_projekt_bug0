@@ -30,7 +30,10 @@ SOFTWARE.
 #include <stddef.h>
 #include "stm32l1xx.h"
 #include "dialkomer.h"
+#include "kontrolka.h"
 
+/* Global variables*/
+long long gTimeStamp = 0;
 
 /* Private typedef */
 /* Private define  */
@@ -72,13 +75,23 @@ int main(void)
 	{
 		//error nepodarilo sa inicializovat dialkomery
 	}
+	if(init_kontrolka() == -1)
+	{
+		//error nepodarilo sa inicializovat dialkomery
+	}
+	if(init_cas_blikanie() == -1)
+	{
+		//error nepodarilo sa inicializovat casovac blikaca
+	}
+
 	int autobus = meraj_dialkomer(0);
 
   /* Infinite loop */
-  while (1)
-  {
-  }
-  return 0;
+	while (1)
+	{
+		blik_kontrolka();
+	}
+	return 0;
 }
 
 #ifdef  USE_FULL_ASSERT
