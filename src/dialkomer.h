@@ -8,10 +8,12 @@
 #ifndef DIALKOMER_H_
 #define DIALKOMER_H_
 
+//global variables
 volatile uint32_t TIM4Freq;
 volatile uint32_t pamatCapture[100];
 volatile uint32_t pocitadlo;
 
+//function prototypes
 int meraj_dialkomer(int cislo_senzoru);
 int init_dialkomery(void);
 int init_spustac_dialkomer(void);

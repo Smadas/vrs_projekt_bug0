@@ -29,7 +29,8 @@ SOFTWARE.
 /* Includes */
 #include <stddef.h>
 #include "stm32l1xx.h"
-#include "dialkomer.h"
+//#include "dialkomer.h"
+#include "sensor.h"
 #include "kontrolka.h"
 
 /* Global variables*/
@@ -42,6 +43,10 @@ long long gTimeStamp = 0;
 /* Private function prototypes */
 /* Private functions */
 
+int leftInit(int cislo)
+{
+	return cislo + 1;
+}
 
 /**
 **===========================================================================
@@ -73,6 +78,10 @@ int main(void)
   /* TODO - Add your application code here */
 	double vzdialenost = 0;
 	int errHerald = 0;
+	int obchod = 0;
+
+
+
 	if(init_dialkomery() == -1)
 	{
 		//error nepodarilo sa inicializovat dialkomery
