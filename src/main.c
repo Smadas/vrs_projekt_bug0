@@ -71,25 +71,35 @@ int main(void)
   */
 
   /* TODO - Add your application code here */
+	double vzdialenost = 0;
+	int errHerald = 0;
 	if(init_dialkomery() == -1)
 	{
 		//error nepodarilo sa inicializovat dialkomery
+		errHerald++;
 	}
 	if(init_kontrolka() == -1)
 	{
 		//error nepodarilo sa inicializovat dialkomery
+		errHerald++;
 	}
 	if(init_cas_blikanie() == -1)
 	{
 		//error nepodarilo sa inicializovat casovac blikaca
+		errHerald++;
 	}
 
-	int autobus = meraj_dialkomer(0);
+	meraj_dialkomer(0);
 
   /* Infinite loop */
 	while (1)
 	{
+		for (int i = 0; i < 500000; i++)
+		{
 
+		}
+		meraj_dialkomer(0);
+		vzdialenost = citaj_vzdialenost(0);//183; 70
 	}
 	return 0;
 }

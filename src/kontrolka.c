@@ -34,35 +34,37 @@ int init_kontrolka()
 	return 0;
 }
 
+//inicializacia casovaca pre kontrolnu LED
 int init_cas_blikanie()
 {
 	gTimeStamp = 0;
 	//unsigned short prescalerValue = (unsigned short) (SystemCoreClock / 1000) - 1;
 	unsigned short prescalerValue = (unsigned short) (16000000 / 1000) - 1;
-	/*Structure for timer settings*/
+	//Structure for timer settings
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
-	/* TIM6 clock enable */
+	// TIM6 clock enable
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
-	/* Enable the TIM6 gloabal Interrupt */
+	// Enable the TIM6 gloabal Interrupt
 	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
-	TIM_TimeBaseStructure.TIM_Period = 1000;
+	TIM_TimeBaseStructure.TIM_Period = 999;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
 	TIM_TimeBaseInit(TIM6, &TIM_TimeBaseStructure);
-	/* TIM Interrupts enable */
+	// TIM Interrupts enable
 	TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
-	/* TIM6 enable counter */
+	// TIM6 enable counter
 	TIM_Cmd(TIM6, ENABLE);
 
 	return 0;
 }
 
+//spracovanie prerusenia z TIM6, casovaca pre kontrolku
 void TIM6_IRQHandler(void)
 {
 	if (TIM_GetITStatus(TIM6, TIM_IT_Update) == SET)
