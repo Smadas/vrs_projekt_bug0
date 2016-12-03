@@ -12,8 +12,8 @@
 #include "dialkomer.h"
 
 //Private variables
-volatile uint16_t IC4ReadValue1 = 0, IC4ReadValue2 = 0;
-volatile uint16_t CaptureNumber = 0;
+volatile uint32_t IC4ReadValue1 = 0, IC4ReadValue2 = 0;
+volatile uint32_t CaptureNumber = 0;
 volatile uint32_t Capture = 0;
 volatile uint32_t TIM4Freq = 0;
 volatile uint32_t pamatCapture[100];
@@ -75,25 +75,25 @@ int init_cas_zachyt_imp_dialkomer()
 	  GPIO_InitTypeDef GPIO_InitStructure;
 	  NVIC_InitTypeDef NVIC_InitStructure;
 
-	  // TIM4 clock enable
-	  	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+	  // TIM5 clock enable
+	  	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
 
 	  	  // GPIOB clock enable
-	  	  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+	  	  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 
-	  	  // TIM4 channel 2 pin (PB.07) configuration
+	  	  // TIM5 channel 2 pin (PA.01) configuration
 	  	  GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
 	  	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 	  	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	  	  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
-	  	  GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_7;
-	  	  GPIO_Init(GPIOB, &GPIO_InitStructure);
-	  	  GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
+	  	  GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_1;
+	  	  GPIO_Init(GPIOA, &GPIO_InitStructure);
+	  	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource1, GPIO_AF_TIM5);
 
-	  	  /* TIM4 configuration: Input Capture mode ---------------------
-	  	     The external signal is connected to TIM4 CH2 pin (PB.07)
+	  	  /* TIM5 configuration: Input Capture mode ---------------------
+	  	     The external signal is connected to TIM5 CH2 pin (PA.01)
 	  	     The Rising edge is used as active edge,
-	  	     The TIM4 CCR2 is used to compute the frequency value
+	  	     The TIM5 CCR2 is used to compute the frequency value
 	  	  ------------------------------------------------------------ */
 
 	  	  TIM_ICInitStructure.TIM_Channel     = TIM_Channel_2;
@@ -101,16 +101,16 @@ int init_cas_zachyt_imp_dialkomer()
 	  	  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
 	  	  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
 	  	  TIM_ICInitStructure.TIM_ICFilter = 0x0;
-	  	  TIM_ICInit(TIM4, &TIM_ICInitStructure);
+	  	  TIM_ICInit(TIM5, &TIM_ICInitStructure);
 
 	  	  // TIM enable counter
-	  	  TIM_Cmd(TIM4, ENABLE);
+	  	  TIM_Cmd(TIM5, ENABLE);
 
 	  	  // Enable the CC2 Interrupt Request
-	  	  TIM_ITConfig(TIM4, TIM_IT_CC2, ENABLE);
+	  	  TIM_ITConfig(TIM5, TIM_IT_CC2, ENABLE);
 
-	  	  // Enable the TIM4 global Interrupt
-	  	  NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;
+	  	  // Enable the TIM5 global Interrupt
+	  	  NVIC_InitStructure.NVIC_IRQChannel = TIM5_IRQn;
 	  	  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
 	  	  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	  	  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -263,24 +263,24 @@ int init_cas_trig_dialkomer()
 	return 0;
 }
 
-void TIM4_IRQHandler(void)
+void TIM5_IRQHandler(void)
 {
-	if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)
+	if (TIM_GetITStatus(TIM5, TIM_IT_CC2) != RESET)
 	  {
 
 
-	    /* Clear TIM4 Capture compare interrupt pending bit */
-	    TIM_ClearITPendingBit(TIM4, TIM_IT_CC2);
+	    /* Clear TIM5 Capture compare interrupt pending bit */
+	    TIM_ClearITPendingBit(TIM5, TIM_IT_CC2);
 	    if(CaptureNumber == 0)
 	    {
 	      /* Get the Input Capture value */
-	      IC4ReadValue1 = TIM_GetCapture2(TIM4);
+	      IC4ReadValue1 = TIM_GetCapture2(TIM5);
 	      CaptureNumber = 1;
 	    }
 	    else if(CaptureNumber == 1)
 	    {
 	      /* Get the Input Capture value */
-	      IC4ReadValue2 = TIM_GetCapture2(TIM4);
+	      IC4ReadValue2 = TIM_GetCapture2(TIM5);
 
 	      /* Capture computation */
 	      if (IC4ReadValue2 > IC4ReadValue1)
