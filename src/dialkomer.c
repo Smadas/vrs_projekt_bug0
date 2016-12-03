@@ -75,14 +75,55 @@ int init_cas_zachyt_imp_dialkomer()
 	  GPIO_InitTypeDef GPIO_InitStructure;
 	  NVIC_InitTypeDef NVIC_InitStructure;
 
+	  // TIM4 clock enable
+	  	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
 
-	  /* TIM4 clock enable */
+	  	  // GPIOB clock enable
+	  	  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+
+	  	  // TIM4 channel 2 pin (PB.07) configuration
+	  	  GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
+	  	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
+	  	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	  	  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
+	  	  GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_7;
+	  	  GPIO_Init(GPIOB, &GPIO_InitStructure);
+	  	  GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
+
+	  	  /* TIM4 configuration: Input Capture mode ---------------------
+	  	     The external signal is connected to TIM4 CH2 pin (PB.07)
+	  	     The Rising edge is used as active edge,
+	  	     The TIM4 CCR2 is used to compute the frequency value
+	  	  ------------------------------------------------------------ */
+
+	  	  TIM_ICInitStructure.TIM_Channel     = TIM_Channel_2;
+	  	  TIM_ICInitStructure.TIM_ICPolarity  = TIM_ICPolarity_BothEdge;//TIM_ICPolarity_Rising;
+	  	  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+	  	  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
+	  	  TIM_ICInitStructure.TIM_ICFilter = 0x0;
+	  	  TIM_ICInit(TIM4, &TIM_ICInitStructure);
+
+	  	  // TIM enable counter
+	  	  TIM_Cmd(TIM4, ENABLE);
+
+	  	  // Enable the CC2 Interrupt Request
+	  	  TIM_ITConfig(TIM4, TIM_IT_CC2, ENABLE);
+
+	  	  // Enable the TIM4 global Interrupt
+	  	  NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;
+	  	  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	  	  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	  	  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	  	  NVIC_Init(&NVIC_InitStructure);
+
+/*
+	  // TIM4 clock enable
 	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
 
-	  /* GPIOB clock enable */
+	  // GPIOB clock enable
 	  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
 
-	  /* TIM4 channel 2 pin (PB.07) configuration */
+	  // TIM4 channel 2 pin (PB.07) configuration
 	  GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
 	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
@@ -90,13 +131,13 @@ int init_cas_zachyt_imp_dialkomer()
 	  GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_7;
 	  GPIO_Init(GPIOB, &GPIO_InitStructure);
 	  GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
-
+*/
 	  /* TIM4 configuration: Input Capture mode ---------------------
 	     The external signal is connected to TIM4 CH2 pin (PB.07)
 	     The Rising edge is used as active edge,
 	     The TIM4 CCR2 is used to compute the frequency value
 	  ------------------------------------------------------------ */
-
+/*
 	  TIM_ICInitStructure.TIM_Channel     = TIM_Channel_2;
 	  TIM_ICInitStructure.TIM_ICPolarity  = TIM_ICPolarity_BothEdge;//TIM_ICPolarity_Rising;
 	  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
@@ -104,19 +145,19 @@ int init_cas_zachyt_imp_dialkomer()
 	  TIM_ICInitStructure.TIM_ICFilter = 0x0;
 	  TIM_ICInit(TIM4, &TIM_ICInitStructure);
 
-	  /* TIM enable counter */
+	  // TIM enable counter
 	  TIM_Cmd(TIM4, ENABLE);
 
-	  /* Enable the CC2 Interrupt Request */
+	  // Enable the CC2 Interrupt Request
 	  TIM_ITConfig(TIM4, TIM_IT_CC2, ENABLE);
 
-	  /* Enable the TIM4 global Interrupt */
+	  // Enable the TIM4 global Interrupt
 	  NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;
 	  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
 	  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	  NVIC_Init(&NVIC_InitStructure);
-
+*/
 	  /*
 	  // TIM4 clock enable
 	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
