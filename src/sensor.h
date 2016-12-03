@@ -11,6 +11,12 @@
 #ifndef SENSOR_H_
 #define SENSOR_H_
 
+//global variables TEMP
+volatile uint32_t TIM4Freq;
+volatile uint32_t pamatCapture[100];
+volatile uint32_t pocitadlo;
+
+
 //inicializacia senzorov vzdialenosti
 void sensorInit(void);
 
@@ -23,7 +29,12 @@ void sensorInitCaptureTimer(void);
 //inicializacia pinu pre meranie dlzky impulzu z dialkomera
 void sensorInitCapturePins(void);
 
-
+//spustenie merania laveho dialkomeru
+void leftSensorMeasure(void);
+//spustenie merania praveho dialkomeru
+void rightSensorMeasure(void);
+//spustenie memrania predneho dialkomeru
+void forwardSensorMeasure(void);
 
 //prevzatie nameranej vzdialenosti z laveho dialkomeru
 double leftSensorGetDistance(void);

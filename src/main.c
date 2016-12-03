@@ -77,28 +77,10 @@ int main(void)
 
   /* TODO - Add your application code here */
 	double vzdialenost = 0;
-	int errHerald = 0;
-	int obchod = 0;
+
+	sensorInit();
 
 
-
-	if(init_dialkomery() == -1)
-	{
-		//error nepodarilo sa inicializovat dialkomery
-		errHerald++;
-	}
-	if(init_kontrolka() == -1)
-	{
-		//error nepodarilo sa inicializovat dialkomery
-		errHerald++;
-	}
-	if(init_cas_blikanie() == -1)
-	{
-		//error nepodarilo sa inicializovat casovac blikaca
-		errHerald++;
-	}
-
-	meraj_dialkomer(0);
 
   /* Infinite loop */
 	while (1)
@@ -107,8 +89,8 @@ int main(void)
 		{
 
 		}
-		meraj_dialkomer(0);
-		vzdialenost = citaj_vzdialenost(0);//183; 70
+		leftSensorMeasure();
+		vzdialenost = leftSensorGetDistance();//183; 70
 	}
 	return 0;
 }

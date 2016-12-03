@@ -10,7 +10,6 @@
 #include <stddef.h>
 #include <string.h>
 #include "stm32l1xx.h"
-#include "dialkomer.h"
 
 /*global variables*/
 long long gTimeStamp;
