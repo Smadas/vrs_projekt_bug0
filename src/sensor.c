@@ -40,14 +40,29 @@ volatile uint32_t pocitadlo11 = 0;
 #define CAPTURE_CLC_PRESCALER 159
 #define DISTANCE_ENV_CONST 58.0
 #define DISTANCE_CLC_CONST 0.1
+#define DISTANCE_MAX 500
 
+	//trig
 #define LEFT_TRIG_PIN GPIO_Pin_10
 #define RIGHT_TRIG_PIN GPIO_Pin_12
 #define FORWARD_TRIG_PIN GPIO_Pin_11
 #define TRIG_PORT GPIOC
 #define TRIG_TIM_FREQ 100000
 
+	//capture
+#define LEFT_TIM_CHANNEL TIM_Channel_3
+#define RIGHT_TIM_CHANNEL TIM_Channel_1
+#define FORWARD_TIM_CHANNEL TIM_Channel_4
+#define LEFT_TIM_CC TIM_IT_CC3
+#define RIGHT_TIM_CC TIM_IT_CC1
+#define FORWARD_TIM_CC TIM_IT_CC4
+#define LEFT_CAP_PIN GPIO_Pin_0
+#define RIGHT_CAP_PIN GPIO_Pin_4
+#define FORWARD_CAP_PIN GPIO_Pin_1
+#define CAPTURE_PORT GPIOB
+
 #define STM_SYSTEM_CLOCK 16000000
+
 
 //Functions
 //inicializacia senzorov vzdialenosti
@@ -63,13 +78,31 @@ void sensorInitTriggerTimer(void)
 {
 	//vypocet delicky pre periodu 10us
 	unsigned short prescalerValue = (unsigned short) (STM_SYSTEM_CLOCK / TRIG_TIM_FREQ) - 1;
+
 	//struktura pre zakladny casovac TIM7
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	//struktura pre prerusenie vyvolane TIM7
-	NVIC_InitTypeDef NVIC_InitStructure;
 
 	//spustenie hodinovych impulzov pre TIM7
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);
+
+	//TIM7 init prerusenie
+	sensorInitTriggerTimerInterrup();
+
+	//init struktura TIM7
+	TIM_TimeBaseStructure.TIM_Period = 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
+	TIM_TimeBaseInit(TIM7, &TIM_TimeBaseStructure);//zapisanie struktury
+
+	//povolenie preruseni TIM7
+	TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
+}
+//inicializacia preruseni casovaca, ktory generuje spustaci impulz
+void sensorInitTriggerTimerInterrup(void)
+{
+	//TIM7 struct prerusenie
+	NVIC_InitTypeDef NVIC_InitStructure;
 
 	//init struktura prerusenie
 	NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;
@@ -77,16 +110,6 @@ void sensorInitTriggerTimer(void)
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);//zapisanie struktury
-
-	//init struktura TIM7
-	TIM_TimeBaseStructure.TIM_Period = 1;
-	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
-	TIM_TimeBaseInit(TIM7, &TIM_TimeBaseStructure);
-
-	//povolenie preruseni TIM7
-	TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
 }
 //inicializacia pinov pre spustanie dialkomerov
 void sensorInitTriggerPin(void)
@@ -115,44 +138,55 @@ void sensorInitTriggerPin(void)
 //inicializacia casovaca pre meranie dlzky impulzu z dialkomera
 void sensorInitCaptureTimer(void)
 {
-	//
-	NVIC_InitTypeDef NVIC_InitStructure;
-	//
+	//TIM3 struct zaklad
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	//struktura inicializacie casovaca merania dlzky impulzu TMP
+	//TIM3 struct capture
 	TIM_ICInitTypeDef  TIM_ICInitStructure;
 
-	// TIM5 clock enable
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
+	//povolenie hodin pre TIM3
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 
-	/* TIM5 configuration: Input Capture mode ---------------------
-	 The external signal is connected to TIM5 CH2 pin (PA.01)
-	 The both Rising and Falling edge are used as active edge,
-	 The TIM5 CCR2 is used to compute the impulse duration
-	------------------------------------------------------------ */
-
-	TIM_ICInitStructure.TIM_Channel     = TIM_Channel_1;//left, forward
-	TIM_ICInitStructure.TIM_ICPolarity  = TIM_ICPolarity_BothEdge;
+	//init TIM3 struct capture
+	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_BothEdge;
 	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
 	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
 	TIM_ICInitStructure.TIM_ICFilter = 0x0;
-	TIM_ICInit(TIM5, &TIM_ICInitStructure);
-	TIM_ICInitStructure.TIM_Channel     = TIM_Channel_2;//left, forward
-	TIM_ICInit(TIM5, &TIM_ICInitStructure);
+
+	//
+	TIM_ICInitStructure.TIM_Channel = LEFT_TIM_CHANNEL;//left
+	TIM_ICInit(TIM3, &TIM_ICInitStructure);
+	TIM_ICInitStructure.TIM_Channel = RIGHT_TIM_CHANNEL;//right
+	TIM_ICInit(TIM3, &TIM_ICInitStructure);
+	TIM_ICInitStructure.TIM_Channel = FORWARD_TIM_CHANNEL;//forward
+		TIM_ICInit(TIM3, &TIM_ICInitStructure);
 
 	//nastavenie delicky hodinovych impuzov
 	TIM_TimeBaseStructure.TIM_Prescaler = (unsigned short)CAPTURE_CLC_PRESCALER;
-	TIM_TimeBaseInit(TIM5, &TIM_TimeBaseStructure);
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
 
-	// TIM enable counter
-	TIM_Cmd(TIM5, ENABLE);
+	//TIM3 povolenie pocitadla
+	TIM_Cmd(TIM3, ENABLE);
 
-	// Enable the CC2 Interrupt Request
-	TIM_ITConfig(TIM5, TIM_IT_CC1, ENABLE);//left
-	TIM_ITConfig(TIM5, TIM_IT_CC2, ENABLE);//forward
+	//povolenie CC poziadavky na prerusenie
+	TIM_ITConfig(TIM3, LEFT_TIM_CC, ENABLE);//left
+	TIM_ITConfig(TIM3, RIGHT_TIM_CC, ENABLE);//right
+	TIM_ITConfig(TIM3, FORWARD_TIM_CC, ENABLE);//forward
 
-	// Enable the TIM5 global Interrupt
-	NVIC_InitStructure.NVIC_IRQChannel = TIM5_IRQn;
+	//TIM3 prerusenie init
+	sensorInitCaptureTimerInterrup();
+
+	//mozno to tam chyba TEMP
+	//povolenie preruseni TIM7
+	//TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
+}
+//inicializacia preruseni casovaca pre meranie dlzky impulzu z dialkomera
+void sensorInitCaptureTimerInterrup(void)
+{
+	//TIM3 struct prerusenie
+	NVIC_InitTypeDef NVIC_InitStructure;
+
+	//init TIM struct prerusenie
+	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -161,9 +195,10 @@ void sensorInitCaptureTimer(void)
 //inicializacia pinu pre meranie dlzky impulzu z dialkomera
 void sensorInitCapturePins(void)
 {
+	//GPIO struct
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	// GPIOB clock enable
+	//GPIOB povolenie hodin
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 
 	// TIM5 channel 2 pin (PA.01) configuration
@@ -171,13 +206,14 @@ void sensorInitCapturePins(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
+
 	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_1;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource1, GPIO_AF_TIM5);
+	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);
+	GPIO_PinAFConfig(CAPTURE_PORT, GPIO_PinSource1, GPIO_AF_TIM3);
 
 	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_0;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_TIM5);
+	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);
+	GPIO_PinAFConfig(CAPTURE_PORT, GPIO_PinSource0, GPIO_AF_TIM3);
 }
 
 //spustenie merania laveho dialkomeru
@@ -234,7 +270,7 @@ void TIM7_IRQHandler(void)
 }
 
 //spracovanie prerusenia z TIM5, casovac pre meranie dlzky impulzu z dialialkomerov
-void TIM5_IRQHandler(void)
+void TIM3_IRQHandler(void)
 {
 	//left
 	if (TIM_GetITStatus(TIM5, TIM_IT_CC2) != RESET)
@@ -324,18 +360,45 @@ void TIM5_IRQHandler(void)
 double leftSensorGetDistance(void)
 {
 	//vypocet vzdialenosti z laveho senzoru
-	return leftDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
+	double distance = leftDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
+	if (distance > DISTANCE_MAX)
+	{
+		//senzor nic nezachytil
+		return -1;
+	}
+	else
+	{
+		return distance;
+	}
 }
 //prevzatie nameranej vzdialenosti z praveho dialkomeru
 double rightSensorGetDistance(void)
 {
 	//vypocet vzdialenosti z praveho senzoru
-	return rightDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
+	double distance = rightDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
+	if (distance > DISTANCE_MAX)
+	{
+		//senzor nic nezachytil
+		return -1;
+	}
+	else
+	{
+		return distance;
+	}
 }
 //prevzatie nameranej vzdialenosti z predneho dialkomeru
 double forwardSensorGetDistance(void)
 {
 	//vypocet vzdialenosti z predneho senzoru
-	return forwardDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
+	double distance = forwardDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
+	if (distance > DISTANCE_MAX)
+	{
+		//senzor nic nezachytil
+		return -1;
+	}
+	else
+	{
+		return distance;
+	}
 }
 

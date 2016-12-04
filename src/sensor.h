@@ -27,6 +27,10 @@ void sensorInitTriggerTimer(void);
 void sensorInitTriggerPin(void);
 //inicializacia casovaca pre meranie dlzky impulzu z dialkomera
 void sensorInitCaptureTimer(void);
+//inicializacia preruseni casovaca, ktory generuje spustaci impulz
+void sensorInitTriggerTimerInterrup(void);
+//inicializacia preruseni casovaca pre meranie dlzky impulzu z dialkomera
+void sensorInitCaptureTimerInterrup(void);
 //inicializacia pinu pre meranie dlzky impulzu z dialkomera
 void sensorInitCapturePins(void);
 
