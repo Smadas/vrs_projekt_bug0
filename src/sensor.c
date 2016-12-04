@@ -14,7 +14,16 @@
 #include "stm32l1xx.h"
 #include "sensor.h"
 
-//Private variables TMP
+//variables
+volatile uint32_t leftCaptureStep = 0;//krokovanie nabezna/dobezna hrana
+volatile uint32_t rightCaptureStep = 0;
+volatile uint32_t forwardCaptureStep = 0;
+
+volatile uint16_t leftDistanceTime = 0;//konecna dlzka impulzu z dialkomeru
+volatile uint16_t rightDistanceTime = 0;
+volatile uint16_t forwardDistanceTime = 0;
+
+//variables TMP
 volatile uint32_t IC4ReadValue1 = 0, IC4ReadValue2 = 0;
 volatile uint32_t CaptureNumber = 0;
 volatile uint32_t Capture = 0;
@@ -27,9 +36,18 @@ volatile uint32_t pocitadlo1 = 0;
 volatile double pamatDist1[1000];
 volatile uint32_t pocitadlo11 = 0;
 
-//Private typedef
-TIM_ICInitTypeDef  TIM_ICInitStructure;//struktura inicializacie casovaca merania dlzky impulzu TMP
+//defines
+#define CAPTURE_CLC_PRESCALER 159
+#define DISTANCE_ENV_CONST 58.0
+#define DISTANCE_CLC_CONST 0.1
 
+#define LEFT_TRIG_PIN GPIO_Pin_10
+#define RIGHT_TRIG_PIN GPIO_Pin_12
+#define FORWARD_TRIG_PIN GPIO_Pin_11
+#define TRIG_PORT GPIOC
+#define TRIG_TIM_FREQ 100000
+
+#define STM_SYSTEM_CLOCK 16000000
 
 //Functions
 //inicializacia senzorov vzdialenosti
@@ -43,51 +61,66 @@ void sensorInit(void)
 //inicializacia casovaca, ktory generuje spustaci impulz
 void sensorInitTriggerTimer(void)
 {
-	//unsigned short prescalerValue = (unsigned short) (SystemCoreClock / 1000) - 1;
-	unsigned short prescalerValue = (unsigned short) (16000000 / 100000) - 1;
-	//Structure for timer settings
+	//vypocet delicky pre periodu 10us
+	unsigned short prescalerValue = (unsigned short) (STM_SYSTEM_CLOCK / TRIG_TIM_FREQ) - 1;
+	//struktura pre zakladny casovac TIM7
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	//struktura pre prerusenie vyvolane TIM7
 	NVIC_InitTypeDef NVIC_InitStructure;
-	// TIM6 clock enable
+
+	//spustenie hodinovych impulzov pre TIM7
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);
-	// Enable the TIM7 gloabal Interrupt
+
+	//init struktura prerusenie
 	NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+	NVIC_Init(&NVIC_InitStructure);//zapisanie struktury
+
+	//init struktura TIM7
 	TIM_TimeBaseStructure.TIM_Period = 1;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
 	TIM_TimeBaseInit(TIM7, &TIM_TimeBaseStructure);
-	// TIM Interrupts enable
+
+	//povolenie preruseni TIM7
 	TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
-	// TIM7 enable counter
-	//TIM_Cmd(TIM7, ENABLE);
 }
 //inicializacia pinov pre spustanie dialkomerov
 void sensorInitTriggerPin(void)
 {
+	//spusti hodiny pre port C
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);//spusti hodiny pre port C
+
 	//vytvorenie struktury GPIO
 	GPIO_InitTypeDef gpioInitStruc;
 	gpioInitStruc.GPIO_Mode = GPIO_Mode_OUT;
 	gpioInitStruc.GPIO_OType = GPIO_OType_PP;
-	gpioInitStruc.GPIO_Pin = GPIO_Pin_10;
 	gpioInitStruc.GPIO_Speed = GPIO_Speed_400KHz;
-	//zapisanie inicializacnej struktury - left
-	GPIO_Init(GPIOC, &gpioInitStruc);
 
-	//forward
-	gpioInitStruc.GPIO_Pin = GPIO_Pin_12;
-	GPIO_Init(GPIOC, &gpioInitStruc);
+	//zapisanie inicializacnej struktury - left
+	gpioInitStruc.GPIO_Pin = LEFT_TRIG_PIN;
+	GPIO_Init(TRIG_PORT, &gpioInitStruc);
+
+	//zapisanie inicializacnej struktury - right
+	gpioInitStruc.GPIO_Pin = RIGHT_TRIG_PIN;
+	GPIO_Init(TRIG_PORT, &gpioInitStruc);
+
+	//zapisanie inicializacnej struktury - forward
+	gpioInitStruc.GPIO_Pin = FORWARD_TRIG_PIN;
+	GPIO_Init(TRIG_PORT, &gpioInitStruc);
 }
 //inicializacia casovaca pre meranie dlzky impulzu z dialkomera
 void sensorInitCaptureTimer(void)
 {
+	//
 	NVIC_InitTypeDef NVIC_InitStructure;
+	//
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	//struktura inicializacie casovaca merania dlzky impulzu TMP
+	TIM_ICInitTypeDef  TIM_ICInitStructure;
 
 	// TIM5 clock enable
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
@@ -107,11 +140,8 @@ void sensorInitCaptureTimer(void)
 	TIM_ICInitStructure.TIM_Channel     = TIM_Channel_2;//left, forward
 	TIM_ICInit(TIM5, &TIM_ICInitStructure);
 
-	//TIM prescale clock
-	TIM_TimeBaseStructure.TIM_Period = 0xFFFF;
-	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseStructure.TIM_Prescaler = (unsigned short)160;
+	//nastavenie delicky hodinovych impuzov
+	TIM_TimeBaseStructure.TIM_Prescaler = (unsigned short)CAPTURE_CLC_PRESCALER;
 	TIM_TimeBaseInit(TIM5, &TIM_TimeBaseStructure);
 
 	// TIM enable counter
@@ -153,19 +183,32 @@ void sensorInitCapturePins(void)
 //spustenie merania laveho dialkomeru
 void leftSensorMeasure(void)
 {
+	//spustenie casovaca
 	TIM_Cmd(TIM7, ENABLE);
-	GPIO_WriteBit(GPIOC, GPIO_Pin_10, Bit_SET);//spustenie trig impulzu
+	//spustenie trig impulzu
+	GPIO_WriteBit(GPIOC, LEFT_TRIG_PIN, Bit_SET);
+	//nulovanie CaptureStep ak by nahodou meranie zblblo
+	leftCaptureStep = 0;
 }
 //spustenie merania praveho dialkomeru
 void rightSensorMeasure(void)
 {
-
+	//spustenie casovaca
+	TIM_Cmd(TIM7, ENABLE);
+	//spustenie trig impulzu
+	GPIO_WriteBit(GPIOC, RIGHT_TRIG_PIN, Bit_SET);
+	//nulovanie CaptureStep ak by nahodou meranie zblblo
+	rightCaptureStep = 0;
 }
 //spustenie memrania predneho dialkomeru
 void forwardSensorMeasure(void)
 {
+	//spustenie casovaca
 	TIM_Cmd(TIM7, ENABLE);
-	GPIO_WriteBit(GPIOC, GPIO_Pin_12, Bit_SET);//spustenie trig impulzu
+	//spustenie trig impulzu
+	GPIO_WriteBit(GPIOC, FORWARD_TRIG_PIN, Bit_SET);
+	//nulovanie CaptureStep ak by nahodou meranie zblblo
+	forwardCaptureStep = 0;
 }
 
 //spracovanie prerusenia z TIM7, casovac pre spustaci impulz dialkomeru
@@ -174,13 +217,17 @@ void TIM7_IRQHandler(void)
 	if (TIM_GetITStatus(TIM7, TIM_IT_Update) == SET)
 	{
 		TIM_Cmd(TIM7, DISABLE);
-		if (GPIO_ReadOutputDataBit(GPIOC, GPIO_Pin_10) == 1)
+		if (GPIO_ReadOutputDataBit(TRIG_PORT, LEFT_TRIG_PIN) == 1)
 		{
-			GPIO_WriteBit(GPIOC, GPIO_Pin_10, Bit_RESET);//ukoncenie trig impulzu left
+			GPIO_WriteBit(TRIG_PORT, LEFT_TRIG_PIN, Bit_RESET);//ukoncenie trig impulzu left
 		}
-		else if (GPIO_ReadOutputDataBit(GPIOC, GPIO_Pin_12) == 1)
+		else if (GPIO_ReadOutputDataBit(TRIG_PORT, RIGHT_TRIG_PIN) == 1)
 		{
-			GPIO_WriteBit(GPIOC, GPIO_Pin_12, Bit_RESET);//ukoncenie trig impulzu forward
+			GPIO_WriteBit(TRIG_PORT, RIGHT_TRIG_PIN, Bit_RESET);//ukoncenie trig impulzu right
+		}
+		else if (GPIO_ReadOutputDataBit(TRIG_PORT, FORWARD_TRIG_PIN) == 1)
+		{
+			GPIO_WriteBit(TRIG_PORT, FORWARD_TRIG_PIN, Bit_RESET);//ukoncenie trig impulzu forward
 		}
 		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
 	}
@@ -276,28 +323,19 @@ void TIM5_IRQHandler(void)
 //prevzatie nameranej vzdialenosti z laveho dialkomeru
 double leftSensorGetDistance(void)
 {
-	pocitadlo1++;
-	if (pocitadlo1 >= 980)
-	{
-		pocitadlo1 = 0;
-	}
-	pamatDist[pocitadlo1] = TIM4Freq/0.1/58.0;
-	return TIM4Freq/0.1/58.0;
+	//vypocet vzdialenosti z laveho senzoru
+	return leftDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
 }
 //prevzatie nameranej vzdialenosti z praveho dialkomeru
 double rightSensorGetDistance(void)
 {
-	return 0;
+	//vypocet vzdialenosti z praveho senzoru
+	return rightDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
 }
 //prevzatie nameranej vzdialenosti z predneho dialkomeru
 double forwardSensorGetDistance(void)
 {
-	pocitadlo11++;
-	if (pocitadlo11 >= 980)
-	{
-		pocitadlo11 = 0;
-	}
-	pamatDist1[pocitadlo11] = TIM5Freq/0.1/58.0;
-	return TIM5Freq/0.1/58.0;
+	//vypocet vzdialenosti z predneho senzoru
+	return forwardDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
 }
 
