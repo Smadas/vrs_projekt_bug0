@@ -60,6 +60,9 @@ volatile uint32_t pocitadlo11 = 0;
 #define RIGHT_CAP_PIN GPIO_Pin_4
 #define FORWARD_CAP_PIN GPIO_Pin_1
 #define CAPTURE_PORT GPIOB
+#define LEFT_CAP_PINSOURCE GPIO_PinSource0
+#define RIGHT_CAP_PINSOURCE GPIO_PinSource4
+#define FORWARD_CAP_PINSOURCE GPIO_PinSource1
 
 #define STM_SYSTEM_CLOCK 16000000
 
@@ -152,13 +155,13 @@ void sensorInitCaptureTimer(void)
 	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
 	TIM_ICInitStructure.TIM_ICFilter = 0x0;
 
-	//
+	//TIM3 nastavenie kanalov
 	TIM_ICInitStructure.TIM_Channel = LEFT_TIM_CHANNEL;//left
 	TIM_ICInit(TIM3, &TIM_ICInitStructure);
 	TIM_ICInitStructure.TIM_Channel = RIGHT_TIM_CHANNEL;//right
 	TIM_ICInit(TIM3, &TIM_ICInitStructure);
 	TIM_ICInitStructure.TIM_Channel = FORWARD_TIM_CHANNEL;//forward
-		TIM_ICInit(TIM3, &TIM_ICInitStructure);
+	TIM_ICInit(TIM3, &TIM_ICInitStructure);
 
 	//nastavenie delicky hodinovych impuzov
 	TIM_TimeBaseStructure.TIM_Prescaler = (unsigned short)CAPTURE_CLC_PRESCALER;
@@ -201,19 +204,24 @@ void sensorInitCapturePins(void)
 	//GPIOB povolenie hodin
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 
-	// TIM5 channel 2 pin (PA.01) configuration
+	//TIM3 struct init
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
 
-	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_1;
-	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);
-	GPIO_PinAFConfig(CAPTURE_PORT, GPIO_PinSource1, GPIO_AF_TIM3);
-
-	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_0;
-	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);
-	GPIO_PinAFConfig(CAPTURE_PORT, GPIO_PinSource0, GPIO_AF_TIM3);
+	//inicializacia pinu left
+	GPIO_InitStructure.GPIO_Pin   = LEFT_CAP_PIN;
+	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);//zapisanie struktury
+	GPIO_PinAFConfig(CAPTURE_PORT, LEFT_CAP_PINSOURCE, GPIO_AF_TIM3);
+	//inicializacia pinu right
+	GPIO_InitStructure.GPIO_Pin   = RIGHT_CAP_PIN;
+	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);//zapisanie struktury
+	GPIO_PinAFConfig(CAPTURE_PORT, RIGHT_CAP_PINSOURCE, GPIO_AF_TIM3);
+	//inicializacia pinu forward
+	GPIO_InitStructure.GPIO_Pin   = FORWARD_CAP_PIN;
+	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);//zapisanie struktury
+	GPIO_PinAFConfig(CAPTURE_PORT, FORWARD_CAP_PINSOURCE, GPIO_AF_TIM3);
 }
 
 //spustenie merania laveho dialkomeru
@@ -253,6 +261,7 @@ void TIM7_IRQHandler(void)
 	if (TIM_GetITStatus(TIM7, TIM_IT_Update) == SET)
 	{
 		TIM_Cmd(TIM7, DISABLE);
+		//vypnutie impulzu na prislusnom spustacom pine
 		if (GPIO_ReadOutputDataBit(TRIG_PORT, LEFT_TRIG_PIN) == 1)
 		{
 			GPIO_WriteBit(TRIG_PORT, LEFT_TRIG_PIN, Bit_RESET);//ukoncenie trig impulzu left
@@ -268,15 +277,14 @@ void TIM7_IRQHandler(void)
 		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
 	}
 }
-
 //spracovanie prerusenia z TIM5, casovac pre meranie dlzky impulzu z dialialkomerov
 void TIM3_IRQHandler(void)
 {
+	//rozdelit do troch funkcii
+	//este treba spravit spustanie dialkomerov cez casovac
 	//left
-	if (TIM_GetITStatus(TIM5, TIM_IT_CC2) != RESET)
+	if (TIM_GetITStatus(TIM3, TIM_IT_CC2) != RESET)
 	  {
-
-
 	    /* Clear TIM5 Capture compare interrupt pending bit */
 	    TIM_ClearITPendingBit(TIM5, TIM_IT_CC2);
 	    if(CaptureNumber == 0)
