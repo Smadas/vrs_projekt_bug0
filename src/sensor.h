@@ -13,7 +13,8 @@
 
 //global variables TEMP
 volatile uint32_t TIM4Freq;
-volatile uint32_t pamatCapture[100];
+volatile uint32_t TIM5Freq;
+volatile uint32_t pamatCapture[1000];
 volatile uint32_t pocitadlo;
 
 

@@ -77,20 +77,30 @@ int main(void)
 
   /* TODO - Add your application code here */
 	double vzdialenost = 0;
+	double vzdialenost1 = 0;
 
+	init_cas_blikanie();
+	init_kontrolka();
 	sensorInit();
 
-
+	forwardSensorMeasure();
 
   /* Infinite loop */
 	while (1)
 	{
-		for (int i = 0; i < 500000; i++)
+		for (int i = 0; i < 1000000; i++)
 		{
 
 		}
+		vzdialenost = forwardSensorGetDistance();//183; 70
 		leftSensorMeasure();
-		vzdialenost = leftSensorGetDistance();//183; 70
+
+		for (int i = 0; i < 1000000; i++)
+		{
+
+		}
+		vzdialenost1 = leftSensorGetDistance();//183; 70
+		forwardSensorMeasure();
 	}
 	return 0;
 }
