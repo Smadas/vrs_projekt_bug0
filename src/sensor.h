@@ -48,6 +48,6 @@ double rightSensorGetDistance(void);
 //prevzatie nameranej vzdialenosti z predneho dialkomeru
 double forwardSensorGetDistance(void);
 //vypocet trvania impulzu ozveny z dialkomera
-uint16_t computeEchoDuration(uint16_t risingTime, uint16_t fallingTime);
+uint32_t computeEchoDuration(uint32_t risingTime, uint32_t fallingTime);
 
 #endif /* SENSOR_H_ */

@@ -21,17 +21,16 @@ volatile uint32_t leftCaptureStep = 0;//krokovanie nabezna/dobezna hrana
 volatile uint32_t rightCaptureStep = 0;
 volatile uint32_t forwardCaptureStep = 0;
 
-volatile uint16_t leftRisingTime = 0;
-volatile uint16_t rightRisingTime = 0;
-volatile uint16_t forwardRisingTime = 0;
-volatile uint16_t leftFallingTime = 0;
-volatile uint16_t rightFallingTime = 0;
-volatile uint16_t forwardFallingTime = 0;
+volatile uint32_t leftRisingTime = 0;
+volatile uint32_t rightRisingTime = 0;
+volatile uint32_t forwardRisingTime = 0;
+volatile uint32_t leftFallingTime = 0;
+volatile uint32_t rightFallingTime = 0;
+volatile uint32_t forwardFallingTime = 0;
 
 //defines
 	//cpu
 #define STM_SYSTEM_CLOCK 16000000
-#define CAPTURE_CLC_PRESCALER 159
 
 	//vypocet vzdialenosti konstanty
 #define DISTANCE_ENV_CONST 58.0
@@ -65,6 +64,7 @@ volatile uint16_t forwardFallingTime = 0;
 #define LEFT_TIM_GETCAPTURE TIM_GetCapture3(CAPTURE_TIM)
 #define RIGHT_TIM_GETCAPTURE TIM_GetCapture1(CAPTURE_TIM)
 #define FORWARD_TIM_GETCAPTURE TIM_GetCapture4(CAPTURE_TIM)
+#define CAPTURE_CLC_PRESCALER (unsigned short)159
 
 //Functions
 //inicializacia senzorov vzdialenosti
@@ -162,8 +162,11 @@ void sensorInitCaptureTimer(void)
 	TIM_ICInitStructure.TIM_Channel = FORWARD_TIM_CHANNEL;//forward
 	TIM_ICInit(CAPTURE_TIM, &TIM_ICInitStructure);
 
-	//nastavenie delicky hodinovych impuzov
-	TIM_TimeBaseStructure.TIM_Prescaler = (unsigned short)CAPTURE_CLC_PRESCALER;
+	//nastavenie pocitadla kvoli delicke hodinovych impuzov
+	TIM_TimeBaseStructure.TIM_Period = 0xFFFF;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_Prescaler = CAPTURE_CLC_PRESCALER;
 	TIM_TimeBaseInit(CAPTURE_TIM, &TIM_TimeBaseStructure);
 
 	//CAPTURE_TIM povolenie pocitadla
@@ -176,10 +179,6 @@ void sensorInitCaptureTimer(void)
 
 	//CAPTURE_TIM prerusenie init
 	sensorInitCaptureTimerInterrup();
-
-	//mozno to tam chyba TEMP
-	//povolenie preruseni CAPTURE_TIM
-	//TIM_ITConfig(CAPTURE_TIM, TIM_IT_Update, ENABLE);
 }
 //inicializacia preruseni casovaca pre meranie dlzky impulzu z dialkomera
 void sensorInitCaptureTimerInterrup(void)
@@ -201,7 +200,7 @@ void sensorInitCapturePins(void)
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	//GPIOB povolenie hodin
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
 
 	//CAPTURE_TIM struct init
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
@@ -265,6 +264,7 @@ void forwardSensorMeasure(void)
 //spracovanie prerusenia z TRIG_TIM, casovac pre spustaci impulz dialkomeru
 void TIM7_IRQHandler(void)
 {
+	//tez do samostatnej funkcie alebo mozno bude stacit #define fjdkkdf nazov funkcie
 	if (TIM_GetITStatus(TRIG_TIM, TIM_IT_Update) == SET)
 	{
 		TIM_Cmd(TRIG_TIM, DISABLE);
@@ -284,7 +284,7 @@ void TIM7_IRQHandler(void)
 		TIM_ClearITPendingBit(TRIG_TIM, TIM_IT_Update);
 	}
 }
-//spracovanie prerusenia z TIM5, casovac pre meranie dlzky impulzu z dialialkomerov
+//spracovanie prerusenia z TIM3, casovac pre meranie dlzky impulzu z dialialkomerov
 void TIM3_IRQHandler(void)
 {
 	//spustenie spracovania prerusenia CAPTURE_TIM pre prislusny senzor
@@ -310,25 +310,25 @@ void leftSensorCaptureHandler(void)
 		else if(leftCaptureStep == 1)
 		{
 			//zachyt cas dobeznej hrany
-			rightFallingTime = LEFT_TIM_GETCAPTURE;
+			leftFallingTime = LEFT_TIM_GETCAPTURE;
 		}
 	}
 }
 //meranie dlzky impulzu lavy senzor
 void rightSensorCaptureHandler(void)
 {
-	if (TIM_GetITStatus(CAPTURE_TIM, LEFT_TIM_CC) != RESET)
+	if (TIM_GetITStatus(CAPTURE_TIM, RIGHT_TIM_CC) != RESET)
 	{
 		//zmaz CAPTURE_TIM priznak prerusenia
-		TIM_ClearITPendingBit(CAPTURE_TIM, LEFT_TIM_CC);
+		TIM_ClearITPendingBit(CAPTURE_TIM, RIGHT_TIM_CC);
 
-		if(leftCaptureStep == 0)
+		if(rightCaptureStep == 0)
 		{
 			//zachyt cas nabeznej hrany
-			leftRisingTime = RIGHT_TIM_GETCAPTURE;
-			leftCaptureStep = 1;
+			rightRisingTime = RIGHT_TIM_GETCAPTURE;
+			rightCaptureStep = 1;
 		}
-		else if(leftCaptureStep == 1)
+		else if(rightCaptureStep == 1)
 		{
 			//zachyt cas dobeznej hrany
 			rightFallingTime = RIGHT_TIM_GETCAPTURE;
@@ -338,21 +338,21 @@ void rightSensorCaptureHandler(void)
 //meranie dlzky impulzu lavy senzor
 void forwardSensorCaptureHandler(void)
 {
-	if (TIM_GetITStatus(CAPTURE_TIM, LEFT_TIM_CC) != RESET)
+	if (TIM_GetITStatus(CAPTURE_TIM, FORWARD_TIM_CC) != RESET)
 	{
 		//zmaz CAPTURE_TIM priznak prerusenia
-		TIM_ClearITPendingBit(CAPTURE_TIM, LEFT_TIM_CC);
+		TIM_ClearITPendingBit(CAPTURE_TIM, FORWARD_TIM_CC);
 
-		if(leftCaptureStep == 0)
+		if(forwardCaptureStep == 0)
 		{
 			//zachyt cas nabeznej hrany
-			leftRisingTime = FORWARD_TIM_GETCAPTURE;
-			leftCaptureStep = 1;
+			forwardRisingTime = FORWARD_TIM_GETCAPTURE;
+			forwardCaptureStep = 1;
 		}
-		else if(leftCaptureStep == 1)
+		else if(forwardCaptureStep == 1)
 		{
 			//zachyt cas dobeznej hrany
-			rightFallingTime = FORWARD_TIM_GETCAPTURE;
+			forwardFallingTime = FORWARD_TIM_GETCAPTURE;
 		}
 	}
 }
@@ -360,7 +360,7 @@ void forwardSensorCaptureHandler(void)
 //prevzatie nameranej vzdialenosti z laveho dialkomeru
 double leftSensorGetDistance(void)
 {
-	uint16_t leftDistanceTime = 0;//konecna dlzka impulzu z dialkomeru
+	uint32_t leftDistanceTime = 0;//konecna dlzka impulzu z dialkomeru
 	double distance = 0;//konecna vzdialenost
 
 	//vypocet trvania impulzu
@@ -381,7 +381,7 @@ double leftSensorGetDistance(void)
 //prevzatie nameranej vzdialenosti z praveho dialkomeru
 double rightSensorGetDistance(void)
 {
-	uint16_t rightDistanceTime = 0;//konecna dlzka impulzu z dialkomer
+	uint32_t rightDistanceTime = 0;//konecna dlzka impulzu z dialkomer
 	double distance = 0;//konecna vzdialenost
 
 	//vypocet trvania impulzu
@@ -402,7 +402,7 @@ double rightSensorGetDistance(void)
 //prevzatie nameranej vzdialenosti z predneho dialkomeru
 double forwardSensorGetDistance(void)
 {
-	uint16_t forwardDistanceTime = 0;//konecna dlzka impulzu z dialkomeru
+	uint32_t forwardDistanceTime = 0;//konecna dlzka impulzu z dialkomeru
 	double distance = 0;//konecna vzdialenost
 
 	//vypocet trvania impulzu
@@ -422,9 +422,9 @@ double forwardSensorGetDistance(void)
 }
 
 //vypocet trvania impulzu ozveny z dialkomera
-uint16_t computeEchoDuration(uint16_t risingTime, uint16_t fallingTime)
+uint32_t computeEchoDuration(uint32_t risingTime, uint32_t fallingTime)
 {
-	uint16_t distanceTime = 0;
+	uint32_t distanceTime = 0;
 	//vypocet podla toho ci nabezna alebo dobezna je vacsie cislo
 	if (fallingTime > risingTime)
 	{
