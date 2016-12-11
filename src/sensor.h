@@ -14,6 +14,8 @@
 //inicializacia senzorov vzdialenosti
 void sensorInit(void);
 
+//inicializacia casovaca pravidelne volajuceho meranie vzdialenosti
+void sensorInitCallTimer(void);
 //inicializacia casovaca, ktory generuje spustaci impulz
 void sensorInitTriggerTimer(void);
 //inicializacia pinov pre spustanie dialkomerov

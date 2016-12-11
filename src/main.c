@@ -84,30 +84,54 @@ int main(void)
 	init_kontrolka();
 	sensorInit();
 
+	inicializaciaPrerusenieUSART();
+	inicializaciaUSART2();
+
+	long autobus = 100000;
 	forwardSensorMeasure();
 
   /* Infinite loop */
 	while (1)
 	{
-		for (int i = 0; i < 500000; i++)
+		for (int i = 0; i < autobus; i++)
 		{
 
 		}
 		vzdialenostF = forwardSensorGetDistance();//183; 70
-		leftSensorMeasure();
+		//leftSensorMeasure();
 
-		for (int i = 0; i < 500000; i++)
+		for (int i = 0; i < autobus; i++)
 		{
 
 		}
 		vzdialenostL = leftSensorGetDistance();//183; 70
-		rightSensorMeasure();
-		for (int i = 0; i < 500000; i++)
+		//rightSensorMeasure();
+		for (int i = 0; i < autobus; i++)
 		{
 
 		}
 		vzdialenostR = rightSensorGetDistance();//183; 70
-		forwardSensorMeasure();
+		//forwardSensorMeasure();
+		for (int i = 0; i < autobus; i++)
+		{
+
+		}
+		vzdialenostF = forwardSensorGetDistance();//183; 70
+		//leftSensorMeasure();
+
+		for (int i = 0; i < autobus; i++)
+		{
+
+		}
+		vzdialenostL = leftSensorGetDistance();//183; 70
+		//rightSensorMeasure();
+		for (int i = 0; i < autobus; i++)
+		{
+
+		}
+		vzdialenostR = rightSensorGetDistance();//183; 70
+		//forwardSensorMeasure();
+
 	}
 	return 0;
 }

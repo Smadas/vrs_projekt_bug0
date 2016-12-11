@@ -13,6 +13,7 @@
 #include <string.h>
 #include "stm32l1xx.h"
 #include "sensor.h"
+#include "serial.h"
 
 //variables
 void (*sensorCaptureHandler)(void);//smernik na funkciu ktora spracuje prerusenie CAPTURE_TIM
@@ -28,6 +29,8 @@ volatile uint32_t leftFallingTime = 0;
 volatile uint32_t rightFallingTime = 0;
 volatile uint32_t forwardFallingTime = 0;
 
+volatile int selectSensor = 0;
+
 //defines
 	//cpu
 #define STM_SYSTEM_CLOCK 16000000
@@ -35,7 +38,7 @@ volatile uint32_t forwardFallingTime = 0;
 	//vypocet vzdialenosti konstanty
 #define DISTANCE_ENV_CONST 58.0
 #define DISTANCE_CLC_CONST 0.1
-#define DISTANCE_MAX 500
+#define DISTANCE_MAX 400
 
 	//trig
 #define LEFT_TRIG_PIN GPIO_Pin_10
@@ -74,7 +77,36 @@ void sensorInit(void)
 	sensorInitTriggerPin();
 	sensorInitCapturePins();
 	sensorInitCaptureTimer();
+	sensorInitCallTimer();
 }
+
+//inicializacia casovaca pravidelne volajuceho meranie vzdialenosti
+void sensorInitCallTimer(void)
+{
+	selectSensor = 0;
+	unsigned short prescalerValue = (unsigned short) (16000000 / 1000) - 1;
+	//Structure for timer settings
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
+	// TIM10 clock enable
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM10, ENABLE);
+	// Enable the TIM10 gloabal Interrupt
+	NVIC_InitStructure.NVIC_IRQChannel = TIM10_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+	TIM_TimeBaseStructure.TIM_Period = 99;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
+	TIM_TimeBaseInit(TIM10, &TIM_TimeBaseStructure);
+	// TIM Interrupts enable
+	TIM_ITConfig(TIM10, TIM_IT_Update, ENABLE);
+	// TIM10 enable counter
+	TIM_Cmd(TIM10, ENABLE);
+}
+
 //inicializacia casovaca, ktory generuje spustaci impulz
 void sensorInitTriggerTimer(void)
 {
@@ -293,6 +325,34 @@ void TIM3_IRQHandler(void)
 		sensorCaptureHandler();
 	}
 }
+//spracovanie prerusenia z TIM10, casovaca pre volanie merania vzdialenosti
+void TIM10_IRQHandler(void)
+{
+	if (TIM_GetITStatus(TIM10, TIM_IT_Update) == SET)
+	{
+		//volanie merania senzora, ktory je na rade
+		switch (selectSensor)
+		{
+		case 0:
+			leftSensorMeasure();
+			break;
+		case 1:
+			forwardSensorMeasure();
+			break;
+		case 2:
+			rightSensorMeasure();
+			break;
+		}
+		//inkrementovanie volaneho senzora
+		selectSensor++;
+		if (selectSensor > 2)
+		{
+			selectSensor = 0;
+		}
+		TIM_ClearITPendingBit(TIM10, TIM_IT_Update);
+	}
+}
+
 //meranie dlzky impulzu lavy senzor
 void leftSensorCaptureHandler(void)
 {
@@ -311,6 +371,8 @@ void leftSensorCaptureHandler(void)
 		{
 			//zachyt cas dobeznej hrany
 			leftFallingTime = LEFT_TIM_GETCAPTURE;
+			//TMP vypis na seriovku
+			sensorMessage(leftSensorGetDistance(), 1);
 		}
 	}
 }
@@ -332,6 +394,8 @@ void rightSensorCaptureHandler(void)
 		{
 			//zachyt cas dobeznej hrany
 			rightFallingTime = RIGHT_TIM_GETCAPTURE;
+			//TMP vypis na seriovku
+			sensorMessage(rightSensorGetDistance(), 3);
 		}
 	}
 }
@@ -353,6 +417,8 @@ void forwardSensorCaptureHandler(void)
 		{
 			//zachyt cas dobeznej hrany
 			forwardFallingTime = FORWARD_TIM_GETCAPTURE;
+			//TMP vypis na seriovku
+			sensorMessage(forwardSensorGetDistance(), 2);
 		}
 	}
 }
