@@ -27,8 +27,8 @@ SOFTWARE.
 */
 
 /* Includes */
-#include <stddef.h>
-#include "stm32l1xx.h"
+#include <bug_0.h>
+
 
 
 /* Private typedef */
@@ -47,9 +47,9 @@ SOFTWARE.
 **===========================================================================
 */
 int main(void)
-{
-  int i = 0;
 
+{
+	init();
   /**
   *  IMPORTANT NOTE!
   *  See the <system_*.c> file and how/if the SystemInit() function updates 
@@ -73,7 +73,14 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-	i++;
+
+	 /* if (running)
+		  run();
+	  else stop();*/
+
+
+	sendValue();
+	//PutcUART2(48);
   }
   return 0;
 }
