@@ -12,7 +12,23 @@
 #include "stm32l1xx.h"
 #include "serial.h"
 
+//USART PRINT TO CONSOLE
+#define PRN_USART_NUM 2
 #define PRN_USART USART2
+#define PRN_USART_IRQHANDLER  PRN_USART ## _IRQHandler
+//GPIO USART PRINT TO CONSOLE
+//#define trololo GPIO_AF_
+//#define paste(xyy) GPIO_AF_USART##xyy
+//#define PRN_USART_GPIO_AF paste(PRN_USART_NUM)
+
+
+///TMP
+#define JOIN_(X,Y) X##Y
+#define JOIN(X,Y) JOIN_(X,Y)
+#define VERSION XY123
+#define PRN_USART_GPIO_AF JOIN(GPIO_AF_USART,PRN_USART_NUM)
+
+//GPIO_AF_USART2
 #define NUM_DEC_CONST 100
 
 volatile int USARTbufferRDY;
@@ -94,7 +110,7 @@ int sensorMessage(double distance, int sensorNum)
 
 
 
-void USART2_IRQHandler(void)
+void PRN_USART_IRQHANDLER(void)
 {
 	if(USART_GetITStatus(PRN_USART, USART_IT_RXNE) != RESET)
 	{
@@ -141,8 +157,8 @@ void inicializaciaUSART2(void)
 	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
-	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);
-	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2);
+	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, PRN_USART_GPIO_AF);
+	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, PRN_USART_GPIO_AF);
 	  GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	  //usart configuration
@@ -154,10 +170,10 @@ void inicializaciaUSART2(void)
 	  USART_InitStructure.USART_Parity = USART_Parity_No;
 	  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 	  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-	  USART_Init(USART2, &USART_InitStructure);
-	  USART_Cmd(USART2, ENABLE);
-	  USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
-	  USART_ITConfig(USART2, USART_IT_TC, ENABLE);
+	  USART_Init(PRN_USART, &USART_InitStructure);
+	  USART_Cmd(PRN_USART, ENABLE);
+	  USART_ITConfig(PRN_USART, USART_IT_RXNE, ENABLE);
+	  USART_ITConfig(PRN_USART, USART_IT_TC, ENABLE);
 }
 
 

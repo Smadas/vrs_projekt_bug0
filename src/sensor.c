@@ -49,6 +49,9 @@ volatile int selectSensor = 0;
 #define TRIG_TIM TIM7
 
 	//capture
+#define LEFT_TIM_CHANNEL_NUM 3
+#define RIGHT_TIM_CHANNEL_NUM 1
+#define FORWARD_TIM_CHANNEL_NUM 4
 #define LEFT_TIM_CHANNEL TIM_Channel_3
 #define RIGHT_TIM_CHANNEL TIM_Channel_1
 #define FORWARD_TIM_CHANNEL TIM_Channel_4
