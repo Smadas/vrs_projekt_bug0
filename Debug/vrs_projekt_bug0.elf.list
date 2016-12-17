@@ -5735,8 +5735,8 @@ void inicializaciaPrerusenieUSART(void)
  8002528:	af00      	add	r7, sp, #0
 	//NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 	NVIC_InitTypeDef NVIC_InitStructure;
-	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn; //zoznam prerušení nájdete v súbore stm32l1xx.h
- 800252a:	2326      	movs	r3, #38	; 0x26
+	NVIC_InitStructure.NVIC_IRQChannel = PRN_USART_NVIC_IRQ ; //zoznam prerušení nájdete v súbore stm32l1xx.h
+ 800252a:	2327      	movs	r3, #39	; 0x27
  800252c:	713b      	strb	r3, [r7, #4]
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
  800252e:	2302      	movs	r3, #2
@@ -5765,9 +5765,9 @@ void inicializaciaUSART(void)
  800254c:	b580      	push	{r7, lr}
  800254e:	b086      	sub	sp, #24
  8002550:	af00      	add	r7, sp, #0
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	RCC_AHBPeriphClockCmd(PRN_USART_GPIO_RCC, ENABLE);
  8002552:	2101      	movs	r1, #1
- 8002554:	2001      	movs	r0, #1
+ 8002554:	2002      	movs	r0, #2
  8002556:	f7fe fced 	bl	8000f34 <RCC_AHBPeriphClockCmd>
 
 	/* Configure USART Tx and Rx pins */
@@ -5787,28 +5787,28 @@ void inicializaciaUSART(void)
 	  GPIO_InitStructure.GPIO_Pin = PRN_USART_RXDPIN_PIN | PRN_USART_TXDPIN_PIN;
  800256a:	f44f 6340 	mov.w	r3, #3072	; 0xc00
  800256e:	613b      	str	r3, [r7, #16]
-	  GPIO_PinAFConfig(GPIOA, PRN_USART_TXDPIN_SOURCE, PRN_USART_GPIO_AF);
+	  GPIO_PinAFConfig(PRN_USART_GPIOPORT, PRN_USART_TXDPIN_SOURCE, PRN_USART_GPIO_AF);
  8002570:	2207      	movs	r2, #7
  8002572:	210a      	movs	r1, #10
  8002574:	481c      	ldr	r0, [pc, #112]	; (80025e8 <inicializaciaUSART+0x9c>)
  8002576:	f7fe fbbb 	bl	8000cf0 <GPIO_PinAFConfig>
-	  GPIO_PinAFConfig(GPIOA, PRN_USART_RXDPIN_SOURCE, PRN_USART_GPIO_AF);
+	  GPIO_PinAFConfig(PRN_USART_GPIOPORT, PRN_USART_RXDPIN_SOURCE, PRN_USART_GPIO_AF);
  800257a:	2207      	movs	r2, #7
  800257c:	210b      	movs	r1, #11
  800257e:	481a      	ldr	r0, [pc, #104]	; (80025e8 <inicializaciaUSART+0x9c>)
  8002580:	f7fe fbb6 	bl	8000cf0 <GPIO_PinAFConfig>
-	  GPIO_Init(GPIOA, &GPIO_InitStructure);
+	  GPIO_Init(PRN_USART_GPIOPORT, &GPIO_InitStructure);
  8002584:	f107 0310 	add.w	r3, r7, #16
  8002588:	4619      	mov	r1, r3
  800258a:	4817      	ldr	r0, [pc, #92]	; (80025e8 <inicializaciaUSART+0x9c>)
  800258c:	f7fe fad2 	bl	8000b34 <GPIO_Init>
 
 	  //usart configuration
-	  PRN_USART_RCC_FUNC(RCC_APB1Periph_USART2, ENABLE);
+	  PRN_USART_RCC_FUNC(PRN_USART_RCC_ARG, ENABLE);
  8002590:	2101      	movs	r1, #1
- 8002592:	f44f 3000 	mov.w	r0, #131072	; 0x20000
- 8002596:	f7fe fceb 	bl	8000f70 <RCC_APB2PeriphClockCmd>
-	  //RCC_APB
+ 8002592:	f44f 2080 	mov.w	r0, #262144	; 0x40000
+ 8002596:	f7fe fd09 	bl	8000fac <RCC_APB1PeriphClockCmd>
+
 	  USART_InitTypeDef USART_InitStructure;
 	  USART_InitStructure.USART_BaudRate = 19200;
  800259a:	f44f 4396 	mov.w	r3, #19200	; 0x4b00
@@ -5853,7 +5853,7 @@ void inicializaciaUSART(void)
  80025e2:	46bd      	mov	sp, r7
  80025e4:	bd80      	pop	{r7, pc}
  80025e6:	bf00      	nop
- 80025e8:	40020000 	.word	0x40020000
+ 80025e8:	40020400 	.word	0x40020400
  80025ec:	40004800 	.word	0x40004800
 
 080025f0 <Reset_Handler>:
