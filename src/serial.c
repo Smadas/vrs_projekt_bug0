@@ -12,21 +12,21 @@
 #include "stm32l1xx.h"
 #include "serial.h"
 
+#define PRE_JOIN_DEF(X,Y,Z) X##Y##Z
+#define JOIN_DEF(X,Y,Z) PRE_JOIN_DEF(X,Y,Z)
+
 //USART PRINT TO CONSOLE
 #define PRN_USART_NUM 2
-#define PRN_USART USART2
-#define PRN_USART_IRQHANDLER  PRN_USART ## _IRQHandler
-//GPIO USART PRINT TO CONSOLE
-//#define trololo GPIO_AF_
-//#define paste(xyy) GPIO_AF_USART##xyy
-//#define PRN_USART_GPIO_AF paste(PRN_USART_NUM)
+#define PRN_USART_TXDPIN 2
+#define PRN_USART_RXDPIN 3
 
-
-///TMP
-#define JOIN_(X,Y) X##Y
-#define JOIN(X,Y) JOIN_(X,Y)
-#define VERSION XY123
-#define PRN_USART_GPIO_AF JOIN(GPIO_AF_USART,PRN_USART_NUM)
+#define PRN_USART_TXDPIN_SOURCE JOIN_DEF(GPIO_PinSource,PRN_USART_TXDPIN, )
+#define PRN_USART_RXDPIN_SOURCE JOIN_DEF(GPIO_PinSource,PRN_USART_RXDPIN, )
+#define PRN_USART_TXDPIN_PIN JOIN_DEF(GPIO_Pin_,PRN_USART_TXDPIN, )
+#define PRN_USART_RXDPIN_PIN JOIN_DEF(GPIO_Pin_,PRN_USART_RXDPIN, )
+#define PRN_USART JOIN_DEF(USART,PRN_USART_NUM, )
+#define PRN_USART_IRQHANDLER JOIN_DEF(USART,PRN_USART_NUM,_IRQHandler)
+#define PRN_USART_GPIO_AF JOIN_DEF(GPIO_AF_USART,PRN_USART_NUM, )
 
 //GPIO_AF_USART2
 #define NUM_DEC_CONST 100
@@ -156,13 +156,14 @@ void inicializaciaUSART2(void)
 	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
-	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, PRN_USART_GPIO_AF);
+	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_2;
+	  GPIO_PinAFConfig(GPIOA, PRN_USART_TXDPIN_SOURCE, PRN_USART_GPIO_AF);
 	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, PRN_USART_GPIO_AF);
 	  GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	  //usart configuration
 	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+	  //RCC_APB
 	  USART_InitTypeDef USART_InitStructure;
 	  USART_InitStructure.USART_BaudRate = 19200;
 	  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
