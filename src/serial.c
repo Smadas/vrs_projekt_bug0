@@ -16,14 +16,21 @@
 #define JOIN_DEF(X,Y,Z) PRE_JOIN_DEF(X,Y,Z)
 
 //USART PRINT TO CONSOLE
-#define PRN_USART_NUM 2
-#define PRN_USART_TXDPIN 2
-#define PRN_USART_RXDPIN 3
+#define PRN_USART_NUM 3//2
+#define PRN_USART_TXDPIN 10//2
+#define PRN_USART_RXDPIN 11//3
+#define PRN_USART_GPIOPORT_LETTER B//A
+#define PRN_USART_RCC_NUM 2//1
+
 
 #define PRN_USART_TXDPIN_SOURCE JOIN_DEF(GPIO_PinSource,PRN_USART_TXDPIN, )
 #define PRN_USART_RXDPIN_SOURCE JOIN_DEF(GPIO_PinSource,PRN_USART_RXDPIN, )
 #define PRN_USART_TXDPIN_PIN JOIN_DEF(GPIO_Pin_,PRN_USART_TXDPIN, )
 #define PRN_USART_RXDPIN_PIN JOIN_DEF(GPIO_Pin_,PRN_USART_RXDPIN, )
+#define PRN_USART_GPIO_RCC JOIN_DEF(RCC_AHBPeriph_GPIO,PRN_USART_GPIOPORT_LETTER, )
+#define PRN_USART_RCC_FUNC JOIN_DEF(RCC_APB,PRN_USART_RCC_NUM,PeriphClockCmd)
+#define PRN_USART_RCC_ARG (RCC_APB##JOIN_DEF(PRN_USART_RCC_NUM,Periph_USART,PRN_USART_NUM)##, ENABLE) ///prerobit
+
 #define PRN_USART JOIN_DEF(USART,PRN_USART_NUM, )
 #define PRN_USART_IRQHANDLER JOIN_DEF(USART,PRN_USART_NUM,_IRQHandler)
 #define PRN_USART_GPIO_AF JOIN_DEF(GPIO_AF_USART,PRN_USART_NUM, )
@@ -145,10 +152,9 @@ void inicializaciaPrerusenieUSART(void)
 	NVIC_Init(&NVIC_InitStructure);
 
 }
-void inicializaciaUSART2(void)
+void inicializaciaUSART(void)
 {
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-
 
 	/* Configure USART Tx and Rx pins */
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -156,13 +162,13 @@ void inicializaciaUSART2(void)
 	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_2;
+	  GPIO_InitStructure.GPIO_Pin = PRN_USART_RXDPIN_PIN | PRN_USART_TXDPIN_PIN;
 	  GPIO_PinAFConfig(GPIOA, PRN_USART_TXDPIN_SOURCE, PRN_USART_GPIO_AF);
-	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, PRN_USART_GPIO_AF);
+	  GPIO_PinAFConfig(GPIOA, PRN_USART_RXDPIN_SOURCE, PRN_USART_GPIO_AF);
 	  GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	  //usart configuration
-	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+	  PRN_USART_RCC_FUNC(RCC_APB1Periph_USART2, ENABLE);
 	  //RCC_APB
 	  USART_InitTypeDef USART_InitStructure;
 	  USART_InitStructure.USART_BaudRate = 19200;

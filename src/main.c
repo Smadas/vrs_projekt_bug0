@@ -85,7 +85,7 @@ int main(void)
 	sensorInit();
 
 	inicializaciaPrerusenieUSART();
-	inicializaciaUSART2();
+	inicializaciaUSART();
 
 	long autobus = 100000;
 	forwardSensorMeasure();
