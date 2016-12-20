@@ -118,7 +118,7 @@ int sensorMessage(double distance, int sensorNum)
 
 int sensorMessageAll(double leftDistance, double rightDistance, double forwardDistance)
 {
-	char message[1000];
+	char message[100];
 
 	//rozdelenie vzdialenosti na celu a desatinnu cast
 	int leftDecimalPart = 0;

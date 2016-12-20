@@ -5,39 +5,39 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   0000013c  08000000  08000000  00010000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         000029e8  08000140  08000140  00010140  2**3
+  1 .text         000029e4  08000140  08000140  00010140  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000030  08002b28  08002b28  00012b28  2**2
+  2 .rodata       00000030  08002b24  08002b24  00012b24  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .init_array   00000004  08002b58  08002b58  00012b58  2**2
+  3 .init_array   00000004  08002b54  08002b54  00012b54  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .fini_array   00000004  08002b5c  08002b5c  00012b5c  2**2
+  4 .fini_array   00000004  08002b58  08002b58  00012b58  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  5 .data         0000001c  20000000  08002b60  00020000  2**2
+  5 .data         0000001c  20000000  08002b5c  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .bss          000000c4  20000020  08002b7c  00020020  2**3
+  6 .bss          000000cc  20000020  08002b78  00020020  2**3
                   ALLOC
-  7 ._user_heap_stack 00000400  200000e4  08002b7c  000200e4  2**0
+  7 ._user_heap_stack 00000400  200000ec  08002b78  000200ec  2**0
                   ALLOC
   8 .ARM.attributes 00000029  00000000  00000000  0002001c  2**0
                   CONTENTS, READONLY
-  9 .debug_info   00006a09  00000000  00000000  00020045  2**0
+  9 .debug_info   000069b8  00000000  00000000  00020045  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_abbrev 000011c9  00000000  00000000  00026a4e  2**0
+ 10 .debug_abbrev 000011cb  00000000  00000000  000269fd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_aranges 00000850  00000000  00000000  00027c18  2**3
+ 11 .debug_aranges 00000850  00000000  00000000  00027bc8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000007a0  00000000  00000000  00028468  2**3
+ 12 .debug_ranges 000007a0  00000000  00000000  00028418  2**3
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_line   00002ab3  00000000  00000000  00028c08  2**0
+ 13 .debug_line   00002ad5  00000000  00000000  00028bb8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    00002939  00000000  00000000  0002b6bb  2**0
+ 14 .debug_str    00002911  00000000  00000000  0002b68d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .comment      0000007e  00000000  00000000  0002dff4  2**0
+ 15 .comment      0000007e  00000000  00000000  0002df9e  2**0
                   CONTENTS, READONLY
- 16 .debug_frame  000022e0  00000000  00000000  0002e074  2**2
+ 16 .debug_frame  000022d8  00000000  00000000  0002e01c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 17 .stabstr      0000003f  00000000  00000000  00030354  2**0
+ 17 .stabstr      0000003f  00000000  00000000  000302f4  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -56,7 +56,7 @@ Disassembly of section .text:
  8000156:	bd10      	pop	{r4, pc}
  8000158:	20000020 	.word	0x20000020
  800015c:	00000000 	.word	0x00000000
- 8000160:	08002b10 	.word	0x08002b10
+ 8000160:	08002b0c 	.word	0x08002b0c
 
 08000164 <frame_dummy>:
  8000164:	b508      	push	{r3, lr}
@@ -68,7 +68,7 @@ Disassembly of section .text:
  8000172:	bd08      	pop	{r3, pc}
  8000174:	00000000 	.word	0x00000000
  8000178:	20000024 	.word	0x20000024
- 800017c:	08002b10 	.word	0x08002b10
+ 800017c:	08002b0c 	.word	0x08002b0c
 
 08000180 <__aeabi_drsub>:
  8000180:	f081 4100 	eor.w	r1, r1, #2147483648	; 0x80000000
@@ -3941,15 +3941,15 @@ int main(void)
  8001a94:	f000 f836 	bl	8001b04 <sensorInit>
 
 	inicializaciaPrerusenieUSART();
- 8001a98:	f000 fd9c 	bl	80025d4 <inicializaciaPrerusenieUSART>
+ 8001a98:	f000 fd9a 	bl	80025d0 <inicializaciaPrerusenieUSART>
 	inicializaciaUSART();
- 8001a9c:	f000 fdae 	bl	80025fc <inicializaciaUSART>
+ 8001a9c:	f000 fdac 	bl	80025f8 <inicializaciaUSART>
 
 	long autobus = 100000;
  8001aa0:	4b17      	ldr	r3, [pc, #92]	; (8001b00 <main+0xa0>)
  8001aa2:	607b      	str	r3, [r7, #4]
 	forwardSensorMeasure();
- 8001aa4:	f000 f9b0 	bl	8001e08 <forwardSensorMeasure>
+ 8001aa4:	f000 f9e2 	bl	8001e6c <forwardSensorMeasure>
 
   /* Infinite loop */
 	while (1)
@@ -3969,22 +3969,22 @@ int main(void)
 
 		}
 		vzdialenostF = forwardSensorGetDistance();//183; 70
- 8001abc:	f000 fb74 	bl	80021a8 <forwardSensorGetDistance>
+ 8001abc:	f000 fb94 	bl	80021e8 <forwardSensorGetDistance>
  8001ac0:	e9c7 0106 	strd	r0, r1, [r7, #24]
 		vzdialenostL = leftSensorGetDistance();//183; 70
- 8001ac4:	f000 fad0 	bl	8002068 <leftSensorGetDistance>
+ 8001ac4:	f000 faf8 	bl	80020b8 <leftSensorGetDistance>
  8001ac8:	e9c7 0104 	strd	r0, r1, [r7, #16]
 		vzdialenostR = rightSensorGetDistance();//183; 70
- 8001acc:	f000 fb1c 	bl	8002108 <rightSensorGetDistance>
+ 8001acc:	f000 fb40 	bl	8002150 <rightSensorGetDistance>
  8001ad0:	e9c7 0102 	strd	r0, r1, [r7, #8]
 		sensorMessageAll(leftSensorGetDistance(),rightSensorGetDistance(),forwardSensorGetDistance());
- 8001ad4:	f000 fac8 	bl	8002068 <leftSensorGetDistance>
+ 8001ad4:	f000 faf0 	bl	80020b8 <leftSensorGetDistance>
  8001ad8:	4605      	mov	r5, r0
  8001ada:	460e      	mov	r6, r1
- 8001adc:	f000 fb14 	bl	8002108 <rightSensorGetDistance>
+ 8001adc:	f000 fb38 	bl	8002150 <rightSensorGetDistance>
  8001ae0:	4680      	mov	r8, r0
  8001ae2:	4689      	mov	r9, r1
- 8001ae4:	f000 fb60 	bl	80021a8 <forwardSensorGetDistance>
+ 8001ae4:	f000 fb80 	bl	80021e8 <forwardSensorGetDistance>
  8001ae8:	4603      	mov	r3, r0
  8001aea:	460c      	mov	r4, r1
  8001aec:	e88d 0018 	stmia.w	sp, {r3, r4}
@@ -3992,7 +3992,7 @@ int main(void)
  8001af2:	464b      	mov	r3, r9
  8001af4:	4628      	mov	r0, r5
  8001af6:	4631      	mov	r1, r6
- 8001af8:	f000 fc0e 	bl	8002318 <sensorMessageAll>
+ 8001af8:	f000 fc2c 	bl	8002354 <sensorMessageAll>
 	}
  8001afc:	e7d4      	b.n	8001aa8 <main+0x48>
  8001afe:	bf00      	nop
@@ -4007,2827 +4007,2878 @@ void sensorInit(void)
 {
  8001b04:	b580      	push	{r7, lr}
  8001b06:	af00      	add	r7, sp, #0
+	initSensorCaptureStruc();
+ 8001b08:	f000 f80c 	bl	8001b24 <initSensorCaptureStruc>
 	sensorInitTriggerTimer();
- 8001b08:	f000 f842 	bl	8001b90 <sensorInitTriggerTimer>
+ 8001b0c:	f000 f872 	bl	8001bf4 <sensorInitTriggerTimer>
 	sensorInitTriggerPin();
- 8001b0c:	f000 f878 	bl	8001c00 <sensorInitTriggerPin>
+ 8001b10:	f000 f8a8 	bl	8001c64 <sensorInitTriggerPin>
 	sensorInitCapturePins();
- 8001b10:	f000 f904 	bl	8001d1c <sensorInitCapturePins>
+ 8001b14:	f000 f934 	bl	8001d80 <sensorInitCapturePins>
 	sensorInitCaptureTimer();
- 8001b14:	f000 f8a0 	bl	8001c58 <sensorInitCaptureTimer>
+ 8001b18:	f000 f8d0 	bl	8001cbc <sensorInitCaptureTimer>
 	sensorInitCallTimer();
- 8001b18:	f000 f802 	bl	8001b20 <sensorInitCallTimer>
+ 8001b1c:	f000 f832 	bl	8001b84 <sensorInitCallTimer>
 }
- 8001b1c:	bf00      	nop
- 8001b1e:	bd80      	pop	{r7, pc}
+ 8001b20:	bf00      	nop
+ 8001b22:	bd80      	pop	{r7, pc}
 
-08001b20 <sensorInitCallTimer>:
+08001b24 <initSensorCaptureStruc>:
+//inicializacia struktur merania vzdialenosti
+void initSensorCaptureStruc(void)
+{
+ 8001b24:	b480      	push	{r7}
+ 8001b26:	af00      	add	r7, sp, #0
+	LeftSensorCaptureStruc.captureStep = 0;
+ 8001b28:	4b13      	ldr	r3, [pc, #76]	; (8001b78 <initSensorCaptureStruc+0x54>)
+ 8001b2a:	2200      	movs	r2, #0
+ 8001b2c:	601a      	str	r2, [r3, #0]
+	LeftSensorCaptureStruc.risingTimeCapturing = 0;
+ 8001b2e:	4b12      	ldr	r3, [pc, #72]	; (8001b78 <initSensorCaptureStruc+0x54>)
+ 8001b30:	2200      	movs	r2, #0
+ 8001b32:	605a      	str	r2, [r3, #4]
+	LeftSensorCaptureStruc.risingTime = 0;
+ 8001b34:	4b10      	ldr	r3, [pc, #64]	; (8001b78 <initSensorCaptureStruc+0x54>)
+ 8001b36:	2200      	movs	r2, #0
+ 8001b38:	609a      	str	r2, [r3, #8]
+	LeftSensorCaptureStruc.fallingTime = 0;
+ 8001b3a:	4b0f      	ldr	r3, [pc, #60]	; (8001b78 <initSensorCaptureStruc+0x54>)
+ 8001b3c:	2200      	movs	r2, #0
+ 8001b3e:	60da      	str	r2, [r3, #12]
 
+	RightSensorCaptureStruc.captureStep = 0;
+ 8001b40:	4b0e      	ldr	r3, [pc, #56]	; (8001b7c <initSensorCaptureStruc+0x58>)
+ 8001b42:	2200      	movs	r2, #0
+ 8001b44:	601a      	str	r2, [r3, #0]
+	RightSensorCaptureStruc.risingTimeCapturing = 0;
+ 8001b46:	4b0d      	ldr	r3, [pc, #52]	; (8001b7c <initSensorCaptureStruc+0x58>)
+ 8001b48:	2200      	movs	r2, #0
+ 8001b4a:	605a      	str	r2, [r3, #4]
+	RightSensorCaptureStruc.risingTime = 0;
+ 8001b4c:	4b0b      	ldr	r3, [pc, #44]	; (8001b7c <initSensorCaptureStruc+0x58>)
+ 8001b4e:	2200      	movs	r2, #0
+ 8001b50:	609a      	str	r2, [r3, #8]
+	RightSensorCaptureStruc.fallingTime = 0;
+ 8001b52:	4b0a      	ldr	r3, [pc, #40]	; (8001b7c <initSensorCaptureStruc+0x58>)
+ 8001b54:	2200      	movs	r2, #0
+ 8001b56:	60da      	str	r2, [r3, #12]
+
+	ForwardSensorCaptureStruc.captureStep = 0;
+ 8001b58:	4b09      	ldr	r3, [pc, #36]	; (8001b80 <initSensorCaptureStruc+0x5c>)
+ 8001b5a:	2200      	movs	r2, #0
+ 8001b5c:	601a      	str	r2, [r3, #0]
+	ForwardSensorCaptureStruc.risingTimeCapturing = 0;
+ 8001b5e:	4b08      	ldr	r3, [pc, #32]	; (8001b80 <initSensorCaptureStruc+0x5c>)
+ 8001b60:	2200      	movs	r2, #0
+ 8001b62:	605a      	str	r2, [r3, #4]
+	ForwardSensorCaptureStruc.risingTime = 0;
+ 8001b64:	4b06      	ldr	r3, [pc, #24]	; (8001b80 <initSensorCaptureStruc+0x5c>)
+ 8001b66:	2200      	movs	r2, #0
+ 8001b68:	609a      	str	r2, [r3, #8]
+	ForwardSensorCaptureStruc.fallingTime = 0;
+ 8001b6a:	4b05      	ldr	r3, [pc, #20]	; (8001b80 <initSensorCaptureStruc+0x5c>)
+ 8001b6c:	2200      	movs	r2, #0
+ 8001b6e:	60da      	str	r2, [r3, #12]
+
+}
+ 8001b70:	bf00      	nop
+ 8001b72:	46bd      	mov	sp, r7
+ 8001b74:	bc80      	pop	{r7}
+ 8001b76:	4770      	bx	lr
+ 8001b78:	200000c8 	.word	0x200000c8
+ 8001b7c:	200000b8 	.word	0x200000b8
+ 8001b80:	200000d8 	.word	0x200000d8
+
+08001b84 <sensorInitCallTimer>:
 //inicializacia casovaca pravidelne volajuceho meranie vzdialenosti
 void sensorInitCallTimer(void)
 {
- 8001b20:	b580      	push	{r7, lr}
- 8001b22:	b086      	sub	sp, #24
- 8001b24:	af00      	add	r7, sp, #0
+ 8001b84:	b580      	push	{r7, lr}
+ 8001b86:	b086      	sub	sp, #24
+ 8001b88:	af00      	add	r7, sp, #0
 	selectSensor = 0;
- 8001b26:	4b18      	ldr	r3, [pc, #96]	; (8001b88 <sensorInitCallTimer+0x68>)
- 8001b28:	2200      	movs	r2, #0
- 8001b2a:	601a      	str	r2, [r3, #0]
+ 8001b8a:	4b18      	ldr	r3, [pc, #96]	; (8001bec <sensorInitCallTimer+0x68>)
+ 8001b8c:	2200      	movs	r2, #0
+ 8001b8e:	601a      	str	r2, [r3, #0]
 	unsigned short prescalerValue = (unsigned short) (16000000 / 1000) - 1;
- 8001b2c:	f643 637f 	movw	r3, #15999	; 0x3e7f
- 8001b30:	82fb      	strh	r3, [r7, #22]
+ 8001b90:	f643 637f 	movw	r3, #15999	; 0x3e7f
+ 8001b94:	82fb      	strh	r3, [r7, #22]
 	//Structure for timer settings
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	// TIM10 clock enable
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM10, ENABLE);
- 8001b32:	2101      	movs	r1, #1
- 8001b34:	2008      	movs	r0, #8
- 8001b36:	f7ff fa1b 	bl	8000f70 <RCC_APB2PeriphClockCmd>
+ 8001b96:	2101      	movs	r1, #1
+ 8001b98:	2008      	movs	r0, #8
+ 8001b9a:	f7ff f9e9 	bl	8000f70 <RCC_APB2PeriphClockCmd>
 	// Enable the TIM10 gloabal Interrupt
 	NVIC_InitStructure.NVIC_IRQChannel = TIM10_IRQn;
- 8001b3a:	231a      	movs	r3, #26
- 8001b3c:	713b      	strb	r3, [r7, #4]
+ 8001b9e:	231a      	movs	r3, #26
+ 8001ba0:	713b      	strb	r3, [r7, #4]
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
- 8001b3e:	2303      	movs	r3, #3
- 8001b40:	717b      	strb	r3, [r7, #5]
+ 8001ba2:	2303      	movs	r3, #3
+ 8001ba4:	717b      	strb	r3, [r7, #5]
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
- 8001b42:	2303      	movs	r3, #3
- 8001b44:	71bb      	strb	r3, [r7, #6]
+ 8001ba6:	2303      	movs	r3, #3
+ 8001ba8:	71bb      	strb	r3, [r7, #6]
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
- 8001b46:	2301      	movs	r3, #1
- 8001b48:	71fb      	strb	r3, [r7, #7]
+ 8001baa:	2301      	movs	r3, #1
+ 8001bac:	71fb      	strb	r3, [r7, #7]
 	NVIC_Init(&NVIC_InitStructure);
- 8001b4a:	1d3b      	adds	r3, r7, #4
- 8001b4c:	4618      	mov	r0, r3
- 8001b4e:	f7fe ff91 	bl	8000a74 <NVIC_Init>
+ 8001bae:	1d3b      	adds	r3, r7, #4
+ 8001bb0:	4618      	mov	r0, r3
+ 8001bb2:	f7fe ff5f 	bl	8000a74 <NVIC_Init>
 	TIM_TimeBaseStructure.TIM_Period = 99;
- 8001b52:	2363      	movs	r3, #99	; 0x63
- 8001b54:	60fb      	str	r3, [r7, #12]
+ 8001bb6:	2363      	movs	r3, #99	; 0x63
+ 8001bb8:	60fb      	str	r3, [r7, #12]
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
- 8001b56:	2300      	movs	r3, #0
- 8001b58:	823b      	strh	r3, [r7, #16]
+ 8001bba:	2300      	movs	r3, #0
+ 8001bbc:	823b      	strh	r3, [r7, #16]
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
- 8001b5a:	2300      	movs	r3, #0
- 8001b5c:	817b      	strh	r3, [r7, #10]
+ 8001bbe:	2300      	movs	r3, #0
+ 8001bc0:	817b      	strh	r3, [r7, #10]
 	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
- 8001b5e:	8afb      	ldrh	r3, [r7, #22]
- 8001b60:	813b      	strh	r3, [r7, #8]
+ 8001bc2:	8afb      	ldrh	r3, [r7, #22]
+ 8001bc4:	813b      	strh	r3, [r7, #8]
 	TIM_TimeBaseInit(TIM10, &TIM_TimeBaseStructure);
- 8001b62:	f107 0308 	add.w	r3, r7, #8
- 8001b66:	4619      	mov	r1, r3
- 8001b68:	4808      	ldr	r0, [pc, #32]	; (8001b8c <sensorInitCallTimer+0x6c>)
- 8001b6a:	f7ff fa3d 	bl	8000fe8 <TIM_TimeBaseInit>
+ 8001bc6:	f107 0308 	add.w	r3, r7, #8
+ 8001bca:	4619      	mov	r1, r3
+ 8001bcc:	4808      	ldr	r0, [pc, #32]	; (8001bf0 <sensorInitCallTimer+0x6c>)
+ 8001bce:	f7ff fa0b 	bl	8000fe8 <TIM_TimeBaseInit>
 	// TIM Interrupts enable
 	TIM_ITConfig(TIM10, TIM_IT_Update, ENABLE);
- 8001b6e:	2201      	movs	r2, #1
- 8001b70:	2101      	movs	r1, #1
- 8001b72:	4806      	ldr	r0, [pc, #24]	; (8001b8c <sensorInitCallTimer+0x6c>)
- 8001b74:	f7ff fb96 	bl	80012a4 <TIM_ITConfig>
+ 8001bd2:	2201      	movs	r2, #1
+ 8001bd4:	2101      	movs	r1, #1
+ 8001bd6:	4806      	ldr	r0, [pc, #24]	; (8001bf0 <sensorInitCallTimer+0x6c>)
+ 8001bd8:	f7ff fb64 	bl	80012a4 <TIM_ITConfig>
 	// TIM10 enable counter
 	TIM_Cmd(TIM10, ENABLE);
- 8001b78:	2101      	movs	r1, #1
- 8001b7a:	4804      	ldr	r0, [pc, #16]	; (8001b8c <sensorInitCallTimer+0x6c>)
- 8001b7c:	f7ff fa86 	bl	800108c <TIM_Cmd>
+ 8001bdc:	2101      	movs	r1, #1
+ 8001bde:	4804      	ldr	r0, [pc, #16]	; (8001bf0 <sensorInitCallTimer+0x6c>)
+ 8001be0:	f7ff fa54 	bl	800108c <TIM_Cmd>
 }
- 8001b80:	bf00      	nop
- 8001b82:	3718      	adds	r7, #24
- 8001b84:	46bd      	mov	sp, r7
- 8001b86:	bd80      	pop	{r7, pc}
- 8001b88:	2000006c 	.word	0x2000006c
- 8001b8c:	40010c00 	.word	0x40010c00
+ 8001be4:	bf00      	nop
+ 8001be6:	3718      	adds	r7, #24
+ 8001be8:	46bd      	mov	sp, r7
+ 8001bea:	bd80      	pop	{r7, pc}
+ 8001bec:	2000003c 	.word	0x2000003c
+ 8001bf0:	40010c00 	.word	0x40010c00
 
-08001b90 <sensorInitTriggerTimer>:
+08001bf4 <sensorInitTriggerTimer>:
 
 //inicializacia casovaca, ktory generuje spustaci impulz
 void sensorInitTriggerTimer(void)
 {
- 8001b90:	b580      	push	{r7, lr}
- 8001b92:	b084      	sub	sp, #16
- 8001b94:	af00      	add	r7, sp, #0
+ 8001bf4:	b580      	push	{r7, lr}
+ 8001bf6:	b084      	sub	sp, #16
+ 8001bf8:	af00      	add	r7, sp, #0
 	//vypocet delicky pre periodu 10us
 	unsigned short prescalerValue = (unsigned short) (STM_SYSTEM_CLOCK / TRIG_TIM_FREQ) - 1;
- 8001b96:	239f      	movs	r3, #159	; 0x9f
- 8001b98:	81fb      	strh	r3, [r7, #14]
+ 8001bfa:	239f      	movs	r3, #159	; 0x9f
+ 8001bfc:	81fb      	strh	r3, [r7, #14]
 
 	//struktura pre zakladny casovac TRIG_TIM
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 
 	//spustenie hodinovych impulzov pre TRIG_TIM
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);
- 8001b9a:	2101      	movs	r1, #1
- 8001b9c:	2020      	movs	r0, #32
- 8001b9e:	f7ff fa05 	bl	8000fac <RCC_APB1PeriphClockCmd>
+ 8001bfe:	2101      	movs	r1, #1
+ 8001c00:	2020      	movs	r0, #32
+ 8001c02:	f7ff f9d3 	bl	8000fac <RCC_APB1PeriphClockCmd>
 
 	//TRIG_TIM init prerusenie
 	sensorInitTriggerTimerInterrup();
- 8001ba2:	f000 f819 	bl	8001bd8 <sensorInitTriggerTimerInterrup>
+ 8001c06:	f000 f819 	bl	8001c3c <sensorInitTriggerTimerInterrup>
 
 	//init struktura TRIG_TIM
 	TIM_TimeBaseStructure.TIM_Period = 1;
- 8001ba6:	2301      	movs	r3, #1
- 8001ba8:	607b      	str	r3, [r7, #4]
+ 8001c0a:	2301      	movs	r3, #1
+ 8001c0c:	607b      	str	r3, [r7, #4]
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
- 8001baa:	2300      	movs	r3, #0
- 8001bac:	813b      	strh	r3, [r7, #8]
+ 8001c0e:	2300      	movs	r3, #0
+ 8001c10:	813b      	strh	r3, [r7, #8]
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
- 8001bae:	2300      	movs	r3, #0
- 8001bb0:	807b      	strh	r3, [r7, #2]
+ 8001c12:	2300      	movs	r3, #0
+ 8001c14:	807b      	strh	r3, [r7, #2]
 	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
- 8001bb2:	89fb      	ldrh	r3, [r7, #14]
- 8001bb4:	803b      	strh	r3, [r7, #0]
+ 8001c16:	89fb      	ldrh	r3, [r7, #14]
+ 8001c18:	803b      	strh	r3, [r7, #0]
 	TIM_TimeBaseInit(TRIG_TIM, &TIM_TimeBaseStructure);//zapisanie struktury
- 8001bb6:	463b      	mov	r3, r7
- 8001bb8:	4619      	mov	r1, r3
- 8001bba:	4806      	ldr	r0, [pc, #24]	; (8001bd4 <sensorInitTriggerTimer+0x44>)
- 8001bbc:	f7ff fa14 	bl	8000fe8 <TIM_TimeBaseInit>
+ 8001c1a:	463b      	mov	r3, r7
+ 8001c1c:	4619      	mov	r1, r3
+ 8001c1e:	4806      	ldr	r0, [pc, #24]	; (8001c38 <sensorInitTriggerTimer+0x44>)
+ 8001c20:	f7ff f9e2 	bl	8000fe8 <TIM_TimeBaseInit>
 
 	//povolenie preruseni TRIG_TIM
 	TIM_ITConfig(TRIG_TIM, TIM_IT_Update, ENABLE);
- 8001bc0:	2201      	movs	r2, #1
- 8001bc2:	2101      	movs	r1, #1
- 8001bc4:	4803      	ldr	r0, [pc, #12]	; (8001bd4 <sensorInitTriggerTimer+0x44>)
- 8001bc6:	f7ff fb6d 	bl	80012a4 <TIM_ITConfig>
+ 8001c24:	2201      	movs	r2, #1
+ 8001c26:	2101      	movs	r1, #1
+ 8001c28:	4803      	ldr	r0, [pc, #12]	; (8001c38 <sensorInitTriggerTimer+0x44>)
+ 8001c2a:	f7ff fb3b 	bl	80012a4 <TIM_ITConfig>
 }
- 8001bca:	bf00      	nop
- 8001bcc:	3710      	adds	r7, #16
- 8001bce:	46bd      	mov	sp, r7
- 8001bd0:	bd80      	pop	{r7, pc}
- 8001bd2:	bf00      	nop
- 8001bd4:	40001400 	.word	0x40001400
+ 8001c2e:	bf00      	nop
+ 8001c30:	3710      	adds	r7, #16
+ 8001c32:	46bd      	mov	sp, r7
+ 8001c34:	bd80      	pop	{r7, pc}
+ 8001c36:	bf00      	nop
+ 8001c38:	40001400 	.word	0x40001400
 
-08001bd8 <sensorInitTriggerTimerInterrup>:
+08001c3c <sensorInitTriggerTimerInterrup>:
 //inicializacia preruseni casovaca, ktory generuje spustaci impulz
 void sensorInitTriggerTimerInterrup(void)
 {
- 8001bd8:	b580      	push	{r7, lr}
- 8001bda:	b082      	sub	sp, #8
- 8001bdc:	af00      	add	r7, sp, #0
+ 8001c3c:	b580      	push	{r7, lr}
+ 8001c3e:	b082      	sub	sp, #8
+ 8001c40:	af00      	add	r7, sp, #0
 	//TRIG_TIM struct prerusenie
 	NVIC_InitTypeDef NVIC_InitStructure;
 
 	//init struktura prerusenie
 	NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;
- 8001bde:	232c      	movs	r3, #44	; 0x2c
- 8001be0:	713b      	strb	r3, [r7, #4]
+ 8001c42:	232c      	movs	r3, #44	; 0x2c
+ 8001c44:	713b      	strb	r3, [r7, #4]
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
- 8001be2:	2300      	movs	r3, #0
- 8001be4:	717b      	strb	r3, [r7, #5]
+ 8001c46:	2300      	movs	r3, #0
+ 8001c48:	717b      	strb	r3, [r7, #5]
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
- 8001be6:	2301      	movs	r3, #1
- 8001be8:	71bb      	strb	r3, [r7, #6]
+ 8001c4a:	2301      	movs	r3, #1
+ 8001c4c:	71bb      	strb	r3, [r7, #6]
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
- 8001bea:	2301      	movs	r3, #1
- 8001bec:	71fb      	strb	r3, [r7, #7]
+ 8001c4e:	2301      	movs	r3, #1
+ 8001c50:	71fb      	strb	r3, [r7, #7]
 	NVIC_Init(&NVIC_InitStructure);//zapisanie struktury
- 8001bee:	1d3b      	adds	r3, r7, #4
- 8001bf0:	4618      	mov	r0, r3
- 8001bf2:	f7fe ff3f 	bl	8000a74 <NVIC_Init>
+ 8001c52:	1d3b      	adds	r3, r7, #4
+ 8001c54:	4618      	mov	r0, r3
+ 8001c56:	f7fe ff0d 	bl	8000a74 <NVIC_Init>
 }
- 8001bf6:	bf00      	nop
- 8001bf8:	3708      	adds	r7, #8
- 8001bfa:	46bd      	mov	sp, r7
- 8001bfc:	bd80      	pop	{r7, pc}
- 8001bfe:	bf00      	nop
+ 8001c5a:	bf00      	nop
+ 8001c5c:	3708      	adds	r7, #8
+ 8001c5e:	46bd      	mov	sp, r7
+ 8001c60:	bd80      	pop	{r7, pc}
+ 8001c62:	bf00      	nop
 
-08001c00 <sensorInitTriggerPin>:
+08001c64 <sensorInitTriggerPin>:
 //inicializacia pinov pre spustanie dialkomerov
 void sensorInitTriggerPin(void)
 {
- 8001c00:	b580      	push	{r7, lr}
- 8001c02:	b082      	sub	sp, #8
- 8001c04:	af00      	add	r7, sp, #0
+ 8001c64:	b580      	push	{r7, lr}
+ 8001c66:	b082      	sub	sp, #8
+ 8001c68:	af00      	add	r7, sp, #0
 	//spusti hodiny pre port C
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);//spusti hodiny pre port C
- 8001c06:	2101      	movs	r1, #1
- 8001c08:	2004      	movs	r0, #4
- 8001c0a:	f7ff f993 	bl	8000f34 <RCC_AHBPeriphClockCmd>
+ 8001c6a:	2101      	movs	r1, #1
+ 8001c6c:	2004      	movs	r0, #4
+ 8001c6e:	f7ff f961 	bl	8000f34 <RCC_AHBPeriphClockCmd>
 
 	//vytvorenie struktury GPIO
 	GPIO_InitTypeDef gpioInitStruc;
 	gpioInitStruc.GPIO_Mode = GPIO_Mode_OUT;
- 8001c0e:	2301      	movs	r3, #1
- 8001c10:	713b      	strb	r3, [r7, #4]
+ 8001c72:	2301      	movs	r3, #1
+ 8001c74:	713b      	strb	r3, [r7, #4]
 	gpioInitStruc.GPIO_OType = GPIO_OType_PP;
- 8001c12:	2300      	movs	r3, #0
- 8001c14:	71bb      	strb	r3, [r7, #6]
+ 8001c76:	2300      	movs	r3, #0
+ 8001c78:	71bb      	strb	r3, [r7, #6]
 	gpioInitStruc.GPIO_Speed = GPIO_Speed_400KHz;
- 8001c16:	2300      	movs	r3, #0
- 8001c18:	717b      	strb	r3, [r7, #5]
+ 8001c7a:	2300      	movs	r3, #0
+ 8001c7c:	717b      	strb	r3, [r7, #5]
 
 	//zapisanie inicializacnej struktury - left
 	gpioInitStruc.GPIO_Pin = LEFT_TRIG_PIN;
- 8001c1a:	f44f 5300 	mov.w	r3, #8192	; 0x2000
- 8001c1e:	603b      	str	r3, [r7, #0]
+ 8001c7e:	f44f 5300 	mov.w	r3, #8192	; 0x2000
+ 8001c82:	603b      	str	r3, [r7, #0]
 	GPIO_Init(TRIG_PORT, &gpioInitStruc);
- 8001c20:	463b      	mov	r3, r7
- 8001c22:	4619      	mov	r1, r3
- 8001c24:	480b      	ldr	r0, [pc, #44]	; (8001c54 <sensorInitTriggerPin+0x54>)
- 8001c26:	f7fe ff85 	bl	8000b34 <GPIO_Init>
+ 8001c84:	463b      	mov	r3, r7
+ 8001c86:	4619      	mov	r1, r3
+ 8001c88:	480b      	ldr	r0, [pc, #44]	; (8001cb8 <sensorInitTriggerPin+0x54>)
+ 8001c8a:	f7fe ff53 	bl	8000b34 <GPIO_Init>
 
 	//zapisanie inicializacnej struktury - right
 	gpioInitStruc.GPIO_Pin = RIGHT_TRIG_PIN;
- 8001c2a:	f44f 4300 	mov.w	r3, #32768	; 0x8000
- 8001c2e:	603b      	str	r3, [r7, #0]
+ 8001c8e:	f44f 4300 	mov.w	r3, #32768	; 0x8000
+ 8001c92:	603b      	str	r3, [r7, #0]
 	GPIO_Init(TRIG_PORT, &gpioInitStruc);
- 8001c30:	463b      	mov	r3, r7
- 8001c32:	4619      	mov	r1, r3
- 8001c34:	4807      	ldr	r0, [pc, #28]	; (8001c54 <sensorInitTriggerPin+0x54>)
- 8001c36:	f7fe ff7d 	bl	8000b34 <GPIO_Init>
+ 8001c94:	463b      	mov	r3, r7
+ 8001c96:	4619      	mov	r1, r3
+ 8001c98:	4807      	ldr	r0, [pc, #28]	; (8001cb8 <sensorInitTriggerPin+0x54>)
+ 8001c9a:	f7fe ff4b 	bl	8000b34 <GPIO_Init>
 
 	//zapisanie inicializacnej struktury - forward
 	gpioInitStruc.GPIO_Pin = FORWARD_TRIG_PIN;
- 8001c3a:	f44f 4380 	mov.w	r3, #16384	; 0x4000
- 8001c3e:	603b      	str	r3, [r7, #0]
+ 8001c9e:	f44f 4380 	mov.w	r3, #16384	; 0x4000
+ 8001ca2:	603b      	str	r3, [r7, #0]
 	GPIO_Init(TRIG_PORT, &gpioInitStruc);
- 8001c40:	463b      	mov	r3, r7
- 8001c42:	4619      	mov	r1, r3
- 8001c44:	4803      	ldr	r0, [pc, #12]	; (8001c54 <sensorInitTriggerPin+0x54>)
- 8001c46:	f7fe ff75 	bl	8000b34 <GPIO_Init>
+ 8001ca4:	463b      	mov	r3, r7
+ 8001ca6:	4619      	mov	r1, r3
+ 8001ca8:	4803      	ldr	r0, [pc, #12]	; (8001cb8 <sensorInitTriggerPin+0x54>)
+ 8001caa:	f7fe ff43 	bl	8000b34 <GPIO_Init>
 }
- 8001c4a:	bf00      	nop
- 8001c4c:	3708      	adds	r7, #8
- 8001c4e:	46bd      	mov	sp, r7
- 8001c50:	bd80      	pop	{r7, pc}
- 8001c52:	bf00      	nop
- 8001c54:	40020000 	.word	0x40020000
+ 8001cae:	bf00      	nop
+ 8001cb0:	3708      	adds	r7, #8
+ 8001cb2:	46bd      	mov	sp, r7
+ 8001cb4:	bd80      	pop	{r7, pc}
+ 8001cb6:	bf00      	nop
+ 8001cb8:	40020000 	.word	0x40020000
 
-08001c58 <sensorInitCaptureTimer>:
+08001cbc <sensorInitCaptureTimer>:
 //inicializacia casovaca pre meranie dlzky impulzu z dialkomera
 void sensorInitCaptureTimer(void)
 {
- 8001c58:	b580      	push	{r7, lr}
- 8001c5a:	b086      	sub	sp, #24
- 8001c5c:	af00      	add	r7, sp, #0
+ 8001cbc:	b580      	push	{r7, lr}
+ 8001cbe:	b086      	sub	sp, #24
+ 8001cc0:	af00      	add	r7, sp, #0
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	//CAPTURE_TIM struct capture
 	TIM_ICInitTypeDef  TIM_ICInitStructure;
 
 	//povolenie hodin pre CAPTURE_TIM
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
- 8001c5e:	2101      	movs	r1, #1
- 8001c60:	2002      	movs	r0, #2
- 8001c62:	f7ff f9a3 	bl	8000fac <RCC_APB1PeriphClockCmd>
+ 8001cc2:	2101      	movs	r1, #1
+ 8001cc4:	2002      	movs	r0, #2
+ 8001cc6:	f7ff f971 	bl	8000fac <RCC_APB1PeriphClockCmd>
 
 	//init CAPTURE_TIM struct capture
 	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_BothEdge;
- 8001c66:	230a      	movs	r3, #10
- 8001c68:	807b      	strh	r3, [r7, #2]
+ 8001cca:	230a      	movs	r3, #10
+ 8001ccc:	807b      	strh	r3, [r7, #2]
 	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
- 8001c6a:	2301      	movs	r3, #1
- 8001c6c:	80bb      	strh	r3, [r7, #4]
+ 8001cce:	2301      	movs	r3, #1
+ 8001cd0:	80bb      	strh	r3, [r7, #4]
 	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
- 8001c6e:	2300      	movs	r3, #0
- 8001c70:	80fb      	strh	r3, [r7, #6]
+ 8001cd2:	2300      	movs	r3, #0
+ 8001cd4:	80fb      	strh	r3, [r7, #6]
 	TIM_ICInitStructure.TIM_ICFilter = 0x0;
- 8001c72:	2300      	movs	r3, #0
- 8001c74:	813b      	strh	r3, [r7, #8]
+ 8001cd6:	2300      	movs	r3, #0
+ 8001cd8:	813b      	strh	r3, [r7, #8]
 
 	//CAPTURE_TIM nastavenie kanalov
 	TIM_ICInitStructure.TIM_Channel = LEFT_TIM_CHANNEL;//left
- 8001c76:	2308      	movs	r3, #8
- 8001c78:	803b      	strh	r3, [r7, #0]
+ 8001cda:	2308      	movs	r3, #8
+ 8001cdc:	803b      	strh	r3, [r7, #0]
 	TIM_ICInit(CAPTURE_TIM, &TIM_ICInitStructure);
- 8001c7a:	463b      	mov	r3, r7
- 8001c7c:	4619      	mov	r1, r3
- 8001c7e:	481c      	ldr	r0, [pc, #112]	; (8001cf0 <sensorInitCaptureTimer+0x98>)
- 8001c80:	f7ff fa24 	bl	80010cc <TIM_ICInit>
+ 8001cde:	463b      	mov	r3, r7
+ 8001ce0:	4619      	mov	r1, r3
+ 8001ce2:	481c      	ldr	r0, [pc, #112]	; (8001d54 <sensorInitCaptureTimer+0x98>)
+ 8001ce4:	f7ff f9f2 	bl	80010cc <TIM_ICInit>
 	TIM_ICInitStructure.TIM_Channel = RIGHT_TIM_CHANNEL;//right
- 8001c84:	2300      	movs	r3, #0
- 8001c86:	803b      	strh	r3, [r7, #0]
+ 8001ce8:	2300      	movs	r3, #0
+ 8001cea:	803b      	strh	r3, [r7, #0]
 	TIM_ICInit(CAPTURE_TIM, &TIM_ICInitStructure);
- 8001c88:	463b      	mov	r3, r7
- 8001c8a:	4619      	mov	r1, r3
- 8001c8c:	4818      	ldr	r0, [pc, #96]	; (8001cf0 <sensorInitCaptureTimer+0x98>)
- 8001c8e:	f7ff fa1d 	bl	80010cc <TIM_ICInit>
+ 8001cec:	463b      	mov	r3, r7
+ 8001cee:	4619      	mov	r1, r3
+ 8001cf0:	4818      	ldr	r0, [pc, #96]	; (8001d54 <sensorInitCaptureTimer+0x98>)
+ 8001cf2:	f7ff f9eb 	bl	80010cc <TIM_ICInit>
 	TIM_ICInitStructure.TIM_Channel = FORWARD_TIM_CHANNEL;//forward
- 8001c92:	230c      	movs	r3, #12
- 8001c94:	803b      	strh	r3, [r7, #0]
+ 8001cf6:	230c      	movs	r3, #12
+ 8001cf8:	803b      	strh	r3, [r7, #0]
 	TIM_ICInit(CAPTURE_TIM, &TIM_ICInitStructure);
- 8001c96:	463b      	mov	r3, r7
- 8001c98:	4619      	mov	r1, r3
- 8001c9a:	4815      	ldr	r0, [pc, #84]	; (8001cf0 <sensorInitCaptureTimer+0x98>)
- 8001c9c:	f7ff fa16 	bl	80010cc <TIM_ICInit>
+ 8001cfa:	463b      	mov	r3, r7
+ 8001cfc:	4619      	mov	r1, r3
+ 8001cfe:	4815      	ldr	r0, [pc, #84]	; (8001d54 <sensorInitCaptureTimer+0x98>)
+ 8001d00:	f7ff f9e4 	bl	80010cc <TIM_ICInit>
 
 	//nastavenie pocitadla kvoli delicke hodinovych impuzov
 	TIM_TimeBaseStructure.TIM_Period = 0xFFFF;
- 8001ca0:	f64f 73ff 	movw	r3, #65535	; 0xffff
- 8001ca4:	613b      	str	r3, [r7, #16]
+ 8001d04:	f64f 73ff 	movw	r3, #65535	; 0xffff
+ 8001d08:	613b      	str	r3, [r7, #16]
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
- 8001ca6:	2300      	movs	r3, #0
- 8001ca8:	82bb      	strh	r3, [r7, #20]
+ 8001d0a:	2300      	movs	r3, #0
+ 8001d0c:	82bb      	strh	r3, [r7, #20]
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
- 8001caa:	2300      	movs	r3, #0
- 8001cac:	81fb      	strh	r3, [r7, #14]
+ 8001d0e:	2300      	movs	r3, #0
+ 8001d10:	81fb      	strh	r3, [r7, #14]
 	TIM_TimeBaseStructure.TIM_Prescaler = CAPTURE_CLC_PRESCALER;
- 8001cae:	239f      	movs	r3, #159	; 0x9f
- 8001cb0:	81bb      	strh	r3, [r7, #12]
+ 8001d12:	239f      	movs	r3, #159	; 0x9f
+ 8001d14:	81bb      	strh	r3, [r7, #12]
 	TIM_TimeBaseInit(CAPTURE_TIM, &TIM_TimeBaseStructure);
- 8001cb2:	f107 030c 	add.w	r3, r7, #12
- 8001cb6:	4619      	mov	r1, r3
- 8001cb8:	480d      	ldr	r0, [pc, #52]	; (8001cf0 <sensorInitCaptureTimer+0x98>)
- 8001cba:	f7ff f995 	bl	8000fe8 <TIM_TimeBaseInit>
+ 8001d16:	f107 030c 	add.w	r3, r7, #12
+ 8001d1a:	4619      	mov	r1, r3
+ 8001d1c:	480d      	ldr	r0, [pc, #52]	; (8001d54 <sensorInitCaptureTimer+0x98>)
+ 8001d1e:	f7ff f963 	bl	8000fe8 <TIM_TimeBaseInit>
 
 	//CAPTURE_TIM povolenie pocitadla
 	TIM_Cmd(CAPTURE_TIM, ENABLE);
- 8001cbe:	2101      	movs	r1, #1
- 8001cc0:	480b      	ldr	r0, [pc, #44]	; (8001cf0 <sensorInitCaptureTimer+0x98>)
- 8001cc2:	f7ff f9e3 	bl	800108c <TIM_Cmd>
+ 8001d22:	2101      	movs	r1, #1
+ 8001d24:	480b      	ldr	r0, [pc, #44]	; (8001d54 <sensorInitCaptureTimer+0x98>)
+ 8001d26:	f7ff f9b1 	bl	800108c <TIM_Cmd>
 
 	//povolenie CC poziadavky na prerusenie
 	TIM_ITConfig(CAPTURE_TIM, LEFT_TIM_CC, ENABLE);//left
- 8001cc6:	2201      	movs	r2, #1
- 8001cc8:	2108      	movs	r1, #8
- 8001cca:	4809      	ldr	r0, [pc, #36]	; (8001cf0 <sensorInitCaptureTimer+0x98>)
- 8001ccc:	f7ff faea 	bl	80012a4 <TIM_ITConfig>
+ 8001d2a:	2201      	movs	r2, #1
+ 8001d2c:	2108      	movs	r1, #8
+ 8001d2e:	4809      	ldr	r0, [pc, #36]	; (8001d54 <sensorInitCaptureTimer+0x98>)
+ 8001d30:	f7ff fab8 	bl	80012a4 <TIM_ITConfig>
 	TIM_ITConfig(CAPTURE_TIM, RIGHT_TIM_CC, ENABLE);//right
- 8001cd0:	2201      	movs	r2, #1
- 8001cd2:	2102      	movs	r1, #2
- 8001cd4:	4806      	ldr	r0, [pc, #24]	; (8001cf0 <sensorInitCaptureTimer+0x98>)
- 8001cd6:	f7ff fae5 	bl	80012a4 <TIM_ITConfig>
+ 8001d34:	2201      	movs	r2, #1
+ 8001d36:	2102      	movs	r1, #2
+ 8001d38:	4806      	ldr	r0, [pc, #24]	; (8001d54 <sensorInitCaptureTimer+0x98>)
+ 8001d3a:	f7ff fab3 	bl	80012a4 <TIM_ITConfig>
 	TIM_ITConfig(CAPTURE_TIM, FORWARD_TIM_CC, ENABLE);//forward
- 8001cda:	2201      	movs	r2, #1
- 8001cdc:	2110      	movs	r1, #16
- 8001cde:	4804      	ldr	r0, [pc, #16]	; (8001cf0 <sensorInitCaptureTimer+0x98>)
- 8001ce0:	f7ff fae0 	bl	80012a4 <TIM_ITConfig>
+ 8001d3e:	2201      	movs	r2, #1
+ 8001d40:	2110      	movs	r1, #16
+ 8001d42:	4804      	ldr	r0, [pc, #16]	; (8001d54 <sensorInitCaptureTimer+0x98>)
+ 8001d44:	f7ff faae 	bl	80012a4 <TIM_ITConfig>
 
 	//CAPTURE_TIM prerusenie init
 	sensorInitCaptureTimerInterrup();
- 8001ce4:	f000 f806 	bl	8001cf4 <sensorInitCaptureTimerInterrup>
+ 8001d48:	f000 f806 	bl	8001d58 <sensorInitCaptureTimerInterrup>
 }
- 8001ce8:	bf00      	nop
- 8001cea:	3718      	adds	r7, #24
- 8001cec:	46bd      	mov	sp, r7
- 8001cee:	bd80      	pop	{r7, pc}
- 8001cf0:	40000400 	.word	0x40000400
+ 8001d4c:	bf00      	nop
+ 8001d4e:	3718      	adds	r7, #24
+ 8001d50:	46bd      	mov	sp, r7
+ 8001d52:	bd80      	pop	{r7, pc}
+ 8001d54:	40000400 	.word	0x40000400
 
-08001cf4 <sensorInitCaptureTimerInterrup>:
+08001d58 <sensorInitCaptureTimerInterrup>:
 //inicializacia preruseni casovaca pre meranie dlzky impulzu z dialkomera
 void sensorInitCaptureTimerInterrup(void)
 {
- 8001cf4:	b580      	push	{r7, lr}
- 8001cf6:	b082      	sub	sp, #8
- 8001cf8:	af00      	add	r7, sp, #0
+ 8001d58:	b580      	push	{r7, lr}
+ 8001d5a:	b082      	sub	sp, #8
+ 8001d5c:	af00      	add	r7, sp, #0
 	//CAPTURE_TIM struct prerusenie
 	NVIC_InitTypeDef NVIC_InitStructure;
 
 	//init TIM struct prerusenie
 	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
- 8001cfa:	231d      	movs	r3, #29
- 8001cfc:	713b      	strb	r3, [r7, #4]
+ 8001d5e:	231d      	movs	r3, #29
+ 8001d60:	713b      	strb	r3, [r7, #4]
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
- 8001cfe:	2300      	movs	r3, #0
- 8001d00:	717b      	strb	r3, [r7, #5]
+ 8001d62:	2300      	movs	r3, #0
+ 8001d64:	717b      	strb	r3, [r7, #5]
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
- 8001d02:	2302      	movs	r3, #2
- 8001d04:	71bb      	strb	r3, [r7, #6]
+ 8001d66:	2302      	movs	r3, #2
+ 8001d68:	71bb      	strb	r3, [r7, #6]
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
- 8001d06:	2301      	movs	r3, #1
- 8001d08:	71fb      	strb	r3, [r7, #7]
+ 8001d6a:	2301      	movs	r3, #1
+ 8001d6c:	71fb      	strb	r3, [r7, #7]
 	NVIC_Init(&NVIC_InitStructure);
- 8001d0a:	1d3b      	adds	r3, r7, #4
- 8001d0c:	4618      	mov	r0, r3
- 8001d0e:	f7fe feb1 	bl	8000a74 <NVIC_Init>
+ 8001d6e:	1d3b      	adds	r3, r7, #4
+ 8001d70:	4618      	mov	r0, r3
+ 8001d72:	f7fe fe7f 	bl	8000a74 <NVIC_Init>
 }
- 8001d12:	bf00      	nop
- 8001d14:	3708      	adds	r7, #8
- 8001d16:	46bd      	mov	sp, r7
- 8001d18:	bd80      	pop	{r7, pc}
- 8001d1a:	bf00      	nop
+ 8001d76:	bf00      	nop
+ 8001d78:	3708      	adds	r7, #8
+ 8001d7a:	46bd      	mov	sp, r7
+ 8001d7c:	bd80      	pop	{r7, pc}
+ 8001d7e:	bf00      	nop
 
-08001d1c <sensorInitCapturePins>:
+08001d80 <sensorInitCapturePins>:
 //inicializacia pinu pre meranie dlzky impulzu z dialkomera
 void sensorInitCapturePins(void)
 {
- 8001d1c:	b580      	push	{r7, lr}
- 8001d1e:	b082      	sub	sp, #8
- 8001d20:	af00      	add	r7, sp, #0
+ 8001d80:	b580      	push	{r7, lr}
+ 8001d82:	b082      	sub	sp, #8
+ 8001d84:	af00      	add	r7, sp, #0
 	//GPIO struct
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	//GPIOB povolenie hodin
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
- 8001d22:	2101      	movs	r1, #1
- 8001d24:	2002      	movs	r0, #2
- 8001d26:	f7ff f905 	bl	8000f34 <RCC_AHBPeriphClockCmd>
+ 8001d86:	2101      	movs	r1, #1
+ 8001d88:	2002      	movs	r0, #2
+ 8001d8a:	f7ff f8d3 	bl	8000f34 <RCC_AHBPeriphClockCmd>
 
 	//CAPTURE_TIM struct init
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
- 8001d2a:	2302      	movs	r3, #2
- 8001d2c:	713b      	strb	r3, [r7, #4]
+ 8001d8e:	2302      	movs	r3, #2
+ 8001d90:	713b      	strb	r3, [r7, #4]
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
- 8001d2e:	2303      	movs	r3, #3
- 8001d30:	717b      	strb	r3, [r7, #5]
+ 8001d92:	2303      	movs	r3, #3
+ 8001d94:	717b      	strb	r3, [r7, #5]
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
- 8001d32:	2300      	movs	r3, #0
- 8001d34:	71bb      	strb	r3, [r7, #6]
+ 8001d96:	2300      	movs	r3, #0
+ 8001d98:	71bb      	strb	r3, [r7, #6]
 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
- 8001d36:	2301      	movs	r3, #1
- 8001d38:	71fb      	strb	r3, [r7, #7]
+ 8001d9a:	2301      	movs	r3, #1
+ 8001d9c:	71fb      	strb	r3, [r7, #7]
 
 	//inicializacia pinu left
 	GPIO_InitStructure.GPIO_Pin   = LEFT_CAP_PIN;
- 8001d3a:	2301      	movs	r3, #1
- 8001d3c:	603b      	str	r3, [r7, #0]
+ 8001d9e:	2301      	movs	r3, #1
+ 8001da0:	603b      	str	r3, [r7, #0]
 	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);//zapisanie struktury
- 8001d3e:	463b      	mov	r3, r7
- 8001d40:	4619      	mov	r1, r3
- 8001d42:	4812      	ldr	r0, [pc, #72]	; (8001d8c <sensorInitCapturePins+0x70>)
- 8001d44:	f7fe fef6 	bl	8000b34 <GPIO_Init>
+ 8001da2:	463b      	mov	r3, r7
+ 8001da4:	4619      	mov	r1, r3
+ 8001da6:	4812      	ldr	r0, [pc, #72]	; (8001df0 <sensorInitCapturePins+0x70>)
+ 8001da8:	f7fe fec4 	bl	8000b34 <GPIO_Init>
 	GPIO_PinAFConfig(CAPTURE_PORT, LEFT_CAP_PINSOURCE, GPIO_AF_TIM3);
- 8001d48:	2202      	movs	r2, #2
- 8001d4a:	2100      	movs	r1, #0
- 8001d4c:	480f      	ldr	r0, [pc, #60]	; (8001d8c <sensorInitCapturePins+0x70>)
- 8001d4e:	f7fe ffcf 	bl	8000cf0 <GPIO_PinAFConfig>
+ 8001dac:	2202      	movs	r2, #2
+ 8001dae:	2100      	movs	r1, #0
+ 8001db0:	480f      	ldr	r0, [pc, #60]	; (8001df0 <sensorInitCapturePins+0x70>)
+ 8001db2:	f7fe ff9d 	bl	8000cf0 <GPIO_PinAFConfig>
 	//inicializacia pinu right
 	GPIO_InitStructure.GPIO_Pin   = RIGHT_CAP_PIN;
- 8001d52:	2310      	movs	r3, #16
- 8001d54:	603b      	str	r3, [r7, #0]
+ 8001db6:	2310      	movs	r3, #16
+ 8001db8:	603b      	str	r3, [r7, #0]
 	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);//zapisanie struktury
- 8001d56:	463b      	mov	r3, r7
- 8001d58:	4619      	mov	r1, r3
- 8001d5a:	480c      	ldr	r0, [pc, #48]	; (8001d8c <sensorInitCapturePins+0x70>)
- 8001d5c:	f7fe feea 	bl	8000b34 <GPIO_Init>
+ 8001dba:	463b      	mov	r3, r7
+ 8001dbc:	4619      	mov	r1, r3
+ 8001dbe:	480c      	ldr	r0, [pc, #48]	; (8001df0 <sensorInitCapturePins+0x70>)
+ 8001dc0:	f7fe feb8 	bl	8000b34 <GPIO_Init>
 	GPIO_PinAFConfig(CAPTURE_PORT, RIGHT_CAP_PINSOURCE, GPIO_AF_TIM3);
- 8001d60:	2202      	movs	r2, #2
- 8001d62:	2104      	movs	r1, #4
- 8001d64:	4809      	ldr	r0, [pc, #36]	; (8001d8c <sensorInitCapturePins+0x70>)
- 8001d66:	f7fe ffc3 	bl	8000cf0 <GPIO_PinAFConfig>
+ 8001dc4:	2202      	movs	r2, #2
+ 8001dc6:	2104      	movs	r1, #4
+ 8001dc8:	4809      	ldr	r0, [pc, #36]	; (8001df0 <sensorInitCapturePins+0x70>)
+ 8001dca:	f7fe ff91 	bl	8000cf0 <GPIO_PinAFConfig>
 	//inicializacia pinu forward
 	GPIO_InitStructure.GPIO_Pin   = FORWARD_CAP_PIN;
- 8001d6a:	2302      	movs	r3, #2
- 8001d6c:	603b      	str	r3, [r7, #0]
+ 8001dce:	2302      	movs	r3, #2
+ 8001dd0:	603b      	str	r3, [r7, #0]
 	GPIO_Init(CAPTURE_PORT, &GPIO_InitStructure);//zapisanie struktury
- 8001d6e:	463b      	mov	r3, r7
- 8001d70:	4619      	mov	r1, r3
- 8001d72:	4806      	ldr	r0, [pc, #24]	; (8001d8c <sensorInitCapturePins+0x70>)
- 8001d74:	f7fe fede 	bl	8000b34 <GPIO_Init>
+ 8001dd2:	463b      	mov	r3, r7
+ 8001dd4:	4619      	mov	r1, r3
+ 8001dd6:	4806      	ldr	r0, [pc, #24]	; (8001df0 <sensorInitCapturePins+0x70>)
+ 8001dd8:	f7fe feac 	bl	8000b34 <GPIO_Init>
 	GPIO_PinAFConfig(CAPTURE_PORT, FORWARD_CAP_PINSOURCE, GPIO_AF_TIM3);
- 8001d78:	2202      	movs	r2, #2
- 8001d7a:	2101      	movs	r1, #1
- 8001d7c:	4803      	ldr	r0, [pc, #12]	; (8001d8c <sensorInitCapturePins+0x70>)
- 8001d7e:	f7fe ffb7 	bl	8000cf0 <GPIO_PinAFConfig>
+ 8001ddc:	2202      	movs	r2, #2
+ 8001dde:	2101      	movs	r1, #1
+ 8001de0:	4803      	ldr	r0, [pc, #12]	; (8001df0 <sensorInitCapturePins+0x70>)
+ 8001de2:	f7fe ff85 	bl	8000cf0 <GPIO_PinAFConfig>
 }
- 8001d82:	bf00      	nop
- 8001d84:	3708      	adds	r7, #8
- 8001d86:	46bd      	mov	sp, r7
- 8001d88:	bd80      	pop	{r7, pc}
- 8001d8a:	bf00      	nop
- 8001d8c:	40020400 	.word	0x40020400
+ 8001de6:	bf00      	nop
+ 8001de8:	3708      	adds	r7, #8
+ 8001dea:	46bd      	mov	sp, r7
+ 8001dec:	bd80      	pop	{r7, pc}
+ 8001dee:	bf00      	nop
+ 8001df0:	40020400 	.word	0x40020400
 
-08001d90 <leftSensorMeasure>:
+08001df4 <leftSensorMeasure>:
 
 //spustenie merania laveho dialkomeru
 void leftSensorMeasure(void)
 {
- 8001d90:	b580      	push	{r7, lr}
- 8001d92:	af00      	add	r7, sp, #0
+ 8001df4:	b580      	push	{r7, lr}
+ 8001df6:	af00      	add	r7, sp, #0
 	//spustenie casovaca
 	TIM_Cmd(TRIG_TIM, ENABLE);
- 8001d94:	2101      	movs	r1, #1
- 8001d96:	4808      	ldr	r0, [pc, #32]	; (8001db8 <leftSensorMeasure+0x28>)
- 8001d98:	f7ff f978 	bl	800108c <TIM_Cmd>
+ 8001df8:	2101      	movs	r1, #1
+ 8001dfa:	4808      	ldr	r0, [pc, #32]	; (8001e1c <leftSensorMeasure+0x28>)
+ 8001dfc:	f7ff f946 	bl	800108c <TIM_Cmd>
 	//spustenie trig impulzu
 	GPIO_WriteBit(TRIG_PORT, LEFT_TRIG_PIN, Bit_SET);
- 8001d9c:	2201      	movs	r2, #1
- 8001d9e:	f44f 5100 	mov.w	r1, #8192	; 0x2000
- 8001da2:	4806      	ldr	r0, [pc, #24]	; (8001dbc <leftSensorMeasure+0x2c>)
- 8001da4:	f7fe ff78 	bl	8000c98 <GPIO_WriteBit>
+ 8001e00:	2201      	movs	r2, #1
+ 8001e02:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+ 8001e06:	4806      	ldr	r0, [pc, #24]	; (8001e20 <leftSensorMeasure+0x2c>)
+ 8001e08:	f7fe ff46 	bl	8000c98 <GPIO_WriteBit>
 	//nulovanie CaptureStep ak by nahodou meranie zblblo
-	leftCaptureStep = 0;
- 8001da8:	4b05      	ldr	r3, [pc, #20]	; (8001dc0 <leftSensorMeasure+0x30>)
- 8001daa:	2200      	movs	r2, #0
- 8001dac:	601a      	str	r2, [r3, #0]
+	LeftSensorCaptureStruc.captureStep = 0;
+ 8001e0c:	4b05      	ldr	r3, [pc, #20]	; (8001e24 <leftSensorMeasure+0x30>)
+ 8001e0e:	2200      	movs	r2, #0
+ 8001e10:	601a      	str	r2, [r3, #0]
 	//pridelenie funkcie spracovanie prerusenia capture
 	sensorCaptureHandler = leftSensorCaptureHandler;
- 8001dae:	4b05      	ldr	r3, [pc, #20]	; (8001dc4 <leftSensorMeasure+0x34>)
- 8001db0:	4a05      	ldr	r2, [pc, #20]	; (8001dc8 <leftSensorMeasure+0x38>)
- 8001db2:	601a      	str	r2, [r3, #0]
+ 8001e12:	4b05      	ldr	r3, [pc, #20]	; (8001e28 <leftSensorMeasure+0x34>)
+ 8001e14:	4a05      	ldr	r2, [pc, #20]	; (8001e2c <leftSensorMeasure+0x38>)
+ 8001e16:	601a      	str	r2, [r3, #0]
 }
- 8001db4:	bf00      	nop
- 8001db6:	bd80      	pop	{r7, pc}
- 8001db8:	40001400 	.word	0x40001400
- 8001dbc:	40020000 	.word	0x40020000
- 8001dc0:	20000048 	.word	0x20000048
- 8001dc4:	200000e0 	.word	0x200000e0
- 8001dc8:	08001f49 	.word	0x08001f49
+ 8001e18:	bf00      	nop
+ 8001e1a:	bd80      	pop	{r7, pc}
+ 8001e1c:	40001400 	.word	0x40001400
+ 8001e20:	40020000 	.word	0x40020000
+ 8001e24:	200000c8 	.word	0x200000c8
+ 8001e28:	200000e8 	.word	0x200000e8
+ 8001e2c:	08001fad 	.word	0x08001fad
 
-08001dcc <rightSensorMeasure>:
+08001e30 <rightSensorMeasure>:
 //spustenie merania praveho dialkomeru
 void rightSensorMeasure(void)
 {
- 8001dcc:	b580      	push	{r7, lr}
- 8001dce:	af00      	add	r7, sp, #0
+ 8001e30:	b580      	push	{r7, lr}
+ 8001e32:	af00      	add	r7, sp, #0
 	//spustenie casovaca
 	TIM_Cmd(TRIG_TIM, ENABLE);
- 8001dd0:	2101      	movs	r1, #1
- 8001dd2:	4808      	ldr	r0, [pc, #32]	; (8001df4 <rightSensorMeasure+0x28>)
- 8001dd4:	f7ff f95a 	bl	800108c <TIM_Cmd>
+ 8001e34:	2101      	movs	r1, #1
+ 8001e36:	4808      	ldr	r0, [pc, #32]	; (8001e58 <rightSensorMeasure+0x28>)
+ 8001e38:	f7ff f928 	bl	800108c <TIM_Cmd>
 	//spustenie trig impulzu
 	GPIO_WriteBit(TRIG_PORT, RIGHT_TRIG_PIN, Bit_SET);
- 8001dd8:	2201      	movs	r2, #1
- 8001dda:	f44f 4100 	mov.w	r1, #32768	; 0x8000
- 8001dde:	4806      	ldr	r0, [pc, #24]	; (8001df8 <rightSensorMeasure+0x2c>)
- 8001de0:	f7fe ff5a 	bl	8000c98 <GPIO_WriteBit>
+ 8001e3c:	2201      	movs	r2, #1
+ 8001e3e:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 8001e42:	4806      	ldr	r0, [pc, #24]	; (8001e5c <rightSensorMeasure+0x2c>)
+ 8001e44:	f7fe ff28 	bl	8000c98 <GPIO_WriteBit>
 	//nulovanie CaptureStep ak by nahodou meranie zblblo
-	rightCaptureStep = 0;
- 8001de4:	4b05      	ldr	r3, [pc, #20]	; (8001dfc <rightSensorMeasure+0x30>)
- 8001de6:	2200      	movs	r2, #0
- 8001de8:	601a      	str	r2, [r3, #0]
+	RightSensorCaptureStruc.captureStep = 0;
+ 8001e48:	4b05      	ldr	r3, [pc, #20]	; (8001e60 <rightSensorMeasure+0x30>)
+ 8001e4a:	2200      	movs	r2, #0
+ 8001e4c:	601a      	str	r2, [r3, #0]
 	//pridelenie funkcie spracovanie prerusenia capture
 	sensorCaptureHandler = rightSensorCaptureHandler;
- 8001dea:	4b05      	ldr	r3, [pc, #20]	; (8001e00 <rightSensorMeasure+0x34>)
- 8001dec:	4a05      	ldr	r2, [pc, #20]	; (8001e04 <rightSensorMeasure+0x38>)
- 8001dee:	601a      	str	r2, [r3, #0]
+ 8001e4e:	4b05      	ldr	r3, [pc, #20]	; (8001e64 <rightSensorMeasure+0x34>)
+ 8001e50:	4a05      	ldr	r2, [pc, #20]	; (8001e68 <rightSensorMeasure+0x38>)
+ 8001e52:	601a      	str	r2, [r3, #0]
 }
- 8001df0:	bf00      	nop
- 8001df2:	bd80      	pop	{r7, pc}
- 8001df4:	40001400 	.word	0x40001400
- 8001df8:	40020000 	.word	0x40020000
- 8001dfc:	2000004c 	.word	0x2000004c
- 8001e00:	200000e0 	.word	0x200000e0
- 8001e04:	08001fa9 	.word	0x08001fa9
+ 8001e54:	bf00      	nop
+ 8001e56:	bd80      	pop	{r7, pc}
+ 8001e58:	40001400 	.word	0x40001400
+ 8001e5c:	40020000 	.word	0x40020000
+ 8001e60:	200000b8 	.word	0x200000b8
+ 8001e64:	200000e8 	.word	0x200000e8
+ 8001e68:	08002005 	.word	0x08002005
 
-08001e08 <forwardSensorMeasure>:
+08001e6c <forwardSensorMeasure>:
 //spustenie memrania predneho dialkomeru
 void forwardSensorMeasure(void)
 {
- 8001e08:	b580      	push	{r7, lr}
- 8001e0a:	af00      	add	r7, sp, #0
+ 8001e6c:	b580      	push	{r7, lr}
+ 8001e6e:	af00      	add	r7, sp, #0
 	//spustenie casovaca
 	TIM_Cmd(TRIG_TIM, ENABLE);
- 8001e0c:	2101      	movs	r1, #1
- 8001e0e:	4808      	ldr	r0, [pc, #32]	; (8001e30 <forwardSensorMeasure+0x28>)
- 8001e10:	f7ff f93c 	bl	800108c <TIM_Cmd>
+ 8001e70:	2101      	movs	r1, #1
+ 8001e72:	4808      	ldr	r0, [pc, #32]	; (8001e94 <forwardSensorMeasure+0x28>)
+ 8001e74:	f7ff f90a 	bl	800108c <TIM_Cmd>
 	//spustenie trig impulzu
 	GPIO_WriteBit(TRIG_PORT, FORWARD_TRIG_PIN, Bit_SET);
- 8001e14:	2201      	movs	r2, #1
- 8001e16:	f44f 4180 	mov.w	r1, #16384	; 0x4000
- 8001e1a:	4806      	ldr	r0, [pc, #24]	; (8001e34 <forwardSensorMeasure+0x2c>)
- 8001e1c:	f7fe ff3c 	bl	8000c98 <GPIO_WriteBit>
+ 8001e78:	2201      	movs	r2, #1
+ 8001e7a:	f44f 4180 	mov.w	r1, #16384	; 0x4000
+ 8001e7e:	4806      	ldr	r0, [pc, #24]	; (8001e98 <forwardSensorMeasure+0x2c>)
+ 8001e80:	f7fe ff0a 	bl	8000c98 <GPIO_WriteBit>
 	//nulovanie CaptureStep ak by nahodou meranie zblblo
-	forwardCaptureStep = 0;
- 8001e20:	4b05      	ldr	r3, [pc, #20]	; (8001e38 <forwardSensorMeasure+0x30>)
- 8001e22:	2200      	movs	r2, #0
- 8001e24:	601a      	str	r2, [r3, #0]
+	ForwardSensorCaptureStruc.captureStep = 0;
+ 8001e84:	4b05      	ldr	r3, [pc, #20]	; (8001e9c <forwardSensorMeasure+0x30>)
+ 8001e86:	2200      	movs	r2, #0
+ 8001e88:	601a      	str	r2, [r3, #0]
 	//pridelenie funkcie spracovanie prerusenia capture
 	sensorCaptureHandler = forwardSensorCaptureHandler;
- 8001e26:	4b05      	ldr	r3, [pc, #20]	; (8001e3c <forwardSensorMeasure+0x34>)
- 8001e28:	4a05      	ldr	r2, [pc, #20]	; (8001e40 <forwardSensorMeasure+0x38>)
- 8001e2a:	601a      	str	r2, [r3, #0]
+ 8001e8a:	4b05      	ldr	r3, [pc, #20]	; (8001ea0 <forwardSensorMeasure+0x34>)
+ 8001e8c:	4a05      	ldr	r2, [pc, #20]	; (8001ea4 <forwardSensorMeasure+0x38>)
+ 8001e8e:	601a      	str	r2, [r3, #0]
 }
- 8001e2c:	bf00      	nop
- 8001e2e:	bd80      	pop	{r7, pc}
- 8001e30:	40001400 	.word	0x40001400
- 8001e34:	40020000 	.word	0x40020000
- 8001e38:	20000050 	.word	0x20000050
- 8001e3c:	200000e0 	.word	0x200000e0
- 8001e40:	08002009 	.word	0x08002009
+ 8001e90:	bf00      	nop
+ 8001e92:	bd80      	pop	{r7, pc}
+ 8001e94:	40001400 	.word	0x40001400
+ 8001e98:	40020000 	.word	0x40020000
+ 8001e9c:	200000d8 	.word	0x200000d8
+ 8001ea0:	200000e8 	.word	0x200000e8
+ 8001ea4:	0800205d 	.word	0x0800205d
 
-08001e44 <TIM7_IRQHandler>:
+08001ea8 <TIM7_IRQHandler>:
 
 //handlery bude treba dat do suboru, ktory bude urcovat veci specificke pre dany hardver
 //samotne funkcie ktore ma vykonat ale ostanu tu
 //spracovanie prerusenia z TRIG_TIM, casovac pre spustaci impulz dialkomeru
 void TIM7_IRQHandler(void)
 {
- 8001e44:	b580      	push	{r7, lr}
- 8001e46:	af00      	add	r7, sp, #0
+ 8001ea8:	b580      	push	{r7, lr}
+ 8001eaa:	af00      	add	r7, sp, #0
 	//tez do samostatnej funkcie alebo mozno bude stacit #define fjdkkdf nazov funkcie
 	if (TIM_GetITStatus(TRIG_TIM, TIM_IT_Update) == SET)
- 8001e48:	2101      	movs	r1, #1
- 8001e4a:	481e      	ldr	r0, [pc, #120]	; (8001ec4 <TIM7_IRQHandler+0x80>)
- 8001e4c:	f7ff fa4e 	bl	80012ec <TIM_GetITStatus>
- 8001e50:	4603      	mov	r3, r0
- 8001e52:	2b01      	cmp	r3, #1
- 8001e54:	d133      	bne.n	8001ebe <TIM7_IRQHandler+0x7a>
+ 8001eac:	2101      	movs	r1, #1
+ 8001eae:	481e      	ldr	r0, [pc, #120]	; (8001f28 <TIM7_IRQHandler+0x80>)
+ 8001eb0:	f7ff fa1c 	bl	80012ec <TIM_GetITStatus>
+ 8001eb4:	4603      	mov	r3, r0
+ 8001eb6:	2b01      	cmp	r3, #1
+ 8001eb8:	d133      	bne.n	8001f22 <TIM7_IRQHandler+0x7a>
 	{
 		TIM_Cmd(TRIG_TIM, DISABLE);
- 8001e56:	2100      	movs	r1, #0
- 8001e58:	481a      	ldr	r0, [pc, #104]	; (8001ec4 <TIM7_IRQHandler+0x80>)
- 8001e5a:	f7ff f917 	bl	800108c <TIM_Cmd>
+ 8001eba:	2100      	movs	r1, #0
+ 8001ebc:	481a      	ldr	r0, [pc, #104]	; (8001f28 <TIM7_IRQHandler+0x80>)
+ 8001ebe:	f7ff f8e5 	bl	800108c <TIM_Cmd>
 		//vypnutie impulzu na prislusnom spustacom pine
 		if (GPIO_ReadOutputDataBit(TRIG_PORT, LEFT_TRIG_PIN) == 1)
- 8001e5e:	f44f 5100 	mov.w	r1, #8192	; 0x2000
- 8001e62:	4819      	ldr	r0, [pc, #100]	; (8001ec8 <TIM7_IRQHandler+0x84>)
- 8001e64:	f7fe fefc 	bl	8000c60 <GPIO_ReadOutputDataBit>
- 8001e68:	4603      	mov	r3, r0
- 8001e6a:	2b01      	cmp	r3, #1
- 8001e6c:	d106      	bne.n	8001e7c <TIM7_IRQHandler+0x38>
+ 8001ec2:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+ 8001ec6:	4819      	ldr	r0, [pc, #100]	; (8001f2c <TIM7_IRQHandler+0x84>)
+ 8001ec8:	f7fe feca 	bl	8000c60 <GPIO_ReadOutputDataBit>
+ 8001ecc:	4603      	mov	r3, r0
+ 8001ece:	2b01      	cmp	r3, #1
+ 8001ed0:	d106      	bne.n	8001ee0 <TIM7_IRQHandler+0x38>
 		{
 			GPIO_WriteBit(TRIG_PORT, LEFT_TRIG_PIN, Bit_RESET);//ukoncenie trig impulzu left
- 8001e6e:	2200      	movs	r2, #0
- 8001e70:	f44f 5100 	mov.w	r1, #8192	; 0x2000
- 8001e74:	4814      	ldr	r0, [pc, #80]	; (8001ec8 <TIM7_IRQHandler+0x84>)
- 8001e76:	f7fe ff0f 	bl	8000c98 <GPIO_WriteBit>
- 8001e7a:	e01c      	b.n	8001eb6 <TIM7_IRQHandler+0x72>
+ 8001ed2:	2200      	movs	r2, #0
+ 8001ed4:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+ 8001ed8:	4814      	ldr	r0, [pc, #80]	; (8001f2c <TIM7_IRQHandler+0x84>)
+ 8001eda:	f7fe fedd 	bl	8000c98 <GPIO_WriteBit>
+ 8001ede:	e01c      	b.n	8001f1a <TIM7_IRQHandler+0x72>
 		}
 		else if (GPIO_ReadOutputDataBit(TRIG_PORT, RIGHT_TRIG_PIN) == 1)
- 8001e7c:	f44f 4100 	mov.w	r1, #32768	; 0x8000
- 8001e80:	4811      	ldr	r0, [pc, #68]	; (8001ec8 <TIM7_IRQHandler+0x84>)
- 8001e82:	f7fe feed 	bl	8000c60 <GPIO_ReadOutputDataBit>
- 8001e86:	4603      	mov	r3, r0
- 8001e88:	2b01      	cmp	r3, #1
- 8001e8a:	d106      	bne.n	8001e9a <TIM7_IRQHandler+0x56>
+ 8001ee0:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 8001ee4:	4811      	ldr	r0, [pc, #68]	; (8001f2c <TIM7_IRQHandler+0x84>)
+ 8001ee6:	f7fe febb 	bl	8000c60 <GPIO_ReadOutputDataBit>
+ 8001eea:	4603      	mov	r3, r0
+ 8001eec:	2b01      	cmp	r3, #1
+ 8001eee:	d106      	bne.n	8001efe <TIM7_IRQHandler+0x56>
 		{
 			GPIO_WriteBit(TRIG_PORT, RIGHT_TRIG_PIN, Bit_RESET);//ukoncenie trig impulzu right
- 8001e8c:	2200      	movs	r2, #0
- 8001e8e:	f44f 4100 	mov.w	r1, #32768	; 0x8000
- 8001e92:	480d      	ldr	r0, [pc, #52]	; (8001ec8 <TIM7_IRQHandler+0x84>)
- 8001e94:	f7fe ff00 	bl	8000c98 <GPIO_WriteBit>
- 8001e98:	e00d      	b.n	8001eb6 <TIM7_IRQHandler+0x72>
+ 8001ef0:	2200      	movs	r2, #0
+ 8001ef2:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 8001ef6:	480d      	ldr	r0, [pc, #52]	; (8001f2c <TIM7_IRQHandler+0x84>)
+ 8001ef8:	f7fe fece 	bl	8000c98 <GPIO_WriteBit>
+ 8001efc:	e00d      	b.n	8001f1a <TIM7_IRQHandler+0x72>
 		}
 		else if (GPIO_ReadOutputDataBit(TRIG_PORT, FORWARD_TRIG_PIN) == 1)
- 8001e9a:	f44f 4180 	mov.w	r1, #16384	; 0x4000
- 8001e9e:	480a      	ldr	r0, [pc, #40]	; (8001ec8 <TIM7_IRQHandler+0x84>)
- 8001ea0:	f7fe fede 	bl	8000c60 <GPIO_ReadOutputDataBit>
- 8001ea4:	4603      	mov	r3, r0
- 8001ea6:	2b01      	cmp	r3, #1
- 8001ea8:	d105      	bne.n	8001eb6 <TIM7_IRQHandler+0x72>
+ 8001efe:	f44f 4180 	mov.w	r1, #16384	; 0x4000
+ 8001f02:	480a      	ldr	r0, [pc, #40]	; (8001f2c <TIM7_IRQHandler+0x84>)
+ 8001f04:	f7fe feac 	bl	8000c60 <GPIO_ReadOutputDataBit>
+ 8001f08:	4603      	mov	r3, r0
+ 8001f0a:	2b01      	cmp	r3, #1
+ 8001f0c:	d105      	bne.n	8001f1a <TIM7_IRQHandler+0x72>
 		{
 			GPIO_WriteBit(TRIG_PORT, FORWARD_TRIG_PIN, Bit_RESET);//ukoncenie trig impulzu forward
- 8001eaa:	2200      	movs	r2, #0
- 8001eac:	f44f 4180 	mov.w	r1, #16384	; 0x4000
- 8001eb0:	4805      	ldr	r0, [pc, #20]	; (8001ec8 <TIM7_IRQHandler+0x84>)
- 8001eb2:	f7fe fef1 	bl	8000c98 <GPIO_WriteBit>
+ 8001f0e:	2200      	movs	r2, #0
+ 8001f10:	f44f 4180 	mov.w	r1, #16384	; 0x4000
+ 8001f14:	4805      	ldr	r0, [pc, #20]	; (8001f2c <TIM7_IRQHandler+0x84>)
+ 8001f16:	f7fe febf 	bl	8000c98 <GPIO_WriteBit>
 		}
 		TIM_ClearITPendingBit(TRIG_TIM, TIM_IT_Update);
- 8001eb6:	2101      	movs	r1, #1
- 8001eb8:	4802      	ldr	r0, [pc, #8]	; (8001ec4 <TIM7_IRQHandler+0x80>)
- 8001eba:	f7ff fa41 	bl	8001340 <TIM_ClearITPendingBit>
+ 8001f1a:	2101      	movs	r1, #1
+ 8001f1c:	4802      	ldr	r0, [pc, #8]	; (8001f28 <TIM7_IRQHandler+0x80>)
+ 8001f1e:	f7ff fa0f 	bl	8001340 <TIM_ClearITPendingBit>
 	}
 }
- 8001ebe:	bf00      	nop
- 8001ec0:	bd80      	pop	{r7, pc}
- 8001ec2:	bf00      	nop
- 8001ec4:	40001400 	.word	0x40001400
- 8001ec8:	40020000 	.word	0x40020000
+ 8001f22:	bf00      	nop
+ 8001f24:	bd80      	pop	{r7, pc}
+ 8001f26:	bf00      	nop
+ 8001f28:	40001400 	.word	0x40001400
+ 8001f2c:	40020000 	.word	0x40020000
 
-08001ecc <TIM3_IRQHandler>:
+08001f30 <TIM3_IRQHandler>:
 //spracovanie prerusenia z TIM3, casovac pre meranie dlzky impulzu z dialialkomerov
 void TIM3_IRQHandler(void)
 {
- 8001ecc:	b580      	push	{r7, lr}
- 8001ece:	af00      	add	r7, sp, #0
+ 8001f30:	b580      	push	{r7, lr}
+ 8001f32:	af00      	add	r7, sp, #0
 	//spustenie spracovania prerusenia CAPTURE_TIM pre prislusny senzor
 	if (sensorCaptureHandler != 0)
- 8001ed0:	4b04      	ldr	r3, [pc, #16]	; (8001ee4 <TIM3_IRQHandler+0x18>)
- 8001ed2:	681b      	ldr	r3, [r3, #0]
- 8001ed4:	2b00      	cmp	r3, #0
- 8001ed6:	d002      	beq.n	8001ede <TIM3_IRQHandler+0x12>
+ 8001f34:	4b04      	ldr	r3, [pc, #16]	; (8001f48 <TIM3_IRQHandler+0x18>)
+ 8001f36:	681b      	ldr	r3, [r3, #0]
+ 8001f38:	2b00      	cmp	r3, #0
+ 8001f3a:	d002      	beq.n	8001f42 <TIM3_IRQHandler+0x12>
 	{
 		sensorCaptureHandler();
- 8001ed8:	4b02      	ldr	r3, [pc, #8]	; (8001ee4 <TIM3_IRQHandler+0x18>)
- 8001eda:	681b      	ldr	r3, [r3, #0]
- 8001edc:	4798      	blx	r3
+ 8001f3c:	4b02      	ldr	r3, [pc, #8]	; (8001f48 <TIM3_IRQHandler+0x18>)
+ 8001f3e:	681b      	ldr	r3, [r3, #0]
+ 8001f40:	4798      	blx	r3
 	}
 }
- 8001ede:	bf00      	nop
- 8001ee0:	bd80      	pop	{r7, pc}
- 8001ee2:	bf00      	nop
- 8001ee4:	200000e0 	.word	0x200000e0
+ 8001f42:	bf00      	nop
+ 8001f44:	bd80      	pop	{r7, pc}
+ 8001f46:	bf00      	nop
+ 8001f48:	200000e8 	.word	0x200000e8
 
-08001ee8 <TIM10_IRQHandler>:
+08001f4c <TIM10_IRQHandler>:
 //spracovanie prerusenia z TIM10, casovaca pre volanie merania vzdialenosti
 void TIM10_IRQHandler(void)
 {
- 8001ee8:	b580      	push	{r7, lr}
- 8001eea:	af00      	add	r7, sp, #0
+ 8001f4c:	b580      	push	{r7, lr}
+ 8001f4e:	af00      	add	r7, sp, #0
 	if (TIM_GetITStatus(TIM10, TIM_IT_Update) == SET)
- 8001eec:	2101      	movs	r1, #1
- 8001eee:	4814      	ldr	r0, [pc, #80]	; (8001f40 <TIM10_IRQHandler+0x58>)
- 8001ef0:	f7ff f9fc 	bl	80012ec <TIM_GetITStatus>
- 8001ef4:	4603      	mov	r3, r0
- 8001ef6:	2b01      	cmp	r3, #1
- 8001ef8:	d120      	bne.n	8001f3c <TIM10_IRQHandler+0x54>
+ 8001f50:	2101      	movs	r1, #1
+ 8001f52:	4814      	ldr	r0, [pc, #80]	; (8001fa4 <TIM10_IRQHandler+0x58>)
+ 8001f54:	f7ff f9ca 	bl	80012ec <TIM_GetITStatus>
+ 8001f58:	4603      	mov	r3, r0
+ 8001f5a:	2b01      	cmp	r3, #1
+ 8001f5c:	d120      	bne.n	8001fa0 <TIM10_IRQHandler+0x54>
 	{
 		//volanie merania senzora, ktory je na rade
 		switch (selectSensor)
- 8001efa:	4b12      	ldr	r3, [pc, #72]	; (8001f44 <TIM10_IRQHandler+0x5c>)
- 8001efc:	681b      	ldr	r3, [r3, #0]
- 8001efe:	2b01      	cmp	r3, #1
- 8001f00:	d006      	beq.n	8001f10 <TIM10_IRQHandler+0x28>
- 8001f02:	2b02      	cmp	r3, #2
- 8001f04:	d007      	beq.n	8001f16 <TIM10_IRQHandler+0x2e>
- 8001f06:	2b00      	cmp	r3, #0
- 8001f08:	d108      	bne.n	8001f1c <TIM10_IRQHandler+0x34>
+ 8001f5e:	4b12      	ldr	r3, [pc, #72]	; (8001fa8 <TIM10_IRQHandler+0x5c>)
+ 8001f60:	681b      	ldr	r3, [r3, #0]
+ 8001f62:	2b01      	cmp	r3, #1
+ 8001f64:	d006      	beq.n	8001f74 <TIM10_IRQHandler+0x28>
+ 8001f66:	2b02      	cmp	r3, #2
+ 8001f68:	d007      	beq.n	8001f7a <TIM10_IRQHandler+0x2e>
+ 8001f6a:	2b00      	cmp	r3, #0
+ 8001f6c:	d108      	bne.n	8001f80 <TIM10_IRQHandler+0x34>
 		{
 		case 0:
 			leftSensorMeasure();
- 8001f0a:	f7ff ff41 	bl	8001d90 <leftSensorMeasure>
+ 8001f6e:	f7ff ff41 	bl	8001df4 <leftSensorMeasure>
 			break;
- 8001f0e:	e005      	b.n	8001f1c <TIM10_IRQHandler+0x34>
+ 8001f72:	e005      	b.n	8001f80 <TIM10_IRQHandler+0x34>
 		case 1:
 			forwardSensorMeasure();
- 8001f10:	f7ff ff7a 	bl	8001e08 <forwardSensorMeasure>
+ 8001f74:	f7ff ff7a 	bl	8001e6c <forwardSensorMeasure>
 			break;
- 8001f14:	e002      	b.n	8001f1c <TIM10_IRQHandler+0x34>
+ 8001f78:	e002      	b.n	8001f80 <TIM10_IRQHandler+0x34>
 		case 2:
 			rightSensorMeasure();
- 8001f16:	f7ff ff59 	bl	8001dcc <rightSensorMeasure>
+ 8001f7a:	f7ff ff59 	bl	8001e30 <rightSensorMeasure>
 			break;
- 8001f1a:	bf00      	nop
+ 8001f7e:	bf00      	nop
 		}
 		//inkrementovanie volaneho senzora
 		selectSensor++;
- 8001f1c:	4b09      	ldr	r3, [pc, #36]	; (8001f44 <TIM10_IRQHandler+0x5c>)
- 8001f1e:	681b      	ldr	r3, [r3, #0]
- 8001f20:	3301      	adds	r3, #1
- 8001f22:	4a08      	ldr	r2, [pc, #32]	; (8001f44 <TIM10_IRQHandler+0x5c>)
- 8001f24:	6013      	str	r3, [r2, #0]
+ 8001f80:	4b09      	ldr	r3, [pc, #36]	; (8001fa8 <TIM10_IRQHandler+0x5c>)
+ 8001f82:	681b      	ldr	r3, [r3, #0]
+ 8001f84:	3301      	adds	r3, #1
+ 8001f86:	4a08      	ldr	r2, [pc, #32]	; (8001fa8 <TIM10_IRQHandler+0x5c>)
+ 8001f88:	6013      	str	r3, [r2, #0]
 		if (selectSensor > 2)
- 8001f26:	4b07      	ldr	r3, [pc, #28]	; (8001f44 <TIM10_IRQHandler+0x5c>)
- 8001f28:	681b      	ldr	r3, [r3, #0]
- 8001f2a:	2b02      	cmp	r3, #2
- 8001f2c:	dd02      	ble.n	8001f34 <TIM10_IRQHandler+0x4c>
+ 8001f8a:	4b07      	ldr	r3, [pc, #28]	; (8001fa8 <TIM10_IRQHandler+0x5c>)
+ 8001f8c:	681b      	ldr	r3, [r3, #0]
+ 8001f8e:	2b02      	cmp	r3, #2
+ 8001f90:	dd02      	ble.n	8001f98 <TIM10_IRQHandler+0x4c>
 		{
 			selectSensor = 0;
- 8001f2e:	4b05      	ldr	r3, [pc, #20]	; (8001f44 <TIM10_IRQHandler+0x5c>)
- 8001f30:	2200      	movs	r2, #0
- 8001f32:	601a      	str	r2, [r3, #0]
+ 8001f92:	4b05      	ldr	r3, [pc, #20]	; (8001fa8 <TIM10_IRQHandler+0x5c>)
+ 8001f94:	2200      	movs	r2, #0
+ 8001f96:	601a      	str	r2, [r3, #0]
 		}
 		TIM_ClearITPendingBit(TIM10, TIM_IT_Update);
- 8001f34:	2101      	movs	r1, #1
- 8001f36:	4802      	ldr	r0, [pc, #8]	; (8001f40 <TIM10_IRQHandler+0x58>)
- 8001f38:	f7ff fa02 	bl	8001340 <TIM_ClearITPendingBit>
+ 8001f98:	2101      	movs	r1, #1
+ 8001f9a:	4802      	ldr	r0, [pc, #8]	; (8001fa4 <TIM10_IRQHandler+0x58>)
+ 8001f9c:	f7ff f9d0 	bl	8001340 <TIM_ClearITPendingBit>
 	}
 }
- 8001f3c:	bf00      	nop
- 8001f3e:	bd80      	pop	{r7, pc}
- 8001f40:	40010c00 	.word	0x40010c00
- 8001f44:	2000006c 	.word	0x2000006c
+ 8001fa0:	bf00      	nop
+ 8001fa2:	bd80      	pop	{r7, pc}
+ 8001fa4:	40010c00 	.word	0x40010c00
+ 8001fa8:	2000003c 	.word	0x2000003c
 
-08001f48 <leftSensorCaptureHandler>:
+08001fac <leftSensorCaptureHandler>:
 
 //meranie dlzky impulzu lavy senzor
 void leftSensorCaptureHandler(void)
 {
- 8001f48:	b580      	push	{r7, lr}
- 8001f4a:	af00      	add	r7, sp, #0
+ 8001fac:	b580      	push	{r7, lr}
+ 8001fae:	af00      	add	r7, sp, #0
 	if (TIM_GetITStatus(CAPTURE_TIM, LEFT_TIM_CC) != RESET)
- 8001f4c:	2108      	movs	r1, #8
- 8001f4e:	4812      	ldr	r0, [pc, #72]	; (8001f98 <leftSensorCaptureHandler+0x50>)
- 8001f50:	f7ff f9cc 	bl	80012ec <TIM_GetITStatus>
- 8001f54:	4603      	mov	r3, r0
- 8001f56:	2b00      	cmp	r3, #0
- 8001f58:	d01b      	beq.n	8001f92 <leftSensorCaptureHandler+0x4a>
+ 8001fb0:	2108      	movs	r1, #8
+ 8001fb2:	4812      	ldr	r0, [pc, #72]	; (8001ffc <leftSensorCaptureHandler+0x50>)
+ 8001fb4:	f7ff f99a 	bl	80012ec <TIM_GetITStatus>
+ 8001fb8:	4603      	mov	r3, r0
+ 8001fba:	2b00      	cmp	r3, #0
+ 8001fbc:	d01b      	beq.n	8001ff6 <leftSensorCaptureHandler+0x4a>
 	{
 		//zmaz CAPTURE_TIM priznak prerusenia
 		TIM_ClearITPendingBit(CAPTURE_TIM, LEFT_TIM_CC);
- 8001f5a:	2108      	movs	r1, #8
- 8001f5c:	480e      	ldr	r0, [pc, #56]	; (8001f98 <leftSensorCaptureHandler+0x50>)
- 8001f5e:	f7ff f9ef 	bl	8001340 <TIM_ClearITPendingBit>
+ 8001fbe:	2108      	movs	r1, #8
+ 8001fc0:	480e      	ldr	r0, [pc, #56]	; (8001ffc <leftSensorCaptureHandler+0x50>)
+ 8001fc2:	f7ff f9bd 	bl	8001340 <TIM_ClearITPendingBit>
 
-		if(leftCaptureStep == 0)
- 8001f62:	4b0e      	ldr	r3, [pc, #56]	; (8001f9c <leftSensorCaptureHandler+0x54>)
- 8001f64:	681b      	ldr	r3, [r3, #0]
- 8001f66:	2b00      	cmp	r3, #0
- 8001f68:	d109      	bne.n	8001f7e <leftSensorCaptureHandler+0x36>
+		if(LeftSensorCaptureStruc.captureStep == 0)
+ 8001fc6:	4b0e      	ldr	r3, [pc, #56]	; (8002000 <leftSensorCaptureHandler+0x54>)
+ 8001fc8:	681b      	ldr	r3, [r3, #0]
+ 8001fca:	2b00      	cmp	r3, #0
+ 8001fcc:	d109      	bne.n	8001fe2 <leftSensorCaptureHandler+0x36>
 		{
 			//zachyt cas nabeznej hrany
-			leftRisingTime = LEFT_TIM_GETCAPTURE;
- 8001f6a:	480b      	ldr	r0, [pc, #44]	; (8001f98 <leftSensorCaptureHandler+0x50>)
- 8001f6c:	f7ff f90e 	bl	800118c <TIM_GetCapture3>
- 8001f70:	4602      	mov	r2, r0
- 8001f72:	4b0b      	ldr	r3, [pc, #44]	; (8001fa0 <leftSensorCaptureHandler+0x58>)
- 8001f74:	601a      	str	r2, [r3, #0]
-			leftCaptureStep = 1;
- 8001f76:	4b09      	ldr	r3, [pc, #36]	; (8001f9c <leftSensorCaptureHandler+0x54>)
- 8001f78:	2201      	movs	r2, #1
- 8001f7a:	601a      	str	r2, [r3, #0]
-		{
+			LeftSensorCaptureStruc.risingTime = LEFT_TIM_GETCAPTURE;
+ 8001fce:	480b      	ldr	r0, [pc, #44]	; (8001ffc <leftSensorCaptureHandler+0x50>)
+ 8001fd0:	f7ff f8dc 	bl	800118c <TIM_GetCapture3>
+ 8001fd4:	4602      	mov	r2, r0
+ 8001fd6:	4b0a      	ldr	r3, [pc, #40]	; (8002000 <leftSensorCaptureHandler+0x54>)
+ 8001fd8:	609a      	str	r2, [r3, #8]
+			LeftSensorCaptureStruc.captureStep = 1;
+ 8001fda:	4b09      	ldr	r3, [pc, #36]	; (8002000 <leftSensorCaptureHandler+0x54>)
+ 8001fdc:	2201      	movs	r2, #1
+ 8001fde:	601a      	str	r2, [r3, #0]
 			//zachyt cas dobeznej hrany
-			leftFallingTime = LEFT_TIM_GETCAPTURE;
+			LeftSensorCaptureStruc.fallingTime = LEFT_TIM_GETCAPTURE;
+			//LeftSensorCaptureStruc.risingTime = LeftSensorCaptureStruc.risingTimeCapturing;
 		}
 	}
 }
- 8001f7c:	e009      	b.n	8001f92 <leftSensorCaptureHandler+0x4a>
+ 8001fe0:	e009      	b.n	8001ff6 <leftSensorCaptureHandler+0x4a>
 		{
 			//zachyt cas nabeznej hrany
-			leftRisingTime = LEFT_TIM_GETCAPTURE;
-			leftCaptureStep = 1;
+			LeftSensorCaptureStruc.risingTime = LEFT_TIM_GETCAPTURE;
+			LeftSensorCaptureStruc.captureStep = 1;
 		}
-		else if(leftCaptureStep == 1)
- 8001f7e:	4b07      	ldr	r3, [pc, #28]	; (8001f9c <leftSensorCaptureHandler+0x54>)
- 8001f80:	681b      	ldr	r3, [r3, #0]
- 8001f82:	2b01      	cmp	r3, #1
- 8001f84:	d105      	bne.n	8001f92 <leftSensorCaptureHandler+0x4a>
+		else if(LeftSensorCaptureStruc.captureStep == 1)
+ 8001fe2:	4b07      	ldr	r3, [pc, #28]	; (8002000 <leftSensorCaptureHandler+0x54>)
+ 8001fe4:	681b      	ldr	r3, [r3, #0]
+ 8001fe6:	2b01      	cmp	r3, #1
+ 8001fe8:	d105      	bne.n	8001ff6 <leftSensorCaptureHandler+0x4a>
 		{
 			//zachyt cas dobeznej hrany
-			leftFallingTime = LEFT_TIM_GETCAPTURE;
- 8001f86:	4804      	ldr	r0, [pc, #16]	; (8001f98 <leftSensorCaptureHandler+0x50>)
- 8001f88:	f7ff f900 	bl	800118c <TIM_GetCapture3>
- 8001f8c:	4602      	mov	r2, r0
- 8001f8e:	4b05      	ldr	r3, [pc, #20]	; (8001fa4 <leftSensorCaptureHandler+0x5c>)
- 8001f90:	601a      	str	r2, [r3, #0]
+			LeftSensorCaptureStruc.fallingTime = LEFT_TIM_GETCAPTURE;
+ 8001fea:	4804      	ldr	r0, [pc, #16]	; (8001ffc <leftSensorCaptureHandler+0x50>)
+ 8001fec:	f7ff f8ce 	bl	800118c <TIM_GetCapture3>
+ 8001ff0:	4602      	mov	r2, r0
+ 8001ff2:	4b03      	ldr	r3, [pc, #12]	; (8002000 <leftSensorCaptureHandler+0x54>)
+ 8001ff4:	60da      	str	r2, [r3, #12]
+			//LeftSensorCaptureStruc.risingTime = LeftSensorCaptureStruc.risingTimeCapturing;
 		}
 	}
 }
- 8001f92:	bf00      	nop
- 8001f94:	bd80      	pop	{r7, pc}
- 8001f96:	bf00      	nop
- 8001f98:	40000400 	.word	0x40000400
- 8001f9c:	20000048 	.word	0x20000048
- 8001fa0:	20000054 	.word	0x20000054
- 8001fa4:	20000060 	.word	0x20000060
+ 8001ff6:	bf00      	nop
+ 8001ff8:	bd80      	pop	{r7, pc}
+ 8001ffa:	bf00      	nop
+ 8001ffc:	40000400 	.word	0x40000400
+ 8002000:	200000c8 	.word	0x200000c8
 
-08001fa8 <rightSensorCaptureHandler>:
+08002004 <rightSensorCaptureHandler>:
 //meranie dlzky impulzu lavy senzor
 void rightSensorCaptureHandler(void)
 {
- 8001fa8:	b580      	push	{r7, lr}
- 8001faa:	af00      	add	r7, sp, #0
+ 8002004:	b580      	push	{r7, lr}
+ 8002006:	af00      	add	r7, sp, #0
 	if (TIM_GetITStatus(CAPTURE_TIM, RIGHT_TIM_CC) != RESET)
- 8001fac:	2102      	movs	r1, #2
- 8001fae:	4812      	ldr	r0, [pc, #72]	; (8001ff8 <rightSensorCaptureHandler+0x50>)
- 8001fb0:	f7ff f99c 	bl	80012ec <TIM_GetITStatus>
- 8001fb4:	4603      	mov	r3, r0
- 8001fb6:	2b00      	cmp	r3, #0
- 8001fb8:	d01b      	beq.n	8001ff2 <rightSensorCaptureHandler+0x4a>
+ 8002008:	2102      	movs	r1, #2
+ 800200a:	4812      	ldr	r0, [pc, #72]	; (8002054 <rightSensorCaptureHandler+0x50>)
+ 800200c:	f7ff f96e 	bl	80012ec <TIM_GetITStatus>
+ 8002010:	4603      	mov	r3, r0
+ 8002012:	2b00      	cmp	r3, #0
+ 8002014:	d01b      	beq.n	800204e <rightSensorCaptureHandler+0x4a>
 	{
 		//zmaz CAPTURE_TIM priznak prerusenia
 		TIM_ClearITPendingBit(CAPTURE_TIM, RIGHT_TIM_CC);
- 8001fba:	2102      	movs	r1, #2
- 8001fbc:	480e      	ldr	r0, [pc, #56]	; (8001ff8 <rightSensorCaptureHandler+0x50>)
- 8001fbe:	f7ff f9bf 	bl	8001340 <TIM_ClearITPendingBit>
+ 8002016:	2102      	movs	r1, #2
+ 8002018:	480e      	ldr	r0, [pc, #56]	; (8002054 <rightSensorCaptureHandler+0x50>)
+ 800201a:	f7ff f991 	bl	8001340 <TIM_ClearITPendingBit>
 
-		if(rightCaptureStep == 0)
- 8001fc2:	4b0e      	ldr	r3, [pc, #56]	; (8001ffc <rightSensorCaptureHandler+0x54>)
- 8001fc4:	681b      	ldr	r3, [r3, #0]
- 8001fc6:	2b00      	cmp	r3, #0
- 8001fc8:	d109      	bne.n	8001fde <rightSensorCaptureHandler+0x36>
+		if(RightSensorCaptureStruc.captureStep == 0)
+ 800201e:	4b0e      	ldr	r3, [pc, #56]	; (8002058 <rightSensorCaptureHandler+0x54>)
+ 8002020:	681b      	ldr	r3, [r3, #0]
+ 8002022:	2b00      	cmp	r3, #0
+ 8002024:	d109      	bne.n	800203a <rightSensorCaptureHandler+0x36>
 		{
 			//zachyt cas nabeznej hrany
-			rightRisingTime = RIGHT_TIM_GETCAPTURE;
- 8001fca:	480b      	ldr	r0, [pc, #44]	; (8001ff8 <rightSensorCaptureHandler+0x50>)
- 8001fcc:	f7ff f8d2 	bl	8001174 <TIM_GetCapture1>
- 8001fd0:	4602      	mov	r2, r0
- 8001fd2:	4b0b      	ldr	r3, [pc, #44]	; (8002000 <rightSensorCaptureHandler+0x58>)
- 8001fd4:	601a      	str	r2, [r3, #0]
-			rightCaptureStep = 1;
- 8001fd6:	4b09      	ldr	r3, [pc, #36]	; (8001ffc <rightSensorCaptureHandler+0x54>)
- 8001fd8:	2201      	movs	r2, #1
- 8001fda:	601a      	str	r2, [r3, #0]
-		{
+			RightSensorCaptureStruc.risingTime = RIGHT_TIM_GETCAPTURE;
+ 8002026:	480b      	ldr	r0, [pc, #44]	; (8002054 <rightSensorCaptureHandler+0x50>)
+ 8002028:	f7ff f8a4 	bl	8001174 <TIM_GetCapture1>
+ 800202c:	4602      	mov	r2, r0
+ 800202e:	4b0a      	ldr	r3, [pc, #40]	; (8002058 <rightSensorCaptureHandler+0x54>)
+ 8002030:	609a      	str	r2, [r3, #8]
+			RightSensorCaptureStruc.captureStep = 1;
+ 8002032:	4b09      	ldr	r3, [pc, #36]	; (8002058 <rightSensorCaptureHandler+0x54>)
+ 8002034:	2201      	movs	r2, #1
+ 8002036:	601a      	str	r2, [r3, #0]
 			//zachyt cas dobeznej hrany
-			rightFallingTime = RIGHT_TIM_GETCAPTURE;
+			RightSensorCaptureStruc.fallingTime = RIGHT_TIM_GETCAPTURE;
+			//RightSensorCaptureStruc.risingTime = RightSensorCaptureStruc.risingTimeCapturing;
 		}
 	}
 }
- 8001fdc:	e009      	b.n	8001ff2 <rightSensorCaptureHandler+0x4a>
+ 8002038:	e009      	b.n	800204e <rightSensorCaptureHandler+0x4a>
 		{
 			//zachyt cas nabeznej hrany
-			rightRisingTime = RIGHT_TIM_GETCAPTURE;
-			rightCaptureStep = 1;
+			RightSensorCaptureStruc.risingTime = RIGHT_TIM_GETCAPTURE;
+			RightSensorCaptureStruc.captureStep = 1;
 		}
-		else if(rightCaptureStep == 1)
- 8001fde:	4b07      	ldr	r3, [pc, #28]	; (8001ffc <rightSensorCaptureHandler+0x54>)
- 8001fe0:	681b      	ldr	r3, [r3, #0]
- 8001fe2:	2b01      	cmp	r3, #1
- 8001fe4:	d105      	bne.n	8001ff2 <rightSensorCaptureHandler+0x4a>
+		else if(RightSensorCaptureStruc.captureStep == 1)
+ 800203a:	4b07      	ldr	r3, [pc, #28]	; (8002058 <rightSensorCaptureHandler+0x54>)
+ 800203c:	681b      	ldr	r3, [r3, #0]
+ 800203e:	2b01      	cmp	r3, #1
+ 8002040:	d105      	bne.n	800204e <rightSensorCaptureHandler+0x4a>
 		{
 			//zachyt cas dobeznej hrany
-			rightFallingTime = RIGHT_TIM_GETCAPTURE;
- 8001fe6:	4804      	ldr	r0, [pc, #16]	; (8001ff8 <rightSensorCaptureHandler+0x50>)
- 8001fe8:	f7ff f8c4 	bl	8001174 <TIM_GetCapture1>
- 8001fec:	4602      	mov	r2, r0
- 8001fee:	4b05      	ldr	r3, [pc, #20]	; (8002004 <rightSensorCaptureHandler+0x5c>)
- 8001ff0:	601a      	str	r2, [r3, #0]
+			RightSensorCaptureStruc.fallingTime = RIGHT_TIM_GETCAPTURE;
+ 8002042:	4804      	ldr	r0, [pc, #16]	; (8002054 <rightSensorCaptureHandler+0x50>)
+ 8002044:	f7ff f896 	bl	8001174 <TIM_GetCapture1>
+ 8002048:	4602      	mov	r2, r0
+ 800204a:	4b03      	ldr	r3, [pc, #12]	; (8002058 <rightSensorCaptureHandler+0x54>)
+ 800204c:	60da      	str	r2, [r3, #12]
+			//RightSensorCaptureStruc.risingTime = RightSensorCaptureStruc.risingTimeCapturing;
 		}
 	}
 }
- 8001ff2:	bf00      	nop
- 8001ff4:	bd80      	pop	{r7, pc}
- 8001ff6:	bf00      	nop
- 8001ff8:	40000400 	.word	0x40000400
- 8001ffc:	2000004c 	.word	0x2000004c
- 8002000:	20000058 	.word	0x20000058
- 8002004:	20000064 	.word	0x20000064
+ 800204e:	bf00      	nop
+ 8002050:	bd80      	pop	{r7, pc}
+ 8002052:	bf00      	nop
+ 8002054:	40000400 	.word	0x40000400
+ 8002058:	200000b8 	.word	0x200000b8
 
-08002008 <forwardSensorCaptureHandler>:
+0800205c <forwardSensorCaptureHandler>:
 //meranie dlzky impulzu lavy senzor
 void forwardSensorCaptureHandler(void)
 {
- 8002008:	b580      	push	{r7, lr}
- 800200a:	af00      	add	r7, sp, #0
+ 800205c:	b580      	push	{r7, lr}
+ 800205e:	af00      	add	r7, sp, #0
 	if (TIM_GetITStatus(CAPTURE_TIM, FORWARD_TIM_CC) != RESET)
- 800200c:	2110      	movs	r1, #16
- 800200e:	4812      	ldr	r0, [pc, #72]	; (8002058 <forwardSensorCaptureHandler+0x50>)
- 8002010:	f7ff f96c 	bl	80012ec <TIM_GetITStatus>
- 8002014:	4603      	mov	r3, r0
- 8002016:	2b00      	cmp	r3, #0
- 8002018:	d01b      	beq.n	8002052 <forwardSensorCaptureHandler+0x4a>
+ 8002060:	2110      	movs	r1, #16
+ 8002062:	4812      	ldr	r0, [pc, #72]	; (80020ac <forwardSensorCaptureHandler+0x50>)
+ 8002064:	f7ff f942 	bl	80012ec <TIM_GetITStatus>
+ 8002068:	4603      	mov	r3, r0
+ 800206a:	2b00      	cmp	r3, #0
+ 800206c:	d01b      	beq.n	80020a6 <forwardSensorCaptureHandler+0x4a>
 	{
 		//zmaz CAPTURE_TIM priznak prerusenia
 		TIM_ClearITPendingBit(CAPTURE_TIM, FORWARD_TIM_CC);
- 800201a:	2110      	movs	r1, #16
- 800201c:	480e      	ldr	r0, [pc, #56]	; (8002058 <forwardSensorCaptureHandler+0x50>)
- 800201e:	f7ff f98f 	bl	8001340 <TIM_ClearITPendingBit>
+ 800206e:	2110      	movs	r1, #16
+ 8002070:	480e      	ldr	r0, [pc, #56]	; (80020ac <forwardSensorCaptureHandler+0x50>)
+ 8002072:	f7ff f965 	bl	8001340 <TIM_ClearITPendingBit>
 
-		if(forwardCaptureStep == 0)
- 8002022:	4b0e      	ldr	r3, [pc, #56]	; (800205c <forwardSensorCaptureHandler+0x54>)
- 8002024:	681b      	ldr	r3, [r3, #0]
- 8002026:	2b00      	cmp	r3, #0
- 8002028:	d109      	bne.n	800203e <forwardSensorCaptureHandler+0x36>
+		if(ForwardSensorCaptureStruc.captureStep == 0)
+ 8002076:	4b0e      	ldr	r3, [pc, #56]	; (80020b0 <forwardSensorCaptureHandler+0x54>)
+ 8002078:	681b      	ldr	r3, [r3, #0]
+ 800207a:	2b00      	cmp	r3, #0
+ 800207c:	d109      	bne.n	8002092 <forwardSensorCaptureHandler+0x36>
 		{
 			//zachyt cas nabeznej hrany
-			forwardRisingTime = FORWARD_TIM_GETCAPTURE;
- 800202a:	480b      	ldr	r0, [pc, #44]	; (8002058 <forwardSensorCaptureHandler+0x50>)
- 800202c:	f7ff f8ba 	bl	80011a4 <TIM_GetCapture4>
- 8002030:	4602      	mov	r2, r0
- 8002032:	4b0b      	ldr	r3, [pc, #44]	; (8002060 <forwardSensorCaptureHandler+0x58>)
- 8002034:	601a      	str	r2, [r3, #0]
-			forwardCaptureStep = 1;
- 8002036:	4b09      	ldr	r3, [pc, #36]	; (800205c <forwardSensorCaptureHandler+0x54>)
- 8002038:	2201      	movs	r2, #1
- 800203a:	601a      	str	r2, [r3, #0]
-		{
+			ForwardSensorCaptureStruc.risingTime = FORWARD_TIM_GETCAPTURE;
+ 800207e:	480b      	ldr	r0, [pc, #44]	; (80020ac <forwardSensorCaptureHandler+0x50>)
+ 8002080:	f7ff f890 	bl	80011a4 <TIM_GetCapture4>
+ 8002084:	4602      	mov	r2, r0
+ 8002086:	4b0a      	ldr	r3, [pc, #40]	; (80020b0 <forwardSensorCaptureHandler+0x54>)
+ 8002088:	609a      	str	r2, [r3, #8]
+			ForwardSensorCaptureStruc.captureStep = 1;
+ 800208a:	4b09      	ldr	r3, [pc, #36]	; (80020b0 <forwardSensorCaptureHandler+0x54>)
+ 800208c:	2201      	movs	r2, #1
+ 800208e:	601a      	str	r2, [r3, #0]
 			//zachyt cas dobeznej hrany
-			forwardFallingTime = FORWARD_TIM_GETCAPTURE;
+			ForwardSensorCaptureStruc.fallingTime = FORWARD_TIM_GETCAPTURE;
+			//ForwardSensorCaptureStruc.risingTime = ForwardSensorCaptureStruc.risingTimeCapturing;
 		}
 	}
 }
- 800203c:	e009      	b.n	8002052 <forwardSensorCaptureHandler+0x4a>
+ 8002090:	e009      	b.n	80020a6 <forwardSensorCaptureHandler+0x4a>
 		{
 			//zachyt cas nabeznej hrany
-			forwardRisingTime = FORWARD_TIM_GETCAPTURE;
-			forwardCaptureStep = 1;
+			ForwardSensorCaptureStruc.risingTime = FORWARD_TIM_GETCAPTURE;
+			ForwardSensorCaptureStruc.captureStep = 1;
 		}
-		else if(forwardCaptureStep == 1)
- 800203e:	4b07      	ldr	r3, [pc, #28]	; (800205c <forwardSensorCaptureHandler+0x54>)
- 8002040:	681b      	ldr	r3, [r3, #0]
- 8002042:	2b01      	cmp	r3, #1
- 8002044:	d105      	bne.n	8002052 <forwardSensorCaptureHandler+0x4a>
+		else if(ForwardSensorCaptureStruc.captureStep == 1)
+ 8002092:	4b07      	ldr	r3, [pc, #28]	; (80020b0 <forwardSensorCaptureHandler+0x54>)
+ 8002094:	681b      	ldr	r3, [r3, #0]
+ 8002096:	2b01      	cmp	r3, #1
+ 8002098:	d105      	bne.n	80020a6 <forwardSensorCaptureHandler+0x4a>
 		{
 			//zachyt cas dobeznej hrany
-			forwardFallingTime = FORWARD_TIM_GETCAPTURE;
- 8002046:	4804      	ldr	r0, [pc, #16]	; (8002058 <forwardSensorCaptureHandler+0x50>)
- 8002048:	f7ff f8ac 	bl	80011a4 <TIM_GetCapture4>
- 800204c:	4602      	mov	r2, r0
- 800204e:	4b05      	ldr	r3, [pc, #20]	; (8002064 <forwardSensorCaptureHandler+0x5c>)
- 8002050:	601a      	str	r2, [r3, #0]
+			ForwardSensorCaptureStruc.fallingTime = FORWARD_TIM_GETCAPTURE;
+ 800209a:	4804      	ldr	r0, [pc, #16]	; (80020ac <forwardSensorCaptureHandler+0x50>)
+ 800209c:	f7ff f882 	bl	80011a4 <TIM_GetCapture4>
+ 80020a0:	4602      	mov	r2, r0
+ 80020a2:	4b03      	ldr	r3, [pc, #12]	; (80020b0 <forwardSensorCaptureHandler+0x54>)
+ 80020a4:	60da      	str	r2, [r3, #12]
+			//ForwardSensorCaptureStruc.risingTime = ForwardSensorCaptureStruc.risingTimeCapturing;
 		}
 	}
 }
- 8002052:	bf00      	nop
- 8002054:	bd80      	pop	{r7, pc}
- 8002056:	bf00      	nop
- 8002058:	40000400 	.word	0x40000400
- 800205c:	20000050 	.word	0x20000050
- 8002060:	2000005c 	.word	0x2000005c
- 8002064:	20000068 	.word	0x20000068
+ 80020a6:	bf00      	nop
+ 80020a8:	bd80      	pop	{r7, pc}
+ 80020aa:	bf00      	nop
+ 80020ac:	40000400 	.word	0x40000400
+ 80020b0:	200000d8 	.word	0x200000d8
+ 80020b4:	00000000 	.word	0x00000000
 
-08002068 <leftSensorGetDistance>:
+080020b8 <leftSensorGetDistance>:
 
 //prevzatie nameranej vzdialenosti z laveho dialkomeru
 double leftSensorGetDistance(void)
 {
- 8002068:	b590      	push	{r4, r7, lr}
- 800206a:	b085      	sub	sp, #20
- 800206c:	af00      	add	r7, sp, #0
+ 80020b8:	b590      	push	{r4, r7, lr}
+ 80020ba:	b085      	sub	sp, #20
+ 80020bc:	af00      	add	r7, sp, #0
 	uint32_t leftDistanceTime = 0;//konecna dlzka impulzu z dialkomeru
- 800206e:	2300      	movs	r3, #0
- 8002070:	60fb      	str	r3, [r7, #12]
+ 80020be:	2300      	movs	r3, #0
+ 80020c0:	60fb      	str	r3, [r7, #12]
 	double distance = 0;//konecna vzdialenost
- 8002072:	f04f 0300 	mov.w	r3, #0
- 8002076:	f04f 0400 	mov.w	r4, #0
- 800207a:	e887 0018 	stmia.w	r7, {r3, r4}
+ 80020c2:	f04f 0300 	mov.w	r3, #0
+ 80020c6:	f04f 0400 	mov.w	r4, #0
+ 80020ca:	e887 0018 	stmia.w	r7, {r3, r4}
 
 	//vypocet trvania impulzu
-	leftDistanceTime = computeEchoDuration(leftRisingTime, leftFallingTime);
- 800207e:	4b1c      	ldr	r3, [pc, #112]	; (80020f0 <leftSensorGetDistance+0x88>)
- 8002080:	681a      	ldr	r2, [r3, #0]
- 8002082:	4b1c      	ldr	r3, [pc, #112]	; (80020f4 <leftSensorGetDistance+0x8c>)
- 8002084:	681b      	ldr	r3, [r3, #0]
- 8002086:	4619      	mov	r1, r3
- 8002088:	4610      	mov	r0, r2
- 800208a:	f000 f8db 	bl	8002244 <computeEchoDuration>
- 800208e:	60f8      	str	r0, [r7, #12]
+	leftDistanceTime = computeEchoDuration(LeftSensorCaptureStruc.risingTime, LeftSensorCaptureStruc.fallingTime);
+ 80020ce:	4b1c      	ldr	r3, [pc, #112]	; (8002140 <leftSensorGetDistance+0x88>)
+ 80020d0:	689a      	ldr	r2, [r3, #8]
+ 80020d2:	4b1b      	ldr	r3, [pc, #108]	; (8002140 <leftSensorGetDistance+0x88>)
+ 80020d4:	68db      	ldr	r3, [r3, #12]
+ 80020d6:	4619      	mov	r1, r3
+ 80020d8:	4610      	mov	r0, r2
+ 80020da:	f000 f8d1 	bl	8002280 <computeEchoDuration>
+ 80020de:	60f8      	str	r0, [r7, #12]
 
 	//vypocet vzdialenosti z laveho senzoru
 	distance = leftDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
- 8002090:	68f8      	ldr	r0, [r7, #12]
- 8002092:	f7fe f9b7 	bl	8000404 <__aeabi_ui2d>
- 8002096:	a314      	add	r3, pc, #80	; (adr r3, 80020e8 <leftSensorGetDistance+0x80>)
- 8002098:	e9d3 2300 	ldrd	r2, r3, [r3]
- 800209c:	f7fe fb52 	bl	8000744 <__aeabi_ddiv>
- 80020a0:	4603      	mov	r3, r0
- 80020a2:	460c      	mov	r4, r1
- 80020a4:	4618      	mov	r0, r3
- 80020a6:	4621      	mov	r1, r4
- 80020a8:	f04f 0200 	mov.w	r2, #0
- 80020ac:	4b12      	ldr	r3, [pc, #72]	; (80020f8 <leftSensorGetDistance+0x90>)
- 80020ae:	f7fe fb49 	bl	8000744 <__aeabi_ddiv>
- 80020b2:	4603      	mov	r3, r0
- 80020b4:	460c      	mov	r4, r1
- 80020b6:	e887 0018 	stmia.w	r7, {r3, r4}
+ 80020e0:	68f8      	ldr	r0, [r7, #12]
+ 80020e2:	f7fe f98f 	bl	8000404 <__aeabi_ui2d>
+ 80020e6:	a314      	add	r3, pc, #80	; (adr r3, 8002138 <leftSensorGetDistance+0x80>)
+ 80020e8:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 80020ec:	f7fe fb2a 	bl	8000744 <__aeabi_ddiv>
+ 80020f0:	4603      	mov	r3, r0
+ 80020f2:	460c      	mov	r4, r1
+ 80020f4:	4618      	mov	r0, r3
+ 80020f6:	4621      	mov	r1, r4
+ 80020f8:	f04f 0200 	mov.w	r2, #0
+ 80020fc:	4b11      	ldr	r3, [pc, #68]	; (8002144 <leftSensorGetDistance+0x8c>)
+ 80020fe:	f7fe fb21 	bl	8000744 <__aeabi_ddiv>
+ 8002102:	4603      	mov	r3, r0
+ 8002104:	460c      	mov	r4, r1
+ 8002106:	e887 0018 	stmia.w	r7, {r3, r4}
 	if (distance > DISTANCE_MAX)
- 80020ba:	f04f 0200 	mov.w	r2, #0
- 80020be:	4b0f      	ldr	r3, [pc, #60]	; (80020fc <leftSensorGetDistance+0x94>)
- 80020c0:	e9d7 0100 	ldrd	r0, r1, [r7]
- 80020c4:	f7fe fca4 	bl	8000a10 <__aeabi_dcmpgt>
- 80020c8:	4603      	mov	r3, r0
- 80020ca:	2b00      	cmp	r3, #0
- 80020cc:	d003      	beq.n	80020d6 <leftSensorGetDistance+0x6e>
+ 800210a:	f04f 0200 	mov.w	r2, #0
+ 800210e:	4b0e      	ldr	r3, [pc, #56]	; (8002148 <leftSensorGetDistance+0x90>)
+ 8002110:	e9d7 0100 	ldrd	r0, r1, [r7]
+ 8002114:	f7fe fc7c 	bl	8000a10 <__aeabi_dcmpgt>
+ 8002118:	4603      	mov	r3, r0
+ 800211a:	2b00      	cmp	r3, #0
+ 800211c:	d003      	beq.n	8002126 <leftSensorGetDistance+0x6e>
 	{
 		//senzor nic nezachytil
 		return -1;
- 80020ce:	f04f 0300 	mov.w	r3, #0
- 80020d2:	4c0b      	ldr	r4, [pc, #44]	; (8002100 <leftSensorGetDistance+0x98>)
- 80020d4:	e001      	b.n	80020da <leftSensorGetDistance+0x72>
+ 800211e:	f04f 0300 	mov.w	r3, #0
+ 8002122:	4c0a      	ldr	r4, [pc, #40]	; (800214c <leftSensorGetDistance+0x94>)
+ 8002124:	e001      	b.n	800212a <leftSensorGetDistance+0x72>
 	}
 	else
 	{
 		return distance;
- 80020d6:	e897 0018 	ldmia.w	r7, {r3, r4}
+ 8002126:	e897 0018 	ldmia.w	r7, {r3, r4}
 	}
 }
- 80020da:	4618      	mov	r0, r3
- 80020dc:	4621      	mov	r1, r4
- 80020de:	3714      	adds	r7, #20
- 80020e0:	46bd      	mov	sp, r7
- 80020e2:	bd90      	pop	{r4, r7, pc}
- 80020e4:	f3af 8000 	nop.w
- 80020e8:	9999999a 	.word	0x9999999a
- 80020ec:	3fb99999 	.word	0x3fb99999
- 80020f0:	20000054 	.word	0x20000054
- 80020f4:	20000060 	.word	0x20000060
- 80020f8:	404d0000 	.word	0x404d0000
- 80020fc:	40790000 	.word	0x40790000
- 8002100:	bff00000 	.word	0xbff00000
- 8002104:	00000000 	.word	0x00000000
+ 800212a:	4618      	mov	r0, r3
+ 800212c:	4621      	mov	r1, r4
+ 800212e:	3714      	adds	r7, #20
+ 8002130:	46bd      	mov	sp, r7
+ 8002132:	bd90      	pop	{r4, r7, pc}
+ 8002134:	f3af 8000 	nop.w
+ 8002138:	9999999a 	.word	0x9999999a
+ 800213c:	3fb99999 	.word	0x3fb99999
+ 8002140:	200000c8 	.word	0x200000c8
+ 8002144:	404d0000 	.word	0x404d0000
+ 8002148:	40790000 	.word	0x40790000
+ 800214c:	bff00000 	.word	0xbff00000
 
-08002108 <rightSensorGetDistance>:
+08002150 <rightSensorGetDistance>:
 //prevzatie nameranej vzdialenosti z praveho dialkomeru
 double rightSensorGetDistance(void)
 {
- 8002108:	b590      	push	{r4, r7, lr}
- 800210a:	b085      	sub	sp, #20
- 800210c:	af00      	add	r7, sp, #0
+ 8002150:	b590      	push	{r4, r7, lr}
+ 8002152:	b085      	sub	sp, #20
+ 8002154:	af00      	add	r7, sp, #0
 	uint32_t rightDistanceTime = 0;//konecna dlzka impulzu z dialkomer
- 800210e:	2300      	movs	r3, #0
- 8002110:	60fb      	str	r3, [r7, #12]
+ 8002156:	2300      	movs	r3, #0
+ 8002158:	60fb      	str	r3, [r7, #12]
 	double distance = 0;//konecna vzdialenost
- 8002112:	f04f 0300 	mov.w	r3, #0
- 8002116:	f04f 0400 	mov.w	r4, #0
- 800211a:	e887 0018 	stmia.w	r7, {r3, r4}
+ 800215a:	f04f 0300 	mov.w	r3, #0
+ 800215e:	f04f 0400 	mov.w	r4, #0
+ 8002162:	e887 0018 	stmia.w	r7, {r3, r4}
 
 	//vypocet trvania impulzu
-	rightDistanceTime = computeEchoDuration(rightRisingTime, rightFallingTime);
- 800211e:	4b1c      	ldr	r3, [pc, #112]	; (8002190 <rightSensorGetDistance+0x88>)
- 8002120:	681a      	ldr	r2, [r3, #0]
- 8002122:	4b1c      	ldr	r3, [pc, #112]	; (8002194 <rightSensorGetDistance+0x8c>)
- 8002124:	681b      	ldr	r3, [r3, #0]
- 8002126:	4619      	mov	r1, r3
- 8002128:	4610      	mov	r0, r2
- 800212a:	f000 f88b 	bl	8002244 <computeEchoDuration>
- 800212e:	60f8      	str	r0, [r7, #12]
+	rightDistanceTime = computeEchoDuration(RightSensorCaptureStruc.risingTime, RightSensorCaptureStruc.fallingTime);
+ 8002166:	4b1c      	ldr	r3, [pc, #112]	; (80021d8 <rightSensorGetDistance+0x88>)
+ 8002168:	689a      	ldr	r2, [r3, #8]
+ 800216a:	4b1b      	ldr	r3, [pc, #108]	; (80021d8 <rightSensorGetDistance+0x88>)
+ 800216c:	68db      	ldr	r3, [r3, #12]
+ 800216e:	4619      	mov	r1, r3
+ 8002170:	4610      	mov	r0, r2
+ 8002172:	f000 f885 	bl	8002280 <computeEchoDuration>
+ 8002176:	60f8      	str	r0, [r7, #12]
 
 	//vypocet vzdialenosti z praveho senzoru
 	distance = rightDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
- 8002130:	68f8      	ldr	r0, [r7, #12]
- 8002132:	f7fe f967 	bl	8000404 <__aeabi_ui2d>
- 8002136:	a314      	add	r3, pc, #80	; (adr r3, 8002188 <rightSensorGetDistance+0x80>)
- 8002138:	e9d3 2300 	ldrd	r2, r3, [r3]
- 800213c:	f7fe fb02 	bl	8000744 <__aeabi_ddiv>
- 8002140:	4603      	mov	r3, r0
- 8002142:	460c      	mov	r4, r1
- 8002144:	4618      	mov	r0, r3
- 8002146:	4621      	mov	r1, r4
- 8002148:	f04f 0200 	mov.w	r2, #0
- 800214c:	4b12      	ldr	r3, [pc, #72]	; (8002198 <rightSensorGetDistance+0x90>)
- 800214e:	f7fe faf9 	bl	8000744 <__aeabi_ddiv>
- 8002152:	4603      	mov	r3, r0
- 8002154:	460c      	mov	r4, r1
- 8002156:	e887 0018 	stmia.w	r7, {r3, r4}
+ 8002178:	68f8      	ldr	r0, [r7, #12]
+ 800217a:	f7fe f943 	bl	8000404 <__aeabi_ui2d>
+ 800217e:	a314      	add	r3, pc, #80	; (adr r3, 80021d0 <rightSensorGetDistance+0x80>)
+ 8002180:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 8002184:	f7fe fade 	bl	8000744 <__aeabi_ddiv>
+ 8002188:	4603      	mov	r3, r0
+ 800218a:	460c      	mov	r4, r1
+ 800218c:	4618      	mov	r0, r3
+ 800218e:	4621      	mov	r1, r4
+ 8002190:	f04f 0200 	mov.w	r2, #0
+ 8002194:	4b11      	ldr	r3, [pc, #68]	; (80021dc <rightSensorGetDistance+0x8c>)
+ 8002196:	f7fe fad5 	bl	8000744 <__aeabi_ddiv>
+ 800219a:	4603      	mov	r3, r0
+ 800219c:	460c      	mov	r4, r1
+ 800219e:	e887 0018 	stmia.w	r7, {r3, r4}
 	if (distance > DISTANCE_MAX)
- 800215a:	f04f 0200 	mov.w	r2, #0
- 800215e:	4b0f      	ldr	r3, [pc, #60]	; (800219c <rightSensorGetDistance+0x94>)
- 8002160:	e9d7 0100 	ldrd	r0, r1, [r7]
- 8002164:	f7fe fc54 	bl	8000a10 <__aeabi_dcmpgt>
- 8002168:	4603      	mov	r3, r0
- 800216a:	2b00      	cmp	r3, #0
- 800216c:	d003      	beq.n	8002176 <rightSensorGetDistance+0x6e>
+ 80021a2:	f04f 0200 	mov.w	r2, #0
+ 80021a6:	4b0e      	ldr	r3, [pc, #56]	; (80021e0 <rightSensorGetDistance+0x90>)
+ 80021a8:	e9d7 0100 	ldrd	r0, r1, [r7]
+ 80021ac:	f7fe fc30 	bl	8000a10 <__aeabi_dcmpgt>
+ 80021b0:	4603      	mov	r3, r0
+ 80021b2:	2b00      	cmp	r3, #0
+ 80021b4:	d003      	beq.n	80021be <rightSensorGetDistance+0x6e>
 	{
 		//senzor nic nezachytil
 		return -1;
- 800216e:	f04f 0300 	mov.w	r3, #0
- 8002172:	4c0b      	ldr	r4, [pc, #44]	; (80021a0 <rightSensorGetDistance+0x98>)
- 8002174:	e001      	b.n	800217a <rightSensorGetDistance+0x72>
+ 80021b6:	f04f 0300 	mov.w	r3, #0
+ 80021ba:	4c0a      	ldr	r4, [pc, #40]	; (80021e4 <rightSensorGetDistance+0x94>)
+ 80021bc:	e001      	b.n	80021c2 <rightSensorGetDistance+0x72>
 	}
 	else
 	{
 		return distance;
- 8002176:	e897 0018 	ldmia.w	r7, {r3, r4}
+ 80021be:	e897 0018 	ldmia.w	r7, {r3, r4}
 	}
 }
- 800217a:	4618      	mov	r0, r3
- 800217c:	4621      	mov	r1, r4
- 800217e:	3714      	adds	r7, #20
- 8002180:	46bd      	mov	sp, r7
- 8002182:	bd90      	pop	{r4, r7, pc}
- 8002184:	f3af 8000 	nop.w
- 8002188:	9999999a 	.word	0x9999999a
- 800218c:	3fb99999 	.word	0x3fb99999
- 8002190:	20000058 	.word	0x20000058
- 8002194:	20000064 	.word	0x20000064
- 8002198:	404d0000 	.word	0x404d0000
- 800219c:	40790000 	.word	0x40790000
- 80021a0:	bff00000 	.word	0xbff00000
- 80021a4:	00000000 	.word	0x00000000
+ 80021c2:	4618      	mov	r0, r3
+ 80021c4:	4621      	mov	r1, r4
+ 80021c6:	3714      	adds	r7, #20
+ 80021c8:	46bd      	mov	sp, r7
+ 80021ca:	bd90      	pop	{r4, r7, pc}
+ 80021cc:	f3af 8000 	nop.w
+ 80021d0:	9999999a 	.word	0x9999999a
+ 80021d4:	3fb99999 	.word	0x3fb99999
+ 80021d8:	200000b8 	.word	0x200000b8
+ 80021dc:	404d0000 	.word	0x404d0000
+ 80021e0:	40790000 	.word	0x40790000
+ 80021e4:	bff00000 	.word	0xbff00000
 
-080021a8 <forwardSensorGetDistance>:
+080021e8 <forwardSensorGetDistance>:
 //prevzatie nameranej vzdialenosti z predneho dialkomeru
 double forwardSensorGetDistance(void)
 {
- 80021a8:	b590      	push	{r4, r7, lr}
- 80021aa:	b085      	sub	sp, #20
- 80021ac:	af00      	add	r7, sp, #0
+ 80021e8:	b590      	push	{r4, r7, lr}
+ 80021ea:	b085      	sub	sp, #20
+ 80021ec:	af00      	add	r7, sp, #0
 	uint32_t forwardDistanceTime = 0;//konecna dlzka impulzu z dialkomeru
- 80021ae:	2300      	movs	r3, #0
- 80021b0:	60fb      	str	r3, [r7, #12]
+ 80021ee:	2300      	movs	r3, #0
+ 80021f0:	60fb      	str	r3, [r7, #12]
 	double distance = 0;//konecna vzdialenost
- 80021b2:	f04f 0300 	mov.w	r3, #0
- 80021b6:	f04f 0400 	mov.w	r4, #0
- 80021ba:	e887 0018 	stmia.w	r7, {r3, r4}
+ 80021f2:	f04f 0300 	mov.w	r3, #0
+ 80021f6:	f04f 0400 	mov.w	r4, #0
+ 80021fa:	e887 0018 	stmia.w	r7, {r3, r4}
 
 	//vypocet trvania impulzu
-	forwardDistanceTime = computeEchoDuration(forwardRisingTime, forwardFallingTime);
- 80021be:	4b1c      	ldr	r3, [pc, #112]	; (8002230 <forwardSensorGetDistance+0x88>)
- 80021c0:	681a      	ldr	r2, [r3, #0]
- 80021c2:	4b1c      	ldr	r3, [pc, #112]	; (8002234 <forwardSensorGetDistance+0x8c>)
- 80021c4:	681b      	ldr	r3, [r3, #0]
- 80021c6:	4619      	mov	r1, r3
- 80021c8:	4610      	mov	r0, r2
- 80021ca:	f000 f83b 	bl	8002244 <computeEchoDuration>
- 80021ce:	60f8      	str	r0, [r7, #12]
+	forwardDistanceTime = computeEchoDuration(ForwardSensorCaptureStruc.risingTime, ForwardSensorCaptureStruc.fallingTime);
+ 80021fe:	4b1c      	ldr	r3, [pc, #112]	; (8002270 <forwardSensorGetDistance+0x88>)
+ 8002200:	689a      	ldr	r2, [r3, #8]
+ 8002202:	4b1b      	ldr	r3, [pc, #108]	; (8002270 <forwardSensorGetDistance+0x88>)
+ 8002204:	68db      	ldr	r3, [r3, #12]
+ 8002206:	4619      	mov	r1, r3
+ 8002208:	4610      	mov	r0, r2
+ 800220a:	f000 f839 	bl	8002280 <computeEchoDuration>
+ 800220e:	60f8      	str	r0, [r7, #12]
 
 	//vypocet vzdialenosti z predneho senzoru
 	distance = forwardDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
- 80021d0:	68f8      	ldr	r0, [r7, #12]
- 80021d2:	f7fe f917 	bl	8000404 <__aeabi_ui2d>
- 80021d6:	a314      	add	r3, pc, #80	; (adr r3, 8002228 <forwardSensorGetDistance+0x80>)
- 80021d8:	e9d3 2300 	ldrd	r2, r3, [r3]
- 80021dc:	f7fe fab2 	bl	8000744 <__aeabi_ddiv>
- 80021e0:	4603      	mov	r3, r0
- 80021e2:	460c      	mov	r4, r1
- 80021e4:	4618      	mov	r0, r3
- 80021e6:	4621      	mov	r1, r4
- 80021e8:	f04f 0200 	mov.w	r2, #0
- 80021ec:	4b12      	ldr	r3, [pc, #72]	; (8002238 <forwardSensorGetDistance+0x90>)
- 80021ee:	f7fe faa9 	bl	8000744 <__aeabi_ddiv>
- 80021f2:	4603      	mov	r3, r0
- 80021f4:	460c      	mov	r4, r1
- 80021f6:	e887 0018 	stmia.w	r7, {r3, r4}
+ 8002210:	68f8      	ldr	r0, [r7, #12]
+ 8002212:	f7fe f8f7 	bl	8000404 <__aeabi_ui2d>
+ 8002216:	a314      	add	r3, pc, #80	; (adr r3, 8002268 <forwardSensorGetDistance+0x80>)
+ 8002218:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 800221c:	f7fe fa92 	bl	8000744 <__aeabi_ddiv>
+ 8002220:	4603      	mov	r3, r0
+ 8002222:	460c      	mov	r4, r1
+ 8002224:	4618      	mov	r0, r3
+ 8002226:	4621      	mov	r1, r4
+ 8002228:	f04f 0200 	mov.w	r2, #0
+ 800222c:	4b11      	ldr	r3, [pc, #68]	; (8002274 <forwardSensorGetDistance+0x8c>)
+ 800222e:	f7fe fa89 	bl	8000744 <__aeabi_ddiv>
+ 8002232:	4603      	mov	r3, r0
+ 8002234:	460c      	mov	r4, r1
+ 8002236:	e887 0018 	stmia.w	r7, {r3, r4}
 	if (distance > DISTANCE_MAX)
- 80021fa:	f04f 0200 	mov.w	r2, #0
- 80021fe:	4b0f      	ldr	r3, [pc, #60]	; (800223c <forwardSensorGetDistance+0x94>)
- 8002200:	e9d7 0100 	ldrd	r0, r1, [r7]
- 8002204:	f7fe fc04 	bl	8000a10 <__aeabi_dcmpgt>
- 8002208:	4603      	mov	r3, r0
- 800220a:	2b00      	cmp	r3, #0
- 800220c:	d003      	beq.n	8002216 <forwardSensorGetDistance+0x6e>
+ 800223a:	f04f 0200 	mov.w	r2, #0
+ 800223e:	4b0e      	ldr	r3, [pc, #56]	; (8002278 <forwardSensorGetDistance+0x90>)
+ 8002240:	e9d7 0100 	ldrd	r0, r1, [r7]
+ 8002244:	f7fe fbe4 	bl	8000a10 <__aeabi_dcmpgt>
+ 8002248:	4603      	mov	r3, r0
+ 800224a:	2b00      	cmp	r3, #0
+ 800224c:	d003      	beq.n	8002256 <forwardSensorGetDistance+0x6e>
 	{
 		//senzor nic nezachytil
 		return -1;
- 800220e:	f04f 0300 	mov.w	r3, #0
- 8002212:	4c0b      	ldr	r4, [pc, #44]	; (8002240 <forwardSensorGetDistance+0x98>)
- 8002214:	e001      	b.n	800221a <forwardSensorGetDistance+0x72>
+ 800224e:	f04f 0300 	mov.w	r3, #0
+ 8002252:	4c0a      	ldr	r4, [pc, #40]	; (800227c <forwardSensorGetDistance+0x94>)
+ 8002254:	e001      	b.n	800225a <forwardSensorGetDistance+0x72>
 	}
 	else
 	{
 		return distance;
- 8002216:	e897 0018 	ldmia.w	r7, {r3, r4}
+ 8002256:	e897 0018 	ldmia.w	r7, {r3, r4}
 	}
 }
- 800221a:	4618      	mov	r0, r3
- 800221c:	4621      	mov	r1, r4
- 800221e:	3714      	adds	r7, #20
- 8002220:	46bd      	mov	sp, r7
- 8002222:	bd90      	pop	{r4, r7, pc}
- 8002224:	f3af 8000 	nop.w
- 8002228:	9999999a 	.word	0x9999999a
- 800222c:	3fb99999 	.word	0x3fb99999
- 8002230:	2000005c 	.word	0x2000005c
- 8002234:	20000068 	.word	0x20000068
- 8002238:	404d0000 	.word	0x404d0000
- 800223c:	40790000 	.word	0x40790000
- 8002240:	bff00000 	.word	0xbff00000
+ 800225a:	4618      	mov	r0, r3
+ 800225c:	4621      	mov	r1, r4
+ 800225e:	3714      	adds	r7, #20
+ 8002260:	46bd      	mov	sp, r7
+ 8002262:	bd90      	pop	{r4, r7, pc}
+ 8002264:	f3af 8000 	nop.w
+ 8002268:	9999999a 	.word	0x9999999a
+ 800226c:	3fb99999 	.word	0x3fb99999
+ 8002270:	200000d8 	.word	0x200000d8
+ 8002274:	404d0000 	.word	0x404d0000
+ 8002278:	40790000 	.word	0x40790000
+ 800227c:	bff00000 	.word	0xbff00000
 
-08002244 <computeEchoDuration>:
+08002280 <computeEchoDuration>:
 
 //vypocet trvania impulzu ozveny z dialkomera
 uint32_t computeEchoDuration(uint32_t risingTime, uint32_t fallingTime)
 {
- 8002244:	b480      	push	{r7}
- 8002246:	b085      	sub	sp, #20
- 8002248:	af00      	add	r7, sp, #0
- 800224a:	6078      	str	r0, [r7, #4]
- 800224c:	6039      	str	r1, [r7, #0]
+ 8002280:	b480      	push	{r7}
+ 8002282:	b085      	sub	sp, #20
+ 8002284:	af00      	add	r7, sp, #0
+ 8002286:	6078      	str	r0, [r7, #4]
+ 8002288:	6039      	str	r1, [r7, #0]
 	uint32_t distanceTime = 0;
- 800224e:	2300      	movs	r3, #0
- 8002250:	60fb      	str	r3, [r7, #12]
+ 800228a:	2300      	movs	r3, #0
+ 800228c:	60fb      	str	r3, [r7, #12]
 	//vypocet podla toho ci nabezna alebo dobezna je vacsie cislo
 	if (fallingTime > risingTime)
- 8002252:	683a      	ldr	r2, [r7, #0]
- 8002254:	687b      	ldr	r3, [r7, #4]
- 8002256:	429a      	cmp	r2, r3
- 8002258:	d905      	bls.n	8002266 <computeEchoDuration+0x22>
+ 800228e:	683a      	ldr	r2, [r7, #0]
+ 8002290:	687b      	ldr	r3, [r7, #4]
+ 8002292:	429a      	cmp	r2, r3
+ 8002294:	d905      	bls.n	80022a2 <computeEchoDuration+0x22>
 	{
 		distanceTime = (fallingTime - risingTime) - 1;
- 800225a:	683a      	ldr	r2, [r7, #0]
- 800225c:	687b      	ldr	r3, [r7, #4]
- 800225e:	1ad3      	subs	r3, r2, r3
- 8002260:	3b01      	subs	r3, #1
- 8002262:	60fb      	str	r3, [r7, #12]
- 8002264:	e00d      	b.n	8002282 <computeEchoDuration+0x3e>
+ 8002296:	683a      	ldr	r2, [r7, #0]
+ 8002298:	687b      	ldr	r3, [r7, #4]
+ 800229a:	1ad3      	subs	r3, r2, r3
+ 800229c:	3b01      	subs	r3, #1
+ 800229e:	60fb      	str	r3, [r7, #12]
+ 80022a0:	e00d      	b.n	80022be <computeEchoDuration+0x3e>
 	}
 	else if (fallingTime < risingTime)
- 8002266:	683a      	ldr	r2, [r7, #0]
- 8002268:	687b      	ldr	r3, [r7, #4]
- 800226a:	429a      	cmp	r2, r3
- 800226c:	d207      	bcs.n	800227e <computeEchoDuration+0x3a>
+ 80022a2:	683a      	ldr	r2, [r7, #0]
+ 80022a4:	687b      	ldr	r3, [r7, #4]
+ 80022a6:	429a      	cmp	r2, r3
+ 80022a8:	d207      	bcs.n	80022ba <computeEchoDuration+0x3a>
 	{
 		distanceTime = ((CAPTURE_COUNT_MAX - risingTime) + fallingTime) - 1;
- 800226e:	683a      	ldr	r2, [r7, #0]
- 8002270:	687b      	ldr	r3, [r7, #4]
- 8002272:	1ad3      	subs	r3, r2, r3
- 8002274:	f503 437f 	add.w	r3, r3, #65280	; 0xff00
- 8002278:	33fe      	adds	r3, #254	; 0xfe
- 800227a:	60fb      	str	r3, [r7, #12]
- 800227c:	e001      	b.n	8002282 <computeEchoDuration+0x3e>
+ 80022aa:	683a      	ldr	r2, [r7, #0]
+ 80022ac:	687b      	ldr	r3, [r7, #4]
+ 80022ae:	1ad3      	subs	r3, r2, r3
+ 80022b0:	f503 437f 	add.w	r3, r3, #65280	; 0xff00
+ 80022b4:	33fe      	adds	r3, #254	; 0xfe
+ 80022b6:	60fb      	str	r3, [r7, #12]
+ 80022b8:	e001      	b.n	80022be <computeEchoDuration+0x3e>
 	}
 	else
 	{
 		distanceTime = 0;
- 800227e:	2300      	movs	r3, #0
- 8002280:	60fb      	str	r3, [r7, #12]
+ 80022ba:	2300      	movs	r3, #0
+ 80022bc:	60fb      	str	r3, [r7, #12]
 	}
 
 	return distanceTime;
- 8002282:	68fb      	ldr	r3, [r7, #12]
+ 80022be:	68fb      	ldr	r3, [r7, #12]
 }
- 8002284:	4618      	mov	r0, r3
- 8002286:	3714      	adds	r7, #20
- 8002288:	46bd      	mov	sp, r7
- 800228a:	bc80      	pop	{r7}
- 800228c:	4770      	bx	lr
- 800228e:	bf00      	nop
+ 80022c0:	4618      	mov	r0, r3
+ 80022c2:	3714      	adds	r7, #20
+ 80022c4:	46bd      	mov	sp, r7
+ 80022c6:	bc80      	pop	{r7}
+ 80022c8:	4770      	bx	lr
+ 80022ca:	bf00      	nop
 
-08002290 <printToUSARTbuffer>:
+080022cc <printToUSARTbuffer>:
 volatile char USARTbufferOut[100]; //buffer, kde su ulozene znaky na odoslanie
 volatile int USARTbufferInkr;
 
 //ulozenie spravy do buffera pre USART a odosle prvy znak
 int printToUSARTbuffer(char *message)
 {
- 8002290:	b580      	push	{r7, lr}
- 8002292:	b084      	sub	sp, #16
- 8002294:	af00      	add	r7, sp, #0
- 8002296:	6078      	str	r0, [r7, #4]
+ 80022cc:	b580      	push	{r7, lr}
+ 80022ce:	b084      	sub	sp, #16
+ 80022d0:	af00      	add	r7, sp, #0
+ 80022d2:	6078      	str	r0, [r7, #4]
 	if (USARTbufferRDY == 1)
- 8002298:	4b1b      	ldr	r3, [pc, #108]	; (8002308 <printToUSARTbuffer+0x78>)
- 800229a:	681b      	ldr	r3, [r3, #0]
- 800229c:	2b01      	cmp	r3, #1
- 800229e:	d12d      	bne.n	80022fc <printToUSARTbuffer+0x6c>
+ 80022d4:	4b1b      	ldr	r3, [pc, #108]	; (8002344 <printToUSARTbuffer+0x78>)
+ 80022d6:	681b      	ldr	r3, [r3, #0]
+ 80022d8:	2b01      	cmp	r3, #1
+ 80022da:	d12d      	bne.n	8002338 <printToUSARTbuffer+0x6c>
 	{
 		int increment = 0;
- 80022a0:	2300      	movs	r3, #0
- 80022a2:	60fb      	str	r3, [r7, #12]
+ 80022dc:	2300      	movs	r3, #0
+ 80022de:	60fb      	str	r3, [r7, #12]
 		while (message[increment] != 0)
- 80022a4:	e00b      	b.n	80022be <printToUSARTbuffer+0x2e>
+ 80022e0:	e00b      	b.n	80022fa <printToUSARTbuffer+0x2e>
 		{
 			USARTbufferOut[increment] = message[increment];
- 80022a6:	68fb      	ldr	r3, [r7, #12]
- 80022a8:	687a      	ldr	r2, [r7, #4]
- 80022aa:	4413      	add	r3, r2
- 80022ac:	7819      	ldrb	r1, [r3, #0]
- 80022ae:	4a17      	ldr	r2, [pc, #92]	; (800230c <printToUSARTbuffer+0x7c>)
- 80022b0:	68fb      	ldr	r3, [r7, #12]
- 80022b2:	4413      	add	r3, r2
- 80022b4:	460a      	mov	r2, r1
- 80022b6:	701a      	strb	r2, [r3, #0]
+ 80022e2:	68fb      	ldr	r3, [r7, #12]
+ 80022e4:	687a      	ldr	r2, [r7, #4]
+ 80022e6:	4413      	add	r3, r2
+ 80022e8:	7819      	ldrb	r1, [r3, #0]
+ 80022ea:	4a17      	ldr	r2, [pc, #92]	; (8002348 <printToUSARTbuffer+0x7c>)
+ 80022ec:	68fb      	ldr	r3, [r7, #12]
+ 80022ee:	4413      	add	r3, r2
+ 80022f0:	460a      	mov	r2, r1
+ 80022f2:	701a      	strb	r2, [r3, #0]
 			increment++;
- 80022b8:	68fb      	ldr	r3, [r7, #12]
- 80022ba:	3301      	adds	r3, #1
- 80022bc:	60fb      	str	r3, [r7, #12]
+ 80022f4:	68fb      	ldr	r3, [r7, #12]
+ 80022f6:	3301      	adds	r3, #1
+ 80022f8:	60fb      	str	r3, [r7, #12]
 int printToUSARTbuffer(char *message)
 {
 	if (USARTbufferRDY == 1)
 	{
 		int increment = 0;
 		while (message[increment] != 0)
- 80022be:	68fb      	ldr	r3, [r7, #12]
- 80022c0:	687a      	ldr	r2, [r7, #4]
- 80022c2:	4413      	add	r3, r2
- 80022c4:	781b      	ldrb	r3, [r3, #0]
- 80022c6:	2b00      	cmp	r3, #0
- 80022c8:	d1ed      	bne.n	80022a6 <printToUSARTbuffer+0x16>
+ 80022fa:	68fb      	ldr	r3, [r7, #12]
+ 80022fc:	687a      	ldr	r2, [r7, #4]
+ 80022fe:	4413      	add	r3, r2
+ 8002300:	781b      	ldrb	r3, [r3, #0]
+ 8002302:	2b00      	cmp	r3, #0
+ 8002304:	d1ed      	bne.n	80022e2 <printToUSARTbuffer+0x16>
 		{
 			USARTbufferOut[increment] = message[increment];
 			increment++;
 		}
 		USARTbufferInkr = 0;
- 80022ca:	4b11      	ldr	r3, [pc, #68]	; (8002310 <printToUSARTbuffer+0x80>)
- 80022cc:	2200      	movs	r2, #0
- 80022ce:	601a      	str	r2, [r3, #0]
+ 8002306:	4b11      	ldr	r3, [pc, #68]	; (800234c <printToUSARTbuffer+0x80>)
+ 8002308:	2200      	movs	r2, #0
+ 800230a:	601a      	str	r2, [r3, #0]
 		if (USARTbufferOut[USARTbufferInkr] != 0)
- 80022d0:	4b0f      	ldr	r3, [pc, #60]	; (8002310 <printToUSARTbuffer+0x80>)
- 80022d2:	681b      	ldr	r3, [r3, #0]
- 80022d4:	4a0d      	ldr	r2, [pc, #52]	; (800230c <printToUSARTbuffer+0x7c>)
- 80022d6:	5cd3      	ldrb	r3, [r2, r3]
- 80022d8:	b2db      	uxtb	r3, r3
- 80022da:	2b00      	cmp	r3, #0
- 80022dc:	d00b      	beq.n	80022f6 <printToUSARTbuffer+0x66>
+ 800230c:	4b0f      	ldr	r3, [pc, #60]	; (800234c <printToUSARTbuffer+0x80>)
+ 800230e:	681b      	ldr	r3, [r3, #0]
+ 8002310:	4a0d      	ldr	r2, [pc, #52]	; (8002348 <printToUSARTbuffer+0x7c>)
+ 8002312:	5cd3      	ldrb	r3, [r2, r3]
+ 8002314:	b2db      	uxtb	r3, r3
+ 8002316:	2b00      	cmp	r3, #0
+ 8002318:	d00b      	beq.n	8002332 <printToUSARTbuffer+0x66>
 		{
 			USART_SendData(PRN_USART, USARTbufferOut[USARTbufferInkr]);
- 80022de:	4b0c      	ldr	r3, [pc, #48]	; (8002310 <printToUSARTbuffer+0x80>)
- 80022e0:	681b      	ldr	r3, [r3, #0]
- 80022e2:	4a0a      	ldr	r2, [pc, #40]	; (800230c <printToUSARTbuffer+0x7c>)
- 80022e4:	5cd3      	ldrb	r3, [r2, r3]
- 80022e6:	b2db      	uxtb	r3, r3
- 80022e8:	b29b      	uxth	r3, r3
- 80022ea:	4619      	mov	r1, r3
- 80022ec:	4809      	ldr	r0, [pc, #36]	; (8002314 <printToUSARTbuffer+0x84>)
- 80022ee:	f7ff fa2f 	bl	8001750 <USART_SendData>
+ 800231a:	4b0c      	ldr	r3, [pc, #48]	; (800234c <printToUSARTbuffer+0x80>)
+ 800231c:	681b      	ldr	r3, [r3, #0]
+ 800231e:	4a0a      	ldr	r2, [pc, #40]	; (8002348 <printToUSARTbuffer+0x7c>)
+ 8002320:	5cd3      	ldrb	r3, [r2, r3]
+ 8002322:	b2db      	uxtb	r3, r3
+ 8002324:	b29b      	uxth	r3, r3
+ 8002326:	4619      	mov	r1, r3
+ 8002328:	4809      	ldr	r0, [pc, #36]	; (8002350 <printToUSARTbuffer+0x84>)
+ 800232a:	f7ff fa11 	bl	8001750 <USART_SendData>
 	else
 	{
 		return -1;//chyba USART buffer nie je pripraveny
 	}
 
 	return 0;
- 80022f2:	2300      	movs	r3, #0
- 80022f4:	e004      	b.n	8002300 <printToUSARTbuffer+0x70>
+ 800232e:	2300      	movs	r3, #0
+ 8002330:	e004      	b.n	800233c <printToUSARTbuffer+0x70>
 		{
 			USART_SendData(PRN_USART, USARTbufferOut[USARTbufferInkr]);
 		}
 		else
 		{
 			return -2;//chyba prazdna sprava
- 80022f6:	f06f 0301 	mvn.w	r3, #1
- 80022fa:	e001      	b.n	8002300 <printToUSARTbuffer+0x70>
+ 8002332:	f06f 0301 	mvn.w	r3, #1
+ 8002336:	e001      	b.n	800233c <printToUSARTbuffer+0x70>
 		}
 
 	}
 	else
 	{
 		return -1;//chyba USART buffer nie je pripraveny
- 80022fc:	f04f 33ff 	mov.w	r3, #4294967295
+ 8002338:	f04f 33ff 	mov.w	r3, #4294967295
 	}
 
 	return 0;
 }
- 8002300:	4618      	mov	r0, r3
- 8002302:	3710      	adds	r7, #16
- 8002304:	46bd      	mov	sp, r7
- 8002306:	bd80      	pop	{r7, pc}
- 8002308:	20000070 	.word	0x20000070
- 800230c:	2000007c 	.word	0x2000007c
- 8002310:	20000074 	.word	0x20000074
- 8002314:	40004800 	.word	0x40004800
+ 800233c:	4618      	mov	r0, r3
+ 800233e:	3710      	adds	r7, #16
+ 8002340:	46bd      	mov	sp, r7
+ 8002342:	bd80      	pop	{r7, pc}
+ 8002344:	20000048 	.word	0x20000048
+ 8002348:	20000054 	.word	0x20000054
+ 800234c:	2000004c 	.word	0x2000004c
+ 8002350:	40004800 	.word	0x40004800
 
-08002318 <sensorMessageAll>:
+08002354 <sensorMessageAll>:
 
 	return 0;
 }
 
 int sensorMessageAll(double leftDistance, double rightDistance, double forwardDistance)
 {
- 8002318:	b590      	push	{r4, r7, lr}
- 800231a:	f2ad 4d2c 	subw	sp, sp, #1068	; 0x42c
- 800231e:	af04      	add	r7, sp, #16
- 8002320:	f107 0408 	add.w	r4, r7, #8
- 8002324:	e9c4 0100 	strd	r0, r1, [r4]
- 8002328:	4639      	mov	r1, r7
- 800232a:	e9c1 2300 	strd	r2, r3, [r1]
-	char message[1000];
+ 8002354:	b590      	push	{r4, r7, lr}
+ 8002356:	b0a9      	sub	sp, #164	; 0xa4
+ 8002358:	af04      	add	r7, sp, #16
+ 800235a:	e9c7 0102 	strd	r0, r1, [r7, #8]
+ 800235e:	e9c7 2300 	strd	r2, r3, [r7]
+	char message[100];
 
 	//rozdelenie vzdialenosti na celu a desatinnu cast
 	int leftDecimalPart = 0;
- 800232e:	2300      	movs	r3, #0
- 8002330:	f8c7 3414 	str.w	r3, [r7, #1044]	; 0x414
+ 8002362:	2300      	movs	r3, #0
+ 8002364:	f8c7 308c 	str.w	r3, [r7, #140]	; 0x8c
 	int leftIntegerPart = 0;
- 8002334:	2300      	movs	r3, #0
- 8002336:	f8c7 3410 	str.w	r3, [r7, #1040]	; 0x410
+ 8002368:	2300      	movs	r3, #0
+ 800236a:	f8c7 3088 	str.w	r3, [r7, #136]	; 0x88
 	int rightDecimalPart = 0;
- 800233a:	2300      	movs	r3, #0
- 800233c:	f8c7 340c 	str.w	r3, [r7, #1036]	; 0x40c
+ 800236e:	2300      	movs	r3, #0
+ 8002370:	f8c7 3084 	str.w	r3, [r7, #132]	; 0x84
 	int rightIntegerPart = 0;
- 8002340:	2300      	movs	r3, #0
- 8002342:	f8c7 3408 	str.w	r3, [r7, #1032]	; 0x408
+ 8002374:	2300      	movs	r3, #0
+ 8002376:	f8c7 3080 	str.w	r3, [r7, #128]	; 0x80
 	int forwardDecimalPart = 0;
- 8002346:	2300      	movs	r3, #0
- 8002348:	f8c7 3404 	str.w	r3, [r7, #1028]	; 0x404
+ 800237a:	2300      	movs	r3, #0
+ 800237c:	67fb      	str	r3, [r7, #124]	; 0x7c
 	int forwardIntegerPart = 0;
- 800234c:	2300      	movs	r3, #0
- 800234e:	f8c7 3400 	str.w	r3, [r7, #1024]	; 0x400
+ 800237e:	2300      	movs	r3, #0
+ 8002380:	67bb      	str	r3, [r7, #120]	; 0x78
 
 	leftIntegerPart = (int)leftDistance;
- 8002352:	f107 0308 	add.w	r3, r7, #8
- 8002356:	e9d3 0100 	ldrd	r0, r1, [r3]
- 800235a:	f7fe fb63 	bl	8000a24 <__aeabi_d2iz>
- 800235e:	4603      	mov	r3, r0
- 8002360:	f8c7 3410 	str.w	r3, [r7, #1040]	; 0x410
+ 8002382:	e9d7 0102 	ldrd	r0, r1, [r7, #8]
+ 8002386:	f7fe fb4d 	bl	8000a24 <__aeabi_d2iz>
+ 800238a:	4603      	mov	r3, r0
+ 800238c:	f8c7 3088 	str.w	r3, [r7, #136]	; 0x88
 	leftDecimalPart = (int)(leftDistance*NUM_DEC_CONST) - leftIntegerPart*NUM_DEC_CONST;
- 8002364:	f107 0108 	add.w	r1, r7, #8
- 8002368:	f04f 0200 	mov.w	r2, #0
- 800236c:	4b72      	ldr	r3, [pc, #456]	; (8002538 <sensorMessageAll+0x220>)
- 800236e:	e9d1 0100 	ldrd	r0, r1, [r1]
- 8002372:	f7fe f8bd 	bl	80004f0 <__aeabi_dmul>
- 8002376:	4603      	mov	r3, r0
- 8002378:	460c      	mov	r4, r1
- 800237a:	4618      	mov	r0, r3
- 800237c:	4621      	mov	r1, r4
- 800237e:	f7fe fb51 	bl	8000a24 <__aeabi_d2iz>
- 8002382:	4601      	mov	r1, r0
- 8002384:	f8d7 3410 	ldr.w	r3, [r7, #1040]	; 0x410
- 8002388:	f06f 0263 	mvn.w	r2, #99	; 0x63
- 800238c:	fb02 f303 	mul.w	r3, r2, r3
- 8002390:	440b      	add	r3, r1
- 8002392:	f8c7 3414 	str.w	r3, [r7, #1044]	; 0x414
+ 8002390:	f04f 0200 	mov.w	r2, #0
+ 8002394:	4b67      	ldr	r3, [pc, #412]	; (8002534 <sensorMessageAll+0x1e0>)
+ 8002396:	e9d7 0102 	ldrd	r0, r1, [r7, #8]
+ 800239a:	f7fe f8a9 	bl	80004f0 <__aeabi_dmul>
+ 800239e:	4603      	mov	r3, r0
+ 80023a0:	460c      	mov	r4, r1
+ 80023a2:	4618      	mov	r0, r3
+ 80023a4:	4621      	mov	r1, r4
+ 80023a6:	f7fe fb3d 	bl	8000a24 <__aeabi_d2iz>
+ 80023aa:	4601      	mov	r1, r0
+ 80023ac:	f8d7 3088 	ldr.w	r3, [r7, #136]	; 0x88
+ 80023b0:	f06f 0263 	mvn.w	r2, #99	; 0x63
+ 80023b4:	fb02 f303 	mul.w	r3, r2, r3
+ 80023b8:	440b      	add	r3, r1
+ 80023ba:	f8c7 308c 	str.w	r3, [r7, #140]	; 0x8c
 	rightIntegerPart = (int)rightDistance;
- 8002396:	463b      	mov	r3, r7
- 8002398:	e9d3 0100 	ldrd	r0, r1, [r3]
- 800239c:	f7fe fb42 	bl	8000a24 <__aeabi_d2iz>
- 80023a0:	4603      	mov	r3, r0
- 80023a2:	f8c7 3408 	str.w	r3, [r7, #1032]	; 0x408
+ 80023be:	e9d7 0100 	ldrd	r0, r1, [r7]
+ 80023c2:	f7fe fb2f 	bl	8000a24 <__aeabi_d2iz>
+ 80023c6:	4603      	mov	r3, r0
+ 80023c8:	f8c7 3080 	str.w	r3, [r7, #128]	; 0x80
 	rightDecimalPart = (int)(rightDistance*NUM_DEC_CONST) - rightIntegerPart*NUM_DEC_CONST;
- 80023a6:	4639      	mov	r1, r7
- 80023a8:	f04f 0200 	mov.w	r2, #0
- 80023ac:	4b62      	ldr	r3, [pc, #392]	; (8002538 <sensorMessageAll+0x220>)
- 80023ae:	e9d1 0100 	ldrd	r0, r1, [r1]
- 80023b2:	f7fe f89d 	bl	80004f0 <__aeabi_dmul>
- 80023b6:	4603      	mov	r3, r0
- 80023b8:	460c      	mov	r4, r1
- 80023ba:	4618      	mov	r0, r3
- 80023bc:	4621      	mov	r1, r4
- 80023be:	f7fe fb31 	bl	8000a24 <__aeabi_d2iz>
- 80023c2:	4601      	mov	r1, r0
- 80023c4:	f8d7 3408 	ldr.w	r3, [r7, #1032]	; 0x408
- 80023c8:	f06f 0263 	mvn.w	r2, #99	; 0x63
- 80023cc:	fb02 f303 	mul.w	r3, r2, r3
- 80023d0:	440b      	add	r3, r1
- 80023d2:	f8c7 340c 	str.w	r3, [r7, #1036]	; 0x40c
+ 80023cc:	f04f 0200 	mov.w	r2, #0
+ 80023d0:	4b58      	ldr	r3, [pc, #352]	; (8002534 <sensorMessageAll+0x1e0>)
+ 80023d2:	e9d7 0100 	ldrd	r0, r1, [r7]
+ 80023d6:	f7fe f88b 	bl	80004f0 <__aeabi_dmul>
+ 80023da:	4603      	mov	r3, r0
+ 80023dc:	460c      	mov	r4, r1
+ 80023de:	4618      	mov	r0, r3
+ 80023e0:	4621      	mov	r1, r4
+ 80023e2:	f7fe fb1f 	bl	8000a24 <__aeabi_d2iz>
+ 80023e6:	4601      	mov	r1, r0
+ 80023e8:	f8d7 3080 	ldr.w	r3, [r7, #128]	; 0x80
+ 80023ec:	f06f 0263 	mvn.w	r2, #99	; 0x63
+ 80023f0:	fb02 f303 	mul.w	r3, r2, r3
+ 80023f4:	440b      	add	r3, r1
+ 80023f6:	f8c7 3084 	str.w	r3, [r7, #132]	; 0x84
 	forwardIntegerPart = (int)forwardDistance;
- 80023d6:	f507 6385 	add.w	r3, r7, #1064	; 0x428
- 80023da:	e9d3 0100 	ldrd	r0, r1, [r3]
- 80023de:	f7fe fb21 	bl	8000a24 <__aeabi_d2iz>
- 80023e2:	4603      	mov	r3, r0
- 80023e4:	f8c7 3400 	str.w	r3, [r7, #1024]	; 0x400
+ 80023fa:	e9d7 0128 	ldrd	r0, r1, [r7, #160]	; 0xa0
+ 80023fe:	f7fe fb11 	bl	8000a24 <__aeabi_d2iz>
+ 8002402:	4603      	mov	r3, r0
+ 8002404:	67bb      	str	r3, [r7, #120]	; 0x78
 	forwardDecimalPart = (int)(forwardDistance*NUM_DEC_CONST) - forwardIntegerPart*NUM_DEC_CONST;
- 80023e8:	f04f 0200 	mov.w	r2, #0
- 80023ec:	4b52      	ldr	r3, [pc, #328]	; (8002538 <sensorMessageAll+0x220>)
- 80023ee:	f507 6185 	add.w	r1, r7, #1064	; 0x428
- 80023f2:	e9d1 0100 	ldrd	r0, r1, [r1]
- 80023f6:	f7fe f87b 	bl	80004f0 <__aeabi_dmul>
- 80023fa:	4603      	mov	r3, r0
- 80023fc:	460c      	mov	r4, r1
- 80023fe:	4618      	mov	r0, r3
- 8002400:	4621      	mov	r1, r4
- 8002402:	f7fe fb0f 	bl	8000a24 <__aeabi_d2iz>
- 8002406:	4601      	mov	r1, r0
- 8002408:	f8d7 3400 	ldr.w	r3, [r7, #1024]	; 0x400
- 800240c:	f06f 0263 	mvn.w	r2, #99	; 0x63
- 8002410:	fb02 f303 	mul.w	r3, r2, r3
- 8002414:	440b      	add	r3, r1
- 8002416:	f8c7 3404 	str.w	r3, [r7, #1028]	; 0x404
+ 8002406:	f04f 0200 	mov.w	r2, #0
+ 800240a:	4b4a      	ldr	r3, [pc, #296]	; (8002534 <sensorMessageAll+0x1e0>)
+ 800240c:	e9d7 0128 	ldrd	r0, r1, [r7, #160]	; 0xa0
+ 8002410:	f7fe f86e 	bl	80004f0 <__aeabi_dmul>
+ 8002414:	4603      	mov	r3, r0
+ 8002416:	460c      	mov	r4, r1
+ 8002418:	4618      	mov	r0, r3
+ 800241a:	4621      	mov	r1, r4
+ 800241c:	f7fe fb02 	bl	8000a24 <__aeabi_d2iz>
+ 8002420:	4601      	mov	r1, r0
+ 8002422:	6fbb      	ldr	r3, [r7, #120]	; 0x78
+ 8002424:	f06f 0263 	mvn.w	r2, #99	; 0x63
+ 8002428:	fb02 f303 	mul.w	r3, r2, r3
+ 800242c:	440b      	add	r3, r1
+ 800242e:	67fb      	str	r3, [r7, #124]	; 0x7c
 	//osetrenie prichodu -1 - teda mimo rozsah
 	if (leftDistance < 0)
- 800241a:	f107 0108 	add.w	r1, r7, #8
- 800241e:	f04f 0200 	mov.w	r2, #0
- 8002422:	f04f 0300 	mov.w	r3, #0
- 8002426:	e9d1 0100 	ldrd	r0, r1, [r1]
- 800242a:	f7fe fad3 	bl	80009d4 <__aeabi_dcmplt>
- 800242e:	4603      	mov	r3, r0
- 8002430:	2b00      	cmp	r3, #0
- 8002432:	d006      	beq.n	8002442 <sensorMessageAll+0x12a>
+ 8002430:	f04f 0200 	mov.w	r2, #0
+ 8002434:	f04f 0300 	mov.w	r3, #0
+ 8002438:	e9d7 0102 	ldrd	r0, r1, [r7, #8]
+ 800243c:	f7fe faca 	bl	80009d4 <__aeabi_dcmplt>
+ 8002440:	4603      	mov	r3, r0
+ 8002442:	2b00      	cmp	r3, #0
+ 8002444:	d006      	beq.n	8002454 <sensorMessageAll+0x100>
 	{
 		leftDecimalPart = 0;
- 8002434:	2300      	movs	r3, #0
- 8002436:	f8c7 3414 	str.w	r3, [r7, #1044]	; 0x414
+ 8002446:	2300      	movs	r3, #0
+ 8002448:	f8c7 308c 	str.w	r3, [r7, #140]	; 0x8c
 		leftIntegerPart = -1;
- 800243a:	f04f 33ff 	mov.w	r3, #4294967295
- 800243e:	f8c7 3410 	str.w	r3, [r7, #1040]	; 0x410
+ 800244c:	f04f 33ff 	mov.w	r3, #4294967295
+ 8002450:	f8c7 3088 	str.w	r3, [r7, #136]	; 0x88
 	}
 	if (rightDistance < 0)
- 8002442:	4639      	mov	r1, r7
- 8002444:	f04f 0200 	mov.w	r2, #0
- 8002448:	f04f 0300 	mov.w	r3, #0
- 800244c:	e9d1 0100 	ldrd	r0, r1, [r1]
- 8002450:	f7fe fac0 	bl	80009d4 <__aeabi_dcmplt>
- 8002454:	4603      	mov	r3, r0
- 8002456:	2b00      	cmp	r3, #0
- 8002458:	d006      	beq.n	8002468 <sensorMessageAll+0x150>
+ 8002454:	f04f 0200 	mov.w	r2, #0
+ 8002458:	f04f 0300 	mov.w	r3, #0
+ 800245c:	e9d7 0100 	ldrd	r0, r1, [r7]
+ 8002460:	f7fe fab8 	bl	80009d4 <__aeabi_dcmplt>
+ 8002464:	4603      	mov	r3, r0
+ 8002466:	2b00      	cmp	r3, #0
+ 8002468:	d006      	beq.n	8002478 <sensorMessageAll+0x124>
 	{
 		rightDecimalPart = 0;
- 800245a:	2300      	movs	r3, #0
- 800245c:	f8c7 340c 	str.w	r3, [r7, #1036]	; 0x40c
+ 800246a:	2300      	movs	r3, #0
+ 800246c:	f8c7 3084 	str.w	r3, [r7, #132]	; 0x84
 		rightIntegerPart = -1;
- 8002460:	f04f 33ff 	mov.w	r3, #4294967295
- 8002464:	f8c7 3408 	str.w	r3, [r7, #1032]	; 0x408
+ 8002470:	f04f 33ff 	mov.w	r3, #4294967295
+ 8002474:	f8c7 3080 	str.w	r3, [r7, #128]	; 0x80
 	}
 	if (forwardDistance < 0)
- 8002468:	f04f 0200 	mov.w	r2, #0
- 800246c:	f04f 0300 	mov.w	r3, #0
- 8002470:	f507 6185 	add.w	r1, r7, #1064	; 0x428
- 8002474:	e9d1 0100 	ldrd	r0, r1, [r1]
- 8002478:	f7fe faac 	bl	80009d4 <__aeabi_dcmplt>
- 800247c:	4603      	mov	r3, r0
- 800247e:	2b00      	cmp	r3, #0
- 8002480:	d006      	beq.n	8002490 <sensorMessageAll+0x178>
+ 8002478:	f04f 0200 	mov.w	r2, #0
+ 800247c:	f04f 0300 	mov.w	r3, #0
+ 8002480:	e9d7 0128 	ldrd	r0, r1, [r7, #160]	; 0xa0
+ 8002484:	f7fe faa6 	bl	80009d4 <__aeabi_dcmplt>
+ 8002488:	4603      	mov	r3, r0
+ 800248a:	2b00      	cmp	r3, #0
+ 800248c:	d004      	beq.n	8002498 <sensorMessageAll+0x144>
 	{
 		forwardDecimalPart = 0;
- 8002482:	2300      	movs	r3, #0
- 8002484:	f8c7 3404 	str.w	r3, [r7, #1028]	; 0x404
+ 800248e:	2300      	movs	r3, #0
+ 8002490:	67fb      	str	r3, [r7, #124]	; 0x7c
 		forwardIntegerPart = -1;
- 8002488:	f04f 33ff 	mov.w	r3, #4294967295
- 800248c:	f8c7 3400 	str.w	r3, [r7, #1024]	; 0x400
+ 8002492:	f04f 33ff 	mov.w	r3, #4294967295
+ 8002496:	67bb      	str	r3, [r7, #120]	; 0x78
 	}
 
 	sprintf(message, "L: %d.%d F: %d.%d R: %d.%d",leftIntegerPart, leftDecimalPart, forwardIntegerPart, forwardDecimalPart, rightIntegerPart, rightDecimalPart );
- 8002490:	f107 0014 	add.w	r0, r7, #20
- 8002494:	f8d7 340c 	ldr.w	r3, [r7, #1036]	; 0x40c
- 8002498:	9303      	str	r3, [sp, #12]
- 800249a:	f8d7 3408 	ldr.w	r3, [r7, #1032]	; 0x408
- 800249e:	9302      	str	r3, [sp, #8]
- 80024a0:	f8d7 3404 	ldr.w	r3, [r7, #1028]	; 0x404
- 80024a4:	9301      	str	r3, [sp, #4]
- 80024a6:	f8d7 3400 	ldr.w	r3, [r7, #1024]	; 0x400
- 80024aa:	9300      	str	r3, [sp, #0]
- 80024ac:	f8d7 3414 	ldr.w	r3, [r7, #1044]	; 0x414
- 80024b0:	f8d7 2410 	ldr.w	r2, [r7, #1040]	; 0x410
- 80024b4:	4921      	ldr	r1, [pc, #132]	; (800253c <sensorMessageAll+0x224>)
- 80024b6:	f000 faef 	bl	8002a98 <siprintf>
+ 8002498:	f107 0010 	add.w	r0, r7, #16
+ 800249c:	f8d7 3084 	ldr.w	r3, [r7, #132]	; 0x84
+ 80024a0:	9303      	str	r3, [sp, #12]
+ 80024a2:	f8d7 3080 	ldr.w	r3, [r7, #128]	; 0x80
+ 80024a6:	9302      	str	r3, [sp, #8]
+ 80024a8:	6ffb      	ldr	r3, [r7, #124]	; 0x7c
+ 80024aa:	9301      	str	r3, [sp, #4]
+ 80024ac:	6fbb      	ldr	r3, [r7, #120]	; 0x78
+ 80024ae:	9300      	str	r3, [sp, #0]
+ 80024b0:	f8d7 308c 	ldr.w	r3, [r7, #140]	; 0x8c
+ 80024b4:	f8d7 2088 	ldr.w	r2, [r7, #136]	; 0x88
+ 80024b8:	491f      	ldr	r1, [pc, #124]	; (8002538 <sensorMessageAll+0x1e4>)
+ 80024ba:	f000 faeb 	bl	8002a94 <siprintf>
 
 	//pridanie noveho riadku
 	int increment = 0;
- 80024ba:	2300      	movs	r3, #0
- 80024bc:	f8c7 33fc 	str.w	r3, [r7, #1020]	; 0x3fc
+ 80024be:	2300      	movs	r3, #0
+ 80024c0:	677b      	str	r3, [r7, #116]	; 0x74
 	while (message[increment] != 0)
- 80024c0:	e004      	b.n	80024cc <sensorMessageAll+0x1b4>
+ 80024c2:	e002      	b.n	80024ca <sensorMessageAll+0x176>
 	{
 		//hladanie konca spravy
 		increment++;
- 80024c2:	f8d7 33fc 	ldr.w	r3, [r7, #1020]	; 0x3fc
+ 80024c4:	6f7b      	ldr	r3, [r7, #116]	; 0x74
  80024c6:	3301      	adds	r3, #1
- 80024c8:	f8c7 33fc 	str.w	r3, [r7, #1020]	; 0x3fc
+ 80024c8:	677b      	str	r3, [r7, #116]	; 0x74
 
 	sprintf(message, "L: %d.%d F: %d.%d R: %d.%d",leftIntegerPart, leftDecimalPart, forwardIntegerPart, forwardDecimalPart, rightIntegerPart, rightDecimalPart );
 
 	//pridanie noveho riadku
 	int increment = 0;
 	while (message[increment] != 0)
- 80024cc:	f107 0214 	add.w	r2, r7, #20
- 80024d0:	f8d7 33fc 	ldr.w	r3, [r7, #1020]	; 0x3fc
- 80024d4:	4413      	add	r3, r2
- 80024d6:	781b      	ldrb	r3, [r3, #0]
- 80024d8:	2b00      	cmp	r3, #0
- 80024da:	d1f2      	bne.n	80024c2 <sensorMessageAll+0x1aa>
+ 80024ca:	f107 0210 	add.w	r2, r7, #16
+ 80024ce:	6f7b      	ldr	r3, [r7, #116]	; 0x74
+ 80024d0:	4413      	add	r3, r2
+ 80024d2:	781b      	ldrb	r3, [r3, #0]
+ 80024d4:	2b00      	cmp	r3, #0
+ 80024d6:	d1f5      	bne.n	80024c4 <sensorMessageAll+0x170>
 	{
 		//hladanie konca spravy
 		increment++;
 	}
 	message[increment + 1] = 13;//carriage return
- 80024dc:	f8d7 33fc 	ldr.w	r3, [r7, #1020]	; 0x3fc
- 80024e0:	3301      	adds	r3, #1
- 80024e2:	f107 0214 	add.w	r2, r7, #20
- 80024e6:	210d      	movs	r1, #13
- 80024e8:	54d1      	strb	r1, [r2, r3]
+ 80024d8:	6f7b      	ldr	r3, [r7, #116]	; 0x74
+ 80024da:	3301      	adds	r3, #1
+ 80024dc:	f107 0290 	add.w	r2, r7, #144	; 0x90
+ 80024e0:	4413      	add	r3, r2
+ 80024e2:	220d      	movs	r2, #13
+ 80024e4:	f803 2c80 	strb.w	r2, [r3, #-128]
 	message[increment] = 10;//new line
- 80024ea:	f107 0214 	add.w	r2, r7, #20
- 80024ee:	f8d7 33fc 	ldr.w	r3, [r7, #1020]	; 0x3fc
- 80024f2:	4413      	add	r3, r2
- 80024f4:	220a      	movs	r2, #10
- 80024f6:	701a      	strb	r2, [r3, #0]
+ 80024e8:	f107 0210 	add.w	r2, r7, #16
+ 80024ec:	6f7b      	ldr	r3, [r7, #116]	; 0x74
+ 80024ee:	4413      	add	r3, r2
+ 80024f0:	220a      	movs	r2, #10
+ 80024f2:	701a      	strb	r2, [r3, #0]
 	message[increment + 2] = 0;
- 80024f8:	f8d7 33fc 	ldr.w	r3, [r7, #1020]	; 0x3fc
- 80024fc:	3302      	adds	r3, #2
- 80024fe:	f107 0214 	add.w	r2, r7, #20
- 8002502:	2100      	movs	r1, #0
- 8002504:	54d1      	strb	r1, [r2, r3]
+ 80024f4:	6f7b      	ldr	r3, [r7, #116]	; 0x74
+ 80024f6:	3302      	adds	r3, #2
+ 80024f8:	f107 0290 	add.w	r2, r7, #144	; 0x90
+ 80024fc:	4413      	add	r3, r2
+ 80024fe:	2200      	movs	r2, #0
+ 8002500:	f803 2c80 	strb.w	r2, [r3, #-128]
 
 	//odoslanie prveho znaku
 	switch (printToUSARTbuffer(message))
- 8002506:	f107 0314 	add.w	r3, r7, #20
- 800250a:	4618      	mov	r0, r3
- 800250c:	f7ff fec0 	bl	8002290 <printToUSARTbuffer>
- 8002510:	4603      	mov	r3, r0
- 8002512:	f113 0f02 	cmn.w	r3, #2
- 8002516:	d005      	beq.n	8002524 <sensorMessageAll+0x20c>
- 8002518:	f1b3 3fff 	cmp.w	r3, #4294967295
- 800251c:	d105      	bne.n	800252a <sensorMessageAll+0x212>
+ 8002504:	f107 0310 	add.w	r3, r7, #16
+ 8002508:	4618      	mov	r0, r3
+ 800250a:	f7ff fedf 	bl	80022cc <printToUSARTbuffer>
+ 800250e:	4603      	mov	r3, r0
+ 8002510:	f113 0f02 	cmn.w	r3, #2
+ 8002514:	d005      	beq.n	8002522 <sensorMessageAll+0x1ce>
+ 8002516:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 800251a:	d105      	bne.n	8002528 <sensorMessageAll+0x1d4>
 	{
 	case -1:
 		return -1;//USART buffer nie je pripraveny
- 800251e:	f04f 33ff 	mov.w	r3, #4294967295
- 8002522:	e003      	b.n	800252c <sensorMessageAll+0x214>
+ 800251c:	f04f 33ff 	mov.w	r3, #4294967295
+ 8002520:	e003      	b.n	800252a <sensorMessageAll+0x1d6>
 		break;
 	case -2:
 		return -2;//prazdna sprava
- 8002524:	f06f 0301 	mvn.w	r3, #1
- 8002528:	e000      	b.n	800252c <sensorMessageAll+0x214>
+ 8002522:	f06f 0301 	mvn.w	r3, #1
+ 8002526:	e000      	b.n	800252a <sensorMessageAll+0x1d6>
 		break;
 	}
 
 	return 0;
- 800252a:	2300      	movs	r3, #0
+ 8002528:	2300      	movs	r3, #0
 }
- 800252c:	4618      	mov	r0, r3
- 800252e:	f207 471c 	addw	r7, r7, #1052	; 0x41c
- 8002532:	46bd      	mov	sp, r7
- 8002534:	bd90      	pop	{r4, r7, pc}
- 8002536:	bf00      	nop
- 8002538:	40590000 	.word	0x40590000
- 800253c:	08002b3c 	.word	0x08002b3c
+ 800252a:	4618      	mov	r0, r3
+ 800252c:	3794      	adds	r7, #148	; 0x94
+ 800252e:	46bd      	mov	sp, r7
+ 8002530:	bd90      	pop	{r4, r7, pc}
+ 8002532:	bf00      	nop
+ 8002534:	40590000 	.word	0x40590000
+ 8002538:	08002b38 	.word	0x08002b38
 
-08002540 <USART3_IRQHandler>:
+0800253c <USART3_IRQHandler>:
 
 void PRN_USART_IRQHANDLER(void)
 {
- 8002540:	b580      	push	{r7, lr}
- 8002542:	af00      	add	r7, sp, #0
+ 800253c:	b580      	push	{r7, lr}
+ 800253e:	af00      	add	r7, sp, #0
 	if(USART_GetITStatus(PRN_USART, USART_IT_RXNE) != RESET)
- 8002544:	f240 5125 	movw	r1, #1317	; 0x525
- 8002548:	481d      	ldr	r0, [pc, #116]	; (80025c0 <USART3_IRQHandler+0x80>)
- 800254a:	f7ff f997 	bl	800187c <USART_GetITStatus>
- 800254e:	4603      	mov	r3, r0
- 8002550:	2b00      	cmp	r3, #0
- 8002552:	d00b      	beq.n	800256c <USART3_IRQHandler+0x2c>
+ 8002540:	f240 5125 	movw	r1, #1317	; 0x525
+ 8002544:	481d      	ldr	r0, [pc, #116]	; (80025bc <USART3_IRQHandler+0x80>)
+ 8002546:	f7ff f999 	bl	800187c <USART_GetITStatus>
+ 800254a:	4603      	mov	r3, r0
+ 800254c:	2b00      	cmp	r3, #0
+ 800254e:	d00b      	beq.n	8002568 <USART3_IRQHandler+0x2c>
 	{
 		USART_ClearITPendingBit(PRN_USART, USART_IT_RXNE);
- 8002554:	f240 5125 	movw	r1, #1317	; 0x525
- 8002558:	4819      	ldr	r0, [pc, #100]	; (80025c0 <USART3_IRQHandler+0x80>)
- 800255a:	f7ff f9e9 	bl	8001930 <USART_ClearITPendingBit>
+ 8002550:	f240 5125 	movw	r1, #1317	; 0x525
+ 8002554:	4819      	ldr	r0, [pc, #100]	; (80025bc <USART3_IRQHandler+0x80>)
+ 8002556:	f7ff f9eb 	bl	8001930 <USART_ClearITPendingBit>
 		receivedChar = USART_ReceiveData(PRN_USART);
- 800255e:	4818      	ldr	r0, [pc, #96]	; (80025c0 <USART3_IRQHandler+0x80>)
- 8002560:	f7ff f908 	bl	8001774 <USART_ReceiveData>
- 8002564:	4603      	mov	r3, r0
- 8002566:	461a      	mov	r2, r3
- 8002568:	4b16      	ldr	r3, [pc, #88]	; (80025c4 <USART3_IRQHandler+0x84>)
- 800256a:	801a      	strh	r2, [r3, #0]
+ 800255a:	4818      	ldr	r0, [pc, #96]	; (80025bc <USART3_IRQHandler+0x80>)
+ 800255c:	f7ff f90a 	bl	8001774 <USART_ReceiveData>
+ 8002560:	4603      	mov	r3, r0
+ 8002562:	461a      	mov	r2, r3
+ 8002564:	4b16      	ldr	r3, [pc, #88]	; (80025c0 <USART3_IRQHandler+0x84>)
+ 8002566:	801a      	strh	r2, [r3, #0]
 	}
 	if(USART_GetFlagStatus(PRN_USART, USART_FLAG_TC) != RESET)
- 800256c:	2140      	movs	r1, #64	; 0x40
- 800256e:	4814      	ldr	r0, [pc, #80]	; (80025c0 <USART3_IRQHandler+0x80>)
- 8002570:	f7ff f958 	bl	8001824 <USART_GetFlagStatus>
- 8002574:	4603      	mov	r3, r0
- 8002576:	2b00      	cmp	r3, #0
- 8002578:	d020      	beq.n	80025bc <USART3_IRQHandler+0x7c>
+ 8002568:	2140      	movs	r1, #64	; 0x40
+ 800256a:	4814      	ldr	r0, [pc, #80]	; (80025bc <USART3_IRQHandler+0x80>)
+ 800256c:	f7ff f95a 	bl	8001824 <USART_GetFlagStatus>
+ 8002570:	4603      	mov	r3, r0
+ 8002572:	2b00      	cmp	r3, #0
+ 8002574:	d020      	beq.n	80025b8 <USART3_IRQHandler+0x7c>
 	{
 		USART_ClearFlag(PRN_USART, USART_FLAG_TC);
- 800257a:	2140      	movs	r1, #64	; 0x40
- 800257c:	4810      	ldr	r0, [pc, #64]	; (80025c0 <USART3_IRQHandler+0x80>)
- 800257e:	f7ff f96d 	bl	800185c <USART_ClearFlag>
+ 8002576:	2140      	movs	r1, #64	; 0x40
+ 8002578:	4810      	ldr	r0, [pc, #64]	; (80025bc <USART3_IRQHandler+0x80>)
+ 800257a:	f7ff f96f 	bl	800185c <USART_ClearFlag>
 		USARTbufferInkr++;
- 8002582:	4b11      	ldr	r3, [pc, #68]	; (80025c8 <USART3_IRQHandler+0x88>)
- 8002584:	681b      	ldr	r3, [r3, #0]
- 8002586:	3301      	adds	r3, #1
- 8002588:	4a0f      	ldr	r2, [pc, #60]	; (80025c8 <USART3_IRQHandler+0x88>)
- 800258a:	6013      	str	r3, [r2, #0]
+ 800257e:	4b11      	ldr	r3, [pc, #68]	; (80025c4 <USART3_IRQHandler+0x88>)
+ 8002580:	681b      	ldr	r3, [r3, #0]
+ 8002582:	3301      	adds	r3, #1
+ 8002584:	4a0f      	ldr	r2, [pc, #60]	; (80025c4 <USART3_IRQHandler+0x88>)
+ 8002586:	6013      	str	r3, [r2, #0]
 		if( USARTbufferOut[USARTbufferInkr] != '\0')
- 800258c:	4b0e      	ldr	r3, [pc, #56]	; (80025c8 <USART3_IRQHandler+0x88>)
- 800258e:	681b      	ldr	r3, [r3, #0]
- 8002590:	4a0e      	ldr	r2, [pc, #56]	; (80025cc <USART3_IRQHandler+0x8c>)
- 8002592:	5cd3      	ldrb	r3, [r2, r3]
- 8002594:	b2db      	uxtb	r3, r3
- 8002596:	2b00      	cmp	r3, #0
- 8002598:	d00a      	beq.n	80025b0 <USART3_IRQHandler+0x70>
+ 8002588:	4b0e      	ldr	r3, [pc, #56]	; (80025c4 <USART3_IRQHandler+0x88>)
+ 800258a:	681b      	ldr	r3, [r3, #0]
+ 800258c:	4a0e      	ldr	r2, [pc, #56]	; (80025c8 <USART3_IRQHandler+0x8c>)
+ 800258e:	5cd3      	ldrb	r3, [r2, r3]
+ 8002590:	b2db      	uxtb	r3, r3
+ 8002592:	2b00      	cmp	r3, #0
+ 8002594:	d00a      	beq.n	80025ac <USART3_IRQHandler+0x70>
 		{
 			USART_SendData(PRN_USART, USARTbufferOut[USARTbufferInkr]);
- 800259a:	4b0b      	ldr	r3, [pc, #44]	; (80025c8 <USART3_IRQHandler+0x88>)
- 800259c:	681b      	ldr	r3, [r3, #0]
- 800259e:	4a0b      	ldr	r2, [pc, #44]	; (80025cc <USART3_IRQHandler+0x8c>)
- 80025a0:	5cd3      	ldrb	r3, [r2, r3]
- 80025a2:	b2db      	uxtb	r3, r3
- 80025a4:	b29b      	uxth	r3, r3
- 80025a6:	4619      	mov	r1, r3
- 80025a8:	4805      	ldr	r0, [pc, #20]	; (80025c0 <USART3_IRQHandler+0x80>)
- 80025aa:	f7ff f8d1 	bl	8001750 <USART_SendData>
+ 8002596:	4b0b      	ldr	r3, [pc, #44]	; (80025c4 <USART3_IRQHandler+0x88>)
+ 8002598:	681b      	ldr	r3, [r3, #0]
+ 800259a:	4a0b      	ldr	r2, [pc, #44]	; (80025c8 <USART3_IRQHandler+0x8c>)
+ 800259c:	5cd3      	ldrb	r3, [r2, r3]
+ 800259e:	b2db      	uxtb	r3, r3
+ 80025a0:	b29b      	uxth	r3, r3
+ 80025a2:	4619      	mov	r1, r3
+ 80025a4:	4805      	ldr	r0, [pc, #20]	; (80025bc <USART3_IRQHandler+0x80>)
+ 80025a6:	f7ff f8d3 	bl	8001750 <USART_SendData>
 		{
 			USARTbufferInkr = 0;
 			USARTbufferRDY = 1;
 		}
 	}
 }
- 80025ae:	e005      	b.n	80025bc <USART3_IRQHandler+0x7c>
+ 80025aa:	e005      	b.n	80025b8 <USART3_IRQHandler+0x7c>
 		{
 			USART_SendData(PRN_USART, USARTbufferOut[USARTbufferInkr]);
 		}
 		else
 		{
 			USARTbufferInkr = 0;
- 80025b0:	4b05      	ldr	r3, [pc, #20]	; (80025c8 <USART3_IRQHandler+0x88>)
- 80025b2:	2200      	movs	r2, #0
- 80025b4:	601a      	str	r2, [r3, #0]
+ 80025ac:	4b05      	ldr	r3, [pc, #20]	; (80025c4 <USART3_IRQHandler+0x88>)
+ 80025ae:	2200      	movs	r2, #0
+ 80025b0:	601a      	str	r2, [r3, #0]
 			USARTbufferRDY = 1;
- 80025b6:	4b06      	ldr	r3, [pc, #24]	; (80025d0 <USART3_IRQHandler+0x90>)
- 80025b8:	2201      	movs	r2, #1
- 80025ba:	601a      	str	r2, [r3, #0]
+ 80025b2:	4b06      	ldr	r3, [pc, #24]	; (80025cc <USART3_IRQHandler+0x90>)
+ 80025b4:	2201      	movs	r2, #1
+ 80025b6:	601a      	str	r2, [r3, #0]
 		}
 	}
 }
- 80025bc:	bf00      	nop
- 80025be:	bd80      	pop	{r7, pc}
- 80025c0:	40004800 	.word	0x40004800
- 80025c4:	20000078 	.word	0x20000078
- 80025c8:	20000074 	.word	0x20000074
- 80025cc:	2000007c 	.word	0x2000007c
- 80025d0:	20000070 	.word	0x20000070
+ 80025b8:	bf00      	nop
+ 80025ba:	bd80      	pop	{r7, pc}
+ 80025bc:	40004800 	.word	0x40004800
+ 80025c0:	20000050 	.word	0x20000050
+ 80025c4:	2000004c 	.word	0x2000004c
+ 80025c8:	20000054 	.word	0x20000054
+ 80025cc:	20000048 	.word	0x20000048
 
-080025d4 <inicializaciaPrerusenieUSART>:
+080025d0 <inicializaciaPrerusenieUSART>:
 
 
 void inicializaciaPrerusenieUSART(void)
 {
- 80025d4:	b580      	push	{r7, lr}
- 80025d6:	b082      	sub	sp, #8
- 80025d8:	af00      	add	r7, sp, #0
+ 80025d0:	b580      	push	{r7, lr}
+ 80025d2:	b082      	sub	sp, #8
+ 80025d4:	af00      	add	r7, sp, #0
 	//NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 	NVIC_InitTypeDef NVIC_InitStructure;
 	NVIC_InitStructure.NVIC_IRQChannel = PRN_USART_NVIC_IRQ ; //zoznam prerušení nájdete v súbore stm32l1xx.h
- 80025da:	2327      	movs	r3, #39	; 0x27
- 80025dc:	713b      	strb	r3, [r7, #4]
+ 80025d6:	2327      	movs	r3, #39	; 0x27
+ 80025d8:	713b      	strb	r3, [r7, #4]
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
- 80025de:	2302      	movs	r3, #2
- 80025e0:	717b      	strb	r3, [r7, #5]
+ 80025da:	2302      	movs	r3, #2
+ 80025dc:	717b      	strb	r3, [r7, #5]
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
- 80025e2:	2302      	movs	r3, #2
- 80025e4:	71bb      	strb	r3, [r7, #6]
+ 80025de:	2302      	movs	r3, #2
+ 80025e0:	71bb      	strb	r3, [r7, #6]
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
- 80025e6:	2301      	movs	r3, #1
- 80025e8:	71fb      	strb	r3, [r7, #7]
+ 80025e2:	2301      	movs	r3, #1
+ 80025e4:	71fb      	strb	r3, [r7, #7]
 	NVIC_Init(&NVIC_InitStructure);
- 80025ea:	1d3b      	adds	r3, r7, #4
- 80025ec:	4618      	mov	r0, r3
- 80025ee:	f7fe fa41 	bl	8000a74 <NVIC_Init>
+ 80025e6:	1d3b      	adds	r3, r7, #4
+ 80025e8:	4618      	mov	r0, r3
+ 80025ea:	f7fe fa43 	bl	8000a74 <NVIC_Init>
 
 }
- 80025f2:	bf00      	nop
- 80025f4:	3708      	adds	r7, #8
- 80025f6:	46bd      	mov	sp, r7
- 80025f8:	bd80      	pop	{r7, pc}
- 80025fa:	bf00      	nop
+ 80025ee:	bf00      	nop
+ 80025f0:	3708      	adds	r7, #8
+ 80025f2:	46bd      	mov	sp, r7
+ 80025f4:	bd80      	pop	{r7, pc}
+ 80025f6:	bf00      	nop
 
-080025fc <inicializaciaUSART>:
+080025f8 <inicializaciaUSART>:
 void inicializaciaUSART(void)
 {
- 80025fc:	b580      	push	{r7, lr}
- 80025fe:	b086      	sub	sp, #24
- 8002600:	af00      	add	r7, sp, #0
+ 80025f8:	b580      	push	{r7, lr}
+ 80025fa:	b086      	sub	sp, #24
+ 80025fc:	af00      	add	r7, sp, #0
 	RCC_AHBPeriphClockCmd(PRN_USART_GPIO_RCC, ENABLE);
- 8002602:	2101      	movs	r1, #1
- 8002604:	2004      	movs	r0, #4
- 8002606:	f7fe fc95 	bl	8000f34 <RCC_AHBPeriphClockCmd>
+ 80025fe:	2101      	movs	r1, #1
+ 8002600:	2004      	movs	r0, #4
+ 8002602:	f7fe fc97 	bl	8000f34 <RCC_AHBPeriphClockCmd>
 
 	/* Configure USART Tx and Rx pins */
 	GPIO_InitTypeDef GPIO_InitStructure;
 	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
- 800260a:	2302      	movs	r3, #2
- 800260c:	753b      	strb	r3, [r7, #20]
+ 8002606:	2302      	movs	r3, #2
+ 8002608:	753b      	strb	r3, [r7, #20]
 	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
- 800260e:	2303      	movs	r3, #3
- 8002610:	757b      	strb	r3, [r7, #21]
+ 800260a:	2303      	movs	r3, #3
+ 800260c:	757b      	strb	r3, [r7, #21]
 	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
- 8002612:	2300      	movs	r3, #0
- 8002614:	75bb      	strb	r3, [r7, #22]
+ 800260e:	2300      	movs	r3, #0
+ 8002610:	75bb      	strb	r3, [r7, #22]
 	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
- 8002616:	2300      	movs	r3, #0
- 8002618:	75fb      	strb	r3, [r7, #23]
+ 8002612:	2300      	movs	r3, #0
+ 8002614:	75fb      	strb	r3, [r7, #23]
 	  GPIO_InitStructure.GPIO_Pin = PRN_USART_RXDPIN_PIN | PRN_USART_TXDPIN_PIN;
- 800261a:	f44f 6340 	mov.w	r3, #3072	; 0xc00
- 800261e:	613b      	str	r3, [r7, #16]
+ 8002616:	f44f 6340 	mov.w	r3, #3072	; 0xc00
+ 800261a:	613b      	str	r3, [r7, #16]
 	  GPIO_PinAFConfig(PRN_USART_GPIOPORT, PRN_USART_TXDPIN_SOURCE, PRN_USART_GPIO_AF);
- 8002620:	2207      	movs	r2, #7
- 8002622:	210a      	movs	r1, #10
- 8002624:	481c      	ldr	r0, [pc, #112]	; (8002698 <inicializaciaUSART+0x9c>)
- 8002626:	f7fe fb63 	bl	8000cf0 <GPIO_PinAFConfig>
+ 800261c:	2207      	movs	r2, #7
+ 800261e:	210a      	movs	r1, #10
+ 8002620:	481c      	ldr	r0, [pc, #112]	; (8002694 <inicializaciaUSART+0x9c>)
+ 8002622:	f7fe fb65 	bl	8000cf0 <GPIO_PinAFConfig>
 	  GPIO_PinAFConfig(PRN_USART_GPIOPORT, PRN_USART_RXDPIN_SOURCE, PRN_USART_GPIO_AF);
- 800262a:	2207      	movs	r2, #7
- 800262c:	210b      	movs	r1, #11
- 800262e:	481a      	ldr	r0, [pc, #104]	; (8002698 <inicializaciaUSART+0x9c>)
- 8002630:	f7fe fb5e 	bl	8000cf0 <GPIO_PinAFConfig>
+ 8002626:	2207      	movs	r2, #7
+ 8002628:	210b      	movs	r1, #11
+ 800262a:	481a      	ldr	r0, [pc, #104]	; (8002694 <inicializaciaUSART+0x9c>)
+ 800262c:	f7fe fb60 	bl	8000cf0 <GPIO_PinAFConfig>
 	  GPIO_Init(PRN_USART_GPIOPORT, &GPIO_InitStructure);
- 8002634:	f107 0310 	add.w	r3, r7, #16
- 8002638:	4619      	mov	r1, r3
- 800263a:	4817      	ldr	r0, [pc, #92]	; (8002698 <inicializaciaUSART+0x9c>)
- 800263c:	f7fe fa7a 	bl	8000b34 <GPIO_Init>
+ 8002630:	f107 0310 	add.w	r3, r7, #16
+ 8002634:	4619      	mov	r1, r3
+ 8002636:	4817      	ldr	r0, [pc, #92]	; (8002694 <inicializaciaUSART+0x9c>)
+ 8002638:	f7fe fa7c 	bl	8000b34 <GPIO_Init>
 
 	  //usart configuration
 	  PRN_USART_RCC_FUNC(PRN_USART_RCC_ARG, ENABLE);
- 8002640:	2101      	movs	r1, #1
- 8002642:	f44f 2080 	mov.w	r0, #262144	; 0x40000
- 8002646:	f7fe fcb1 	bl	8000fac <RCC_APB1PeriphClockCmd>
+ 800263c:	2101      	movs	r1, #1
+ 800263e:	f44f 2080 	mov.w	r0, #262144	; 0x40000
+ 8002642:	f7fe fcb3 	bl	8000fac <RCC_APB1PeriphClockCmd>
 
 	  USART_InitTypeDef USART_InitStructure;
 	  USART_InitStructure.USART_BaudRate = 19200;
- 800264a:	f44f 4396 	mov.w	r3, #19200	; 0x4b00
- 800264e:	603b      	str	r3, [r7, #0]
+ 8002646:	f44f 4396 	mov.w	r3, #19200	; 0x4b00
+ 800264a:	603b      	str	r3, [r7, #0]
 	  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
- 8002650:	2300      	movs	r3, #0
- 8002652:	80bb      	strh	r3, [r7, #4]
+ 800264c:	2300      	movs	r3, #0
+ 800264e:	80bb      	strh	r3, [r7, #4]
 	  USART_InitStructure.USART_StopBits = USART_StopBits_1;
- 8002654:	2300      	movs	r3, #0
- 8002656:	80fb      	strh	r3, [r7, #6]
+ 8002650:	2300      	movs	r3, #0
+ 8002652:	80fb      	strh	r3, [r7, #6]
 	  USART_InitStructure.USART_Parity = USART_Parity_No;
- 8002658:	2300      	movs	r3, #0
- 800265a:	813b      	strh	r3, [r7, #8]
+ 8002654:	2300      	movs	r3, #0
+ 8002656:	813b      	strh	r3, [r7, #8]
 	  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
- 800265c:	2300      	movs	r3, #0
- 800265e:	81bb      	strh	r3, [r7, #12]
+ 8002658:	2300      	movs	r3, #0
+ 800265a:	81bb      	strh	r3, [r7, #12]
 	  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
- 8002660:	230c      	movs	r3, #12
- 8002662:	817b      	strh	r3, [r7, #10]
+ 800265c:	230c      	movs	r3, #12
+ 800265e:	817b      	strh	r3, [r7, #10]
 	  USART_Init(PRN_USART, &USART_InitStructure);
- 8002664:	463b      	mov	r3, r7
- 8002666:	4619      	mov	r1, r3
- 8002668:	480c      	ldr	r0, [pc, #48]	; (800269c <inicializaciaUSART+0xa0>)
- 800266a:	f7fe ff9d 	bl	80015a8 <USART_Init>
+ 8002660:	463b      	mov	r3, r7
+ 8002662:	4619      	mov	r1, r3
+ 8002664:	480c      	ldr	r0, [pc, #48]	; (8002698 <inicializaciaUSART+0xa0>)
+ 8002666:	f7fe ff9f 	bl	80015a8 <USART_Init>
 	  USART_Cmd(PRN_USART, ENABLE);
- 800266e:	2101      	movs	r1, #1
- 8002670:	480a      	ldr	r0, [pc, #40]	; (800269c <inicializaciaUSART+0xa0>)
- 8002672:	f7ff f84d 	bl	8001710 <USART_Cmd>
+ 800266a:	2101      	movs	r1, #1
+ 800266c:	480a      	ldr	r0, [pc, #40]	; (8002698 <inicializaciaUSART+0xa0>)
+ 800266e:	f7ff f84f 	bl	8001710 <USART_Cmd>
 	  USART_ITConfig(PRN_USART, USART_IT_RXNE, ENABLE);
- 8002676:	2201      	movs	r2, #1
- 8002678:	f240 5125 	movw	r1, #1317	; 0x525
- 800267c:	4807      	ldr	r0, [pc, #28]	; (800269c <inicializaciaUSART+0xa0>)
- 800267e:	f7ff f889 	bl	8001794 <USART_ITConfig>
+ 8002672:	2201      	movs	r2, #1
+ 8002674:	f240 5125 	movw	r1, #1317	; 0x525
+ 8002678:	4807      	ldr	r0, [pc, #28]	; (8002698 <inicializaciaUSART+0xa0>)
+ 800267a:	f7ff f88b 	bl	8001794 <USART_ITConfig>
 	  USART_ITConfig(PRN_USART, USART_IT_TC, ENABLE);
- 8002682:	2201      	movs	r2, #1
- 8002684:	f240 6126 	movw	r1, #1574	; 0x626
- 8002688:	4804      	ldr	r0, [pc, #16]	; (800269c <inicializaciaUSART+0xa0>)
- 800268a:	f7ff f883 	bl	8001794 <USART_ITConfig>
+ 800267e:	2201      	movs	r2, #1
+ 8002680:	f240 6126 	movw	r1, #1574	; 0x626
+ 8002684:	4804      	ldr	r0, [pc, #16]	; (8002698 <inicializaciaUSART+0xa0>)
+ 8002686:	f7ff f885 	bl	8001794 <USART_ITConfig>
 }
- 800268e:	bf00      	nop
- 8002690:	3718      	adds	r7, #24
- 8002692:	46bd      	mov	sp, r7
- 8002694:	bd80      	pop	{r7, pc}
- 8002696:	bf00      	nop
- 8002698:	40020800 	.word	0x40020800
- 800269c:	40004800 	.word	0x40004800
+ 800268a:	bf00      	nop
+ 800268c:	3718      	adds	r7, #24
+ 800268e:	46bd      	mov	sp, r7
+ 8002690:	bd80      	pop	{r7, pc}
+ 8002692:	bf00      	nop
+ 8002694:	40020800 	.word	0x40020800
+ 8002698:	40004800 	.word	0x40004800
 
-080026a0 <Reset_Handler>:
+0800269c <Reset_Handler>:
 
   .section .text.Reset_Handler
   .weak Reset_Handler
   .type Reset_Handler, %function
 Reset_Handler:
   ldr   sp, =_estack    /* Atollic update: set stack pointer */
- 80026a0:	f8df d034 	ldr.w	sp, [pc, #52]	; 80026d8 <LoopFillZerobss+0x14>
+ 800269c:	f8df d034 	ldr.w	sp, [pc, #52]	; 80026d4 <LoopFillZerobss+0x14>
 
 /* Copy the data segment initializers from flash to SRAM */
   movs r1, #0
- 80026a4:	2100      	movs	r1, #0
+ 80026a0:	2100      	movs	r1, #0
   b LoopCopyDataInit
- 80026a6:	e003      	b.n	80026b0 <LoopCopyDataInit>
+ 80026a2:	e003      	b.n	80026ac <LoopCopyDataInit>
 
-080026a8 <CopyDataInit>:
+080026a4 <CopyDataInit>:
 
 CopyDataInit:
   ldr r3, =_sidata
- 80026a8:	4b0c      	ldr	r3, [pc, #48]	; (80026dc <LoopFillZerobss+0x18>)
+ 80026a4:	4b0c      	ldr	r3, [pc, #48]	; (80026d8 <LoopFillZerobss+0x18>)
   ldr r3, [r3, r1]
- 80026aa:	585b      	ldr	r3, [r3, r1]
+ 80026a6:	585b      	ldr	r3, [r3, r1]
   str r3, [r0, r1]
- 80026ac:	5043      	str	r3, [r0, r1]
+ 80026a8:	5043      	str	r3, [r0, r1]
   adds r1, r1, #4
- 80026ae:	3104      	adds	r1, #4
+ 80026aa:	3104      	adds	r1, #4
 
-080026b0 <LoopCopyDataInit>:
+080026ac <LoopCopyDataInit>:
 
 LoopCopyDataInit:
   ldr r0, =_sdata
- 80026b0:	480b      	ldr	r0, [pc, #44]	; (80026e0 <LoopFillZerobss+0x1c>)
+ 80026ac:	480b      	ldr	r0, [pc, #44]	; (80026dc <LoopFillZerobss+0x1c>)
   ldr r3, =_edata
- 80026b2:	4b0c      	ldr	r3, [pc, #48]	; (80026e4 <LoopFillZerobss+0x20>)
+ 80026ae:	4b0c      	ldr	r3, [pc, #48]	; (80026e0 <LoopFillZerobss+0x20>)
   adds r2, r0, r1
- 80026b4:	1842      	adds	r2, r0, r1
+ 80026b0:	1842      	adds	r2, r0, r1
   cmp r2, r3
- 80026b6:	429a      	cmp	r2, r3
+ 80026b2:	429a      	cmp	r2, r3
   bcc CopyDataInit
- 80026b8:	d3f6      	bcc.n	80026a8 <CopyDataInit>
+ 80026b4:	d3f6      	bcc.n	80026a4 <CopyDataInit>
   ldr r2, =_sbss
- 80026ba:	4a0b      	ldr	r2, [pc, #44]	; (80026e8 <LoopFillZerobss+0x24>)
+ 80026b6:	4a0b      	ldr	r2, [pc, #44]	; (80026e4 <LoopFillZerobss+0x24>)
   b LoopFillZerobss
- 80026bc:	e002      	b.n	80026c4 <LoopFillZerobss>
+ 80026b8:	e002      	b.n	80026c0 <LoopFillZerobss>
 
-080026be <FillZerobss>:
+080026ba <FillZerobss>:
 /* Zero fill the bss segment. */
 FillZerobss:
   movs r3, #0
- 80026be:	2300      	movs	r3, #0
+ 80026ba:	2300      	movs	r3, #0
   str r3, [r2], #4
- 80026c0:	f842 3b04 	str.w	r3, [r2], #4
+ 80026bc:	f842 3b04 	str.w	r3, [r2], #4
 
-080026c4 <LoopFillZerobss>:
+080026c0 <LoopFillZerobss>:
 
 LoopFillZerobss:
   ldr r3, = _ebss
- 80026c4:	4b09      	ldr	r3, [pc, #36]	; (80026ec <LoopFillZerobss+0x28>)
+ 80026c0:	4b09      	ldr	r3, [pc, #36]	; (80026e8 <LoopFillZerobss+0x28>)
   cmp r2, r3
- 80026c6:	429a      	cmp	r2, r3
+ 80026c2:	429a      	cmp	r2, r3
   bcc FillZerobss
- 80026c8:	d3f9      	bcc.n	80026be <FillZerobss>
+ 80026c4:	d3f9      	bcc.n	80026ba <FillZerobss>
 
 /* Call the clock system intitialization function.*/
     bl  SystemInit
- 80026ca:	f000 f841 	bl	8002750 <SystemInit>
+ 80026c6:	f000 f841 	bl	800274c <SystemInit>
 /* Call static constructors */
     bl __libc_init_array
- 80026ce:	f000 f9f9 	bl	8002ac4 <__libc_init_array>
+ 80026ca:	f000 f9f9 	bl	8002ac0 <__libc_init_array>
 /* Call the application's entry point.*/
   bl main
- 80026d2:	f7ff f9c5 	bl	8001a60 <main>
+ 80026ce:	f7ff f9c7 	bl	8001a60 <main>
   bx lr
- 80026d6:	4770      	bx	lr
+ 80026d2:	4770      	bx	lr
 
   .section .text.Reset_Handler
   .weak Reset_Handler
   .type Reset_Handler, %function
 Reset_Handler:
   ldr   sp, =_estack    /* Atollic update: set stack pointer */
- 80026d8:	20014000 	.word	0x20014000
+ 80026d4:	20014000 	.word	0x20014000
 /* Copy the data segment initializers from flash to SRAM */
   movs r1, #0
   b LoopCopyDataInit
 
 CopyDataInit:
   ldr r3, =_sidata
- 80026dc:	08002b60 	.word	0x08002b60
+ 80026d8:	08002b5c 	.word	0x08002b5c
   ldr r3, [r3, r1]
   str r3, [r0, r1]
   adds r1, r1, #4
 
 LoopCopyDataInit:
   ldr r0, =_sdata
- 80026e0:	20000000 	.word	0x20000000
+ 80026dc:	20000000 	.word	0x20000000
   ldr r3, =_edata
- 80026e4:	2000001c 	.word	0x2000001c
+ 80026e0:	2000001c 	.word	0x2000001c
   adds r2, r0, r1
   cmp r2, r3
   bcc CopyDataInit
   ldr r2, =_sbss
- 80026e8:	20000020 	.word	0x20000020
+ 80026e4:	20000020 	.word	0x20000020
 FillZerobss:
   movs r3, #0
   str r3, [r2], #4
 
 LoopFillZerobss:
   ldr r3, = _ebss
- 80026ec:	200000e4 	.word	0x200000e4
+ 80026e8:	200000ec 	.word	0x200000ec
 
-080026f0 <ADC1_IRQHandler>:
+080026ec <ADC1_IRQHandler>:
  * @retval : None
 */
     .section .text.Default_Handler,"ax",%progbits
 Default_Handler:
 Infinite_Loop:
   b Infinite_Loop
- 80026f0:	e7fe      	b.n	80026f0 <ADC1_IRQHandler>
+ 80026ec:	e7fe      	b.n	80026ec <ADC1_IRQHandler>
 	...
 
-080026f4 <NMI_Handler>:
+080026f0 <NMI_Handler>:
   * @brief  This function handles NMI exception.
   * @param  None
   * @retval None
   */
 void NMI_Handler(void)
 {
- 80026f4:	b480      	push	{r7}
- 80026f6:	af00      	add	r7, sp, #0
+ 80026f0:	b480      	push	{r7}
+ 80026f2:	af00      	add	r7, sp, #0
 }
- 80026f8:	bf00      	nop
- 80026fa:	46bd      	mov	sp, r7
- 80026fc:	bc80      	pop	{r7}
- 80026fe:	4770      	bx	lr
+ 80026f4:	bf00      	nop
+ 80026f6:	46bd      	mov	sp, r7
+ 80026f8:	bc80      	pop	{r7}
+ 80026fa:	4770      	bx	lr
 
-08002700 <HardFault_Handler>:
+080026fc <HardFault_Handler>:
   * @brief  This function handles Hard Fault exception.
   * @param  None
   * @retval None
   */
 void HardFault_Handler(void)
 {
- 8002700:	b480      	push	{r7}
- 8002702:	af00      	add	r7, sp, #0
+ 80026fc:	b480      	push	{r7}
+ 80026fe:	af00      	add	r7, sp, #0
   /* Go to infinite loop when Hard Fault exception occurs */
   while (1)
   {
   }
- 8002704:	e7fe      	b.n	8002704 <HardFault_Handler+0x4>
- 8002706:	bf00      	nop
+ 8002700:	e7fe      	b.n	8002700 <HardFault_Handler+0x4>
+ 8002702:	bf00      	nop
 
-08002708 <MemManage_Handler>:
+08002704 <MemManage_Handler>:
   * @brief  This function handles Memory Manage exception.
   * @param  None
   * @retval None
   */
 void MemManage_Handler(void)
 {
- 8002708:	b480      	push	{r7}
- 800270a:	af00      	add	r7, sp, #0
+ 8002704:	b480      	push	{r7}
+ 8002706:	af00      	add	r7, sp, #0
   /* Go to infinite loop when Memory Manage exception occurs */
   while (1)
   {
   }
- 800270c:	e7fe      	b.n	800270c <MemManage_Handler+0x4>
- 800270e:	bf00      	nop
+ 8002708:	e7fe      	b.n	8002708 <MemManage_Handler+0x4>
+ 800270a:	bf00      	nop
 
-08002710 <BusFault_Handler>:
+0800270c <BusFault_Handler>:
   * @brief  This function handles Bus Fault exception.
   * @param  None
   * @retval None
   */
 void BusFault_Handler(void)
 {
- 8002710:	b480      	push	{r7}
- 8002712:	af00      	add	r7, sp, #0
+ 800270c:	b480      	push	{r7}
+ 800270e:	af00      	add	r7, sp, #0
   /* Go to infinite loop when Bus Fault exception occurs */
   while (1)
   {
   }
- 8002714:	e7fe      	b.n	8002714 <BusFault_Handler+0x4>
- 8002716:	bf00      	nop
+ 8002710:	e7fe      	b.n	8002710 <BusFault_Handler+0x4>
+ 8002712:	bf00      	nop
 
-08002718 <UsageFault_Handler>:
+08002714 <UsageFault_Handler>:
   * @brief  This function handles Usage Fault exception.
   * @param  None
   * @retval None
   */
 void UsageFault_Handler(void)
 {
- 8002718:	b480      	push	{r7}
- 800271a:	af00      	add	r7, sp, #0
+ 8002714:	b480      	push	{r7}
+ 8002716:	af00      	add	r7, sp, #0
   /* Go to infinite loop when Usage Fault exception occurs */
   while (1)
   {
   }
- 800271c:	e7fe      	b.n	800271c <UsageFault_Handler+0x4>
- 800271e:	bf00      	nop
+ 8002718:	e7fe      	b.n	8002718 <UsageFault_Handler+0x4>
+ 800271a:	bf00      	nop
 
-08002720 <SVC_Handler>:
+0800271c <SVC_Handler>:
   * @brief  This function handles SVCall exception.
   * @param  None
   * @retval None
   */
 void SVC_Handler(void)
 {
- 8002720:	b480      	push	{r7}
- 8002722:	af00      	add	r7, sp, #0
+ 800271c:	b480      	push	{r7}
+ 800271e:	af00      	add	r7, sp, #0
 }
- 8002724:	bf00      	nop
- 8002726:	46bd      	mov	sp, r7
- 8002728:	bc80      	pop	{r7}
- 800272a:	4770      	bx	lr
+ 8002720:	bf00      	nop
+ 8002722:	46bd      	mov	sp, r7
+ 8002724:	bc80      	pop	{r7}
+ 8002726:	4770      	bx	lr
 
-0800272c <DebugMon_Handler>:
+08002728 <DebugMon_Handler>:
   * @brief  This function handles Debug Monitor exception.
   * @param  None
   * @retval None
   */
 void DebugMon_Handler(void)
 {
- 800272c:	b480      	push	{r7}
- 800272e:	af00      	add	r7, sp, #0
+ 8002728:	b480      	push	{r7}
+ 800272a:	af00      	add	r7, sp, #0
 }
- 8002730:	bf00      	nop
- 8002732:	46bd      	mov	sp, r7
- 8002734:	bc80      	pop	{r7}
- 8002736:	4770      	bx	lr
+ 800272c:	bf00      	nop
+ 800272e:	46bd      	mov	sp, r7
+ 8002730:	bc80      	pop	{r7}
+ 8002732:	4770      	bx	lr
 
-08002738 <PendSV_Handler>:
+08002734 <PendSV_Handler>:
   * @brief  This function handles PendSVC exception.
   * @param  None
   * @retval None
   */
 void PendSV_Handler(void)
 {
- 8002738:	b480      	push	{r7}
- 800273a:	af00      	add	r7, sp, #0
+ 8002734:	b480      	push	{r7}
+ 8002736:	af00      	add	r7, sp, #0
 }
- 800273c:	bf00      	nop
- 800273e:	46bd      	mov	sp, r7
- 8002740:	bc80      	pop	{r7}
- 8002742:	4770      	bx	lr
+ 8002738:	bf00      	nop
+ 800273a:	46bd      	mov	sp, r7
+ 800273c:	bc80      	pop	{r7}
+ 800273e:	4770      	bx	lr
 
-08002744 <SysTick_Handler>:
+08002740 <SysTick_Handler>:
   * @brief  This function handles SysTick Handler.
   * @param  None
   * @retval None
   */
 void SysTick_Handler(void)
 {
- 8002744:	b480      	push	{r7}
- 8002746:	af00      	add	r7, sp, #0
+ 8002740:	b480      	push	{r7}
+ 8002742:	af00      	add	r7, sp, #0
 	/*  TimingDelay_Decrement(); */
 #ifdef USE_STM32L_DISCOVERY
   TimingDelay_Decrement();
 #endif
 }
- 8002748:	bf00      	nop
- 800274a:	46bd      	mov	sp, r7
- 800274c:	bc80      	pop	{r7}
- 800274e:	4770      	bx	lr
+ 8002744:	bf00      	nop
+ 8002746:	46bd      	mov	sp, r7
+ 8002748:	bc80      	pop	{r7}
+ 800274a:	4770      	bx	lr
 
-08002750 <SystemInit>:
+0800274c <SystemInit>:
   *         SystemCoreClock variable.
   * @param  None
   * @retval None
   */
 void SystemInit (void)
 {
- 8002750:	b580      	push	{r7, lr}
- 8002752:	af00      	add	r7, sp, #0
+ 800274c:	b580      	push	{r7, lr}
+ 800274e:	af00      	add	r7, sp, #0
   /*!< Set MSION bit */
   RCC->CR |= (uint32_t)0x00000100;
- 8002754:	4a15      	ldr	r2, [pc, #84]	; (80027ac <SystemInit+0x5c>)
- 8002756:	4b15      	ldr	r3, [pc, #84]	; (80027ac <SystemInit+0x5c>)
- 8002758:	681b      	ldr	r3, [r3, #0]
- 800275a:	f443 7380 	orr.w	r3, r3, #256	; 0x100
- 800275e:	6013      	str	r3, [r2, #0]
+ 8002750:	4a15      	ldr	r2, [pc, #84]	; (80027a8 <SystemInit+0x5c>)
+ 8002752:	4b15      	ldr	r3, [pc, #84]	; (80027a8 <SystemInit+0x5c>)
+ 8002754:	681b      	ldr	r3, [r3, #0]
+ 8002756:	f443 7380 	orr.w	r3, r3, #256	; 0x100
+ 800275a:	6013      	str	r3, [r2, #0]
 
   /*!< Reset SW[1:0], HPRE[3:0], PPRE1[2:0], PPRE2[2:0], MCOSEL[2:0] and MCOPRE[2:0] bits */
   RCC->CFGR &= (uint32_t)0x88FFC00C;
- 8002760:	4912      	ldr	r1, [pc, #72]	; (80027ac <SystemInit+0x5c>)
- 8002762:	4b12      	ldr	r3, [pc, #72]	; (80027ac <SystemInit+0x5c>)
- 8002764:	689a      	ldr	r2, [r3, #8]
- 8002766:	4b12      	ldr	r3, [pc, #72]	; (80027b0 <SystemInit+0x60>)
- 8002768:	4013      	ands	r3, r2
- 800276a:	608b      	str	r3, [r1, #8]
+ 800275c:	4912      	ldr	r1, [pc, #72]	; (80027a8 <SystemInit+0x5c>)
+ 800275e:	4b12      	ldr	r3, [pc, #72]	; (80027a8 <SystemInit+0x5c>)
+ 8002760:	689a      	ldr	r2, [r3, #8]
+ 8002762:	4b12      	ldr	r3, [pc, #72]	; (80027ac <SystemInit+0x60>)
+ 8002764:	4013      	ands	r3, r2
+ 8002766:	608b      	str	r3, [r1, #8]
   
   /*!< Reset HSION, HSEON, CSSON and PLLON bits */
   RCC->CR &= (uint32_t)0xEEFEFFFE;
- 800276c:	4a0f      	ldr	r2, [pc, #60]	; (80027ac <SystemInit+0x5c>)
- 800276e:	4b0f      	ldr	r3, [pc, #60]	; (80027ac <SystemInit+0x5c>)
- 8002770:	681b      	ldr	r3, [r3, #0]
- 8002772:	f023 5388 	bic.w	r3, r3, #285212672	; 0x11000000
- 8002776:	f023 1301 	bic.w	r3, r3, #65537	; 0x10001
- 800277a:	6013      	str	r3, [r2, #0]
+ 8002768:	4a0f      	ldr	r2, [pc, #60]	; (80027a8 <SystemInit+0x5c>)
+ 800276a:	4b0f      	ldr	r3, [pc, #60]	; (80027a8 <SystemInit+0x5c>)
+ 800276c:	681b      	ldr	r3, [r3, #0]
+ 800276e:	f023 5388 	bic.w	r3, r3, #285212672	; 0x11000000
+ 8002772:	f023 1301 	bic.w	r3, r3, #65537	; 0x10001
+ 8002776:	6013      	str	r3, [r2, #0]
 
   /*!< Reset HSEBYP bit */
   RCC->CR &= (uint32_t)0xFFFBFFFF;
- 800277c:	4a0b      	ldr	r2, [pc, #44]	; (80027ac <SystemInit+0x5c>)
- 800277e:	4b0b      	ldr	r3, [pc, #44]	; (80027ac <SystemInit+0x5c>)
- 8002780:	681b      	ldr	r3, [r3, #0]
- 8002782:	f423 2380 	bic.w	r3, r3, #262144	; 0x40000
- 8002786:	6013      	str	r3, [r2, #0]
+ 8002778:	4a0b      	ldr	r2, [pc, #44]	; (80027a8 <SystemInit+0x5c>)
+ 800277a:	4b0b      	ldr	r3, [pc, #44]	; (80027a8 <SystemInit+0x5c>)
+ 800277c:	681b      	ldr	r3, [r3, #0]
+ 800277e:	f423 2380 	bic.w	r3, r3, #262144	; 0x40000
+ 8002782:	6013      	str	r3, [r2, #0]
 
   /*!< Reset PLLSRC, PLLMUL[3:0] and PLLDIV[1:0] bits */
   RCC->CFGR &= (uint32_t)0xFF02FFFF;
- 8002788:	4a08      	ldr	r2, [pc, #32]	; (80027ac <SystemInit+0x5c>)
- 800278a:	4b08      	ldr	r3, [pc, #32]	; (80027ac <SystemInit+0x5c>)
- 800278c:	689b      	ldr	r3, [r3, #8]
- 800278e:	f423 037d 	bic.w	r3, r3, #16580608	; 0xfd0000
- 8002792:	6093      	str	r3, [r2, #8]
+ 8002784:	4a08      	ldr	r2, [pc, #32]	; (80027a8 <SystemInit+0x5c>)
+ 8002786:	4b08      	ldr	r3, [pc, #32]	; (80027a8 <SystemInit+0x5c>)
+ 8002788:	689b      	ldr	r3, [r3, #8]
+ 800278a:	f423 037d 	bic.w	r3, r3, #16580608	; 0xfd0000
+ 800278e:	6093      	str	r3, [r2, #8]
 
   /*!< Disable all interrupts */
   RCC->CIR = 0x00000000;
- 8002794:	4b05      	ldr	r3, [pc, #20]	; (80027ac <SystemInit+0x5c>)
- 8002796:	2200      	movs	r2, #0
- 8002798:	60da      	str	r2, [r3, #12]
+ 8002790:	4b05      	ldr	r3, [pc, #20]	; (80027a8 <SystemInit+0x5c>)
+ 8002792:	2200      	movs	r2, #0
+ 8002794:	60da      	str	r2, [r3, #12]
 #ifdef DATA_IN_ExtSRAM
   SystemInit_ExtMemCtl(); 
 #endif /* DATA_IN_ExtSRAM */
     
   /* Configure the System clock frequency, AHB/APBx prescalers and Flash settings */
   SetSysClock();
- 800279a:	f000 f80d 	bl	80027b8 <SetSysClock>
+ 8002796:	f000 f80d 	bl	80027b4 <SetSysClock>
 
 #ifdef VECT_TAB_SRAM
   SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM. */
 #else
   SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH. */
- 800279e:	4b05      	ldr	r3, [pc, #20]	; (80027b4 <SystemInit+0x64>)
- 80027a0:	f04f 6200 	mov.w	r2, #134217728	; 0x8000000
- 80027a4:	609a      	str	r2, [r3, #8]
+ 800279a:	4b05      	ldr	r3, [pc, #20]	; (80027b0 <SystemInit+0x64>)
+ 800279c:	f04f 6200 	mov.w	r2, #134217728	; 0x8000000
+ 80027a0:	609a      	str	r2, [r3, #8]
 #endif
 }
+ 80027a2:	bf00      	nop
+ 80027a4:	bd80      	pop	{r7, pc}
  80027a6:	bf00      	nop
- 80027a8:	bd80      	pop	{r7, pc}
- 80027aa:	bf00      	nop
- 80027ac:	40023800 	.word	0x40023800
- 80027b0:	88ffc00c 	.word	0x88ffc00c
- 80027b4:	e000ed00 	.word	0xe000ed00
+ 80027a8:	40023800 	.word	0x40023800
+ 80027ac:	88ffc00c 	.word	0x88ffc00c
+ 80027b0:	e000ed00 	.word	0xe000ed00
 
-080027b8 <SetSysClock>:
+080027b4 <SetSysClock>:
   *         is reset to the default reset state (done in SystemInit() function).
   * @param  None
   * @retval None
   */
 static void SetSysClock(void)
 {
- 80027b8:	b480      	push	{r7}
- 80027ba:	b083      	sub	sp, #12
- 80027bc:	af00      	add	r7, sp, #0
+ 80027b4:	b480      	push	{r7}
+ 80027b6:	b083      	sub	sp, #12
+ 80027b8:	af00      	add	r7, sp, #0
   __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
+ 80027ba:	2300      	movs	r3, #0
+ 80027bc:	607b      	str	r3, [r7, #4]
  80027be:	2300      	movs	r3, #0
- 80027c0:	607b      	str	r3, [r7, #4]
- 80027c2:	2300      	movs	r3, #0
- 80027c4:	603b      	str	r3, [r7, #0]
+ 80027c0:	603b      	str	r3, [r7, #0]
   
   /* SYSCLK, HCLK, PCLK2 and PCLK1 configuration ---------------------------*/
   /* Enable HSE */
   RCC->CR |= ((uint32_t)RCC_CR_HSEON);
- 80027c6:	4a41      	ldr	r2, [pc, #260]	; (80028cc <SetSysClock+0x114>)
- 80027c8:	4b40      	ldr	r3, [pc, #256]	; (80028cc <SetSysClock+0x114>)
- 80027ca:	681b      	ldr	r3, [r3, #0]
- 80027cc:	f443 3380 	orr.w	r3, r3, #65536	; 0x10000
- 80027d0:	6013      	str	r3, [r2, #0]
+ 80027c2:	4a41      	ldr	r2, [pc, #260]	; (80028c8 <SetSysClock+0x114>)
+ 80027c4:	4b40      	ldr	r3, [pc, #256]	; (80028c8 <SetSysClock+0x114>)
+ 80027c6:	681b      	ldr	r3, [r3, #0]
+ 80027c8:	f443 3380 	orr.w	r3, r3, #65536	; 0x10000
+ 80027cc:	6013      	str	r3, [r2, #0]
  
   /* Wait till HSE is ready and if Time out is reached exit */
   do
   {
     HSEStatus = RCC->CR & RCC_CR_HSERDY;
- 80027d2:	4b3e      	ldr	r3, [pc, #248]	; (80028cc <SetSysClock+0x114>)
- 80027d4:	681b      	ldr	r3, [r3, #0]
- 80027d6:	f403 3300 	and.w	r3, r3, #131072	; 0x20000
- 80027da:	603b      	str	r3, [r7, #0]
+ 80027ce:	4b3e      	ldr	r3, [pc, #248]	; (80028c8 <SetSysClock+0x114>)
+ 80027d0:	681b      	ldr	r3, [r3, #0]
+ 80027d2:	f403 3300 	and.w	r3, r3, #131072	; 0x20000
+ 80027d6:	603b      	str	r3, [r7, #0]
     StartUpCounter++;
- 80027dc:	687b      	ldr	r3, [r7, #4]
- 80027de:	3301      	adds	r3, #1
- 80027e0:	607b      	str	r3, [r7, #4]
+ 80027d8:	687b      	ldr	r3, [r7, #4]
+ 80027da:	3301      	adds	r3, #1
+ 80027dc:	607b      	str	r3, [r7, #4]
   } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
- 80027e2:	683b      	ldr	r3, [r7, #0]
- 80027e4:	2b00      	cmp	r3, #0
- 80027e6:	d103      	bne.n	80027f0 <SetSysClock+0x38>
- 80027e8:	687b      	ldr	r3, [r7, #4]
- 80027ea:	f5b3 6fa0 	cmp.w	r3, #1280	; 0x500
- 80027ee:	d1f0      	bne.n	80027d2 <SetSysClock+0x1a>
+ 80027de:	683b      	ldr	r3, [r7, #0]
+ 80027e0:	2b00      	cmp	r3, #0
+ 80027e2:	d103      	bne.n	80027ec <SetSysClock+0x38>
+ 80027e4:	687b      	ldr	r3, [r7, #4]
+ 80027e6:	f5b3 6fa0 	cmp.w	r3, #1280	; 0x500
+ 80027ea:	d1f0      	bne.n	80027ce <SetSysClock+0x1a>
 
   if ((RCC->CR & RCC_CR_HSERDY) != RESET)
- 80027f0:	4b36      	ldr	r3, [pc, #216]	; (80028cc <SetSysClock+0x114>)
- 80027f2:	681b      	ldr	r3, [r3, #0]
- 80027f4:	f403 3300 	and.w	r3, r3, #131072	; 0x20000
- 80027f8:	2b00      	cmp	r3, #0
- 80027fa:	d002      	beq.n	8002802 <SetSysClock+0x4a>
+ 80027ec:	4b36      	ldr	r3, [pc, #216]	; (80028c8 <SetSysClock+0x114>)
+ 80027ee:	681b      	ldr	r3, [r3, #0]
+ 80027f0:	f403 3300 	and.w	r3, r3, #131072	; 0x20000
+ 80027f4:	2b00      	cmp	r3, #0
+ 80027f6:	d002      	beq.n	80027fe <SetSysClock+0x4a>
   {
     HSEStatus = (uint32_t)0x01;
- 80027fc:	2301      	movs	r3, #1
- 80027fe:	603b      	str	r3, [r7, #0]
- 8002800:	e001      	b.n	8002806 <SetSysClock+0x4e>
+ 80027f8:	2301      	movs	r3, #1
+ 80027fa:	603b      	str	r3, [r7, #0]
+ 80027fc:	e001      	b.n	8002802 <SetSysClock+0x4e>
   }
   else
   {
     HSEStatus = (uint32_t)0x00;
- 8002802:	2300      	movs	r3, #0
- 8002804:	603b      	str	r3, [r7, #0]
+ 80027fe:	2300      	movs	r3, #0
+ 8002800:	603b      	str	r3, [r7, #0]
   }
   
   if (HSEStatus == (uint32_t)0x01)
- 8002806:	683b      	ldr	r3, [r7, #0]
- 8002808:	2b01      	cmp	r3, #1
- 800280a:	d15a      	bne.n	80028c2 <SetSysClock+0x10a>
+ 8002802:	683b      	ldr	r3, [r7, #0]
+ 8002804:	2b01      	cmp	r3, #1
+ 8002806:	d15a      	bne.n	80028be <SetSysClock+0x10a>
   {
     /* Enable 64-bit access */
     FLASH->ACR |= FLASH_ACR_ACC64;
- 800280c:	4a30      	ldr	r2, [pc, #192]	; (80028d0 <SetSysClock+0x118>)
- 800280e:	4b30      	ldr	r3, [pc, #192]	; (80028d0 <SetSysClock+0x118>)
- 8002810:	681b      	ldr	r3, [r3, #0]
- 8002812:	f043 0304 	orr.w	r3, r3, #4
- 8002816:	6013      	str	r3, [r2, #0]
+ 8002808:	4a30      	ldr	r2, [pc, #192]	; (80028cc <SetSysClock+0x118>)
+ 800280a:	4b30      	ldr	r3, [pc, #192]	; (80028cc <SetSysClock+0x118>)
+ 800280c:	681b      	ldr	r3, [r3, #0]
+ 800280e:	f043 0304 	orr.w	r3, r3, #4
+ 8002812:	6013      	str	r3, [r2, #0]
     
     /* Enable Prefetch Buffer */
     FLASH->ACR |= FLASH_ACR_PRFTEN;
- 8002818:	4a2d      	ldr	r2, [pc, #180]	; (80028d0 <SetSysClock+0x118>)
- 800281a:	4b2d      	ldr	r3, [pc, #180]	; (80028d0 <SetSysClock+0x118>)
- 800281c:	681b      	ldr	r3, [r3, #0]
- 800281e:	f043 0302 	orr.w	r3, r3, #2
- 8002822:	6013      	str	r3, [r2, #0]
+ 8002814:	4a2d      	ldr	r2, [pc, #180]	; (80028cc <SetSysClock+0x118>)
+ 8002816:	4b2d      	ldr	r3, [pc, #180]	; (80028cc <SetSysClock+0x118>)
+ 8002818:	681b      	ldr	r3, [r3, #0]
+ 800281a:	f043 0302 	orr.w	r3, r3, #2
+ 800281e:	6013      	str	r3, [r2, #0]
 
     /* Flash 1 wait state */
     FLASH->ACR |= FLASH_ACR_LATENCY;
- 8002824:	4a2a      	ldr	r2, [pc, #168]	; (80028d0 <SetSysClock+0x118>)
- 8002826:	4b2a      	ldr	r3, [pc, #168]	; (80028d0 <SetSysClock+0x118>)
- 8002828:	681b      	ldr	r3, [r3, #0]
- 800282a:	f043 0301 	orr.w	r3, r3, #1
- 800282e:	6013      	str	r3, [r2, #0]
+ 8002820:	4a2a      	ldr	r2, [pc, #168]	; (80028cc <SetSysClock+0x118>)
+ 8002822:	4b2a      	ldr	r3, [pc, #168]	; (80028cc <SetSysClock+0x118>)
+ 8002824:	681b      	ldr	r3, [r3, #0]
+ 8002826:	f043 0301 	orr.w	r3, r3, #1
+ 800282a:	6013      	str	r3, [r2, #0]
     
     /* Power enable */
     RCC->APB1ENR |= RCC_APB1ENR_PWREN;
- 8002830:	4a26      	ldr	r2, [pc, #152]	; (80028cc <SetSysClock+0x114>)
- 8002832:	4b26      	ldr	r3, [pc, #152]	; (80028cc <SetSysClock+0x114>)
- 8002834:	6a5b      	ldr	r3, [r3, #36]	; 0x24
- 8002836:	f043 5380 	orr.w	r3, r3, #268435456	; 0x10000000
- 800283a:	6253      	str	r3, [r2, #36]	; 0x24
+ 800282c:	4a26      	ldr	r2, [pc, #152]	; (80028c8 <SetSysClock+0x114>)
+ 800282e:	4b26      	ldr	r3, [pc, #152]	; (80028c8 <SetSysClock+0x114>)
+ 8002830:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+ 8002832:	f043 5380 	orr.w	r3, r3, #268435456	; 0x10000000
+ 8002836:	6253      	str	r3, [r2, #36]	; 0x24
   
     /* Select the Voltage Range 1 (1.8 V) */
     PWR->CR = PWR_CR_VOS_0;
- 800283c:	4b25      	ldr	r3, [pc, #148]	; (80028d4 <SetSysClock+0x11c>)
- 800283e:	f44f 6200 	mov.w	r2, #2048	; 0x800
- 8002842:	601a      	str	r2, [r3, #0]
+ 8002838:	4b25      	ldr	r3, [pc, #148]	; (80028d0 <SetSysClock+0x11c>)
+ 800283a:	f44f 6200 	mov.w	r2, #2048	; 0x800
+ 800283e:	601a      	str	r2, [r3, #0]
   
     /* Wait Until the Voltage Regulator is ready */
     while((PWR->CSR & PWR_CSR_VOSF) != RESET)
- 8002844:	bf00      	nop
- 8002846:	4b23      	ldr	r3, [pc, #140]	; (80028d4 <SetSysClock+0x11c>)
- 8002848:	685b      	ldr	r3, [r3, #4]
- 800284a:	f003 0310 	and.w	r3, r3, #16
- 800284e:	2b00      	cmp	r3, #0
- 8002850:	d1f9      	bne.n	8002846 <SetSysClock+0x8e>
+ 8002840:	bf00      	nop
+ 8002842:	4b23      	ldr	r3, [pc, #140]	; (80028d0 <SetSysClock+0x11c>)
+ 8002844:	685b      	ldr	r3, [r3, #4]
+ 8002846:	f003 0310 	and.w	r3, r3, #16
+ 800284a:	2b00      	cmp	r3, #0
+ 800284c:	d1f9      	bne.n	8002842 <SetSysClock+0x8e>
     {
     }
         
     /* HCLK = SYSCLK /1*/
     RCC->CFGR |= (uint32_t)RCC_CFGR_HPRE_DIV1;
- 8002852:	4a1e      	ldr	r2, [pc, #120]	; (80028cc <SetSysClock+0x114>)
- 8002854:	4b1d      	ldr	r3, [pc, #116]	; (80028cc <SetSysClock+0x114>)
- 8002856:	689b      	ldr	r3, [r3, #8]
- 8002858:	6093      	str	r3, [r2, #8]
+ 800284e:	4a1e      	ldr	r2, [pc, #120]	; (80028c8 <SetSysClock+0x114>)
+ 8002850:	4b1d      	ldr	r3, [pc, #116]	; (80028c8 <SetSysClock+0x114>)
+ 8002852:	689b      	ldr	r3, [r3, #8]
+ 8002854:	6093      	str	r3, [r2, #8]
   
     /* PCLK2 = HCLK /1*/
     RCC->CFGR |= (uint32_t)RCC_CFGR_PPRE2_DIV1;
- 800285a:	4a1c      	ldr	r2, [pc, #112]	; (80028cc <SetSysClock+0x114>)
- 800285c:	4b1b      	ldr	r3, [pc, #108]	; (80028cc <SetSysClock+0x114>)
- 800285e:	689b      	ldr	r3, [r3, #8]
- 8002860:	6093      	str	r3, [r2, #8]
+ 8002856:	4a1c      	ldr	r2, [pc, #112]	; (80028c8 <SetSysClock+0x114>)
+ 8002858:	4b1b      	ldr	r3, [pc, #108]	; (80028c8 <SetSysClock+0x114>)
+ 800285a:	689b      	ldr	r3, [r3, #8]
+ 800285c:	6093      	str	r3, [r2, #8]
     
     /* PCLK1 = HCLK /1*/
     RCC->CFGR |= (uint32_t)RCC_CFGR_PPRE1_DIV1;
- 8002862:	4a1a      	ldr	r2, [pc, #104]	; (80028cc <SetSysClock+0x114>)
- 8002864:	4b19      	ldr	r3, [pc, #100]	; (80028cc <SetSysClock+0x114>)
- 8002866:	689b      	ldr	r3, [r3, #8]
- 8002868:	6093      	str	r3, [r2, #8]
+ 800285e:	4a1a      	ldr	r2, [pc, #104]	; (80028c8 <SetSysClock+0x114>)
+ 8002860:	4b19      	ldr	r3, [pc, #100]	; (80028c8 <SetSysClock+0x114>)
+ 8002862:	689b      	ldr	r3, [r3, #8]
+ 8002864:	6093      	str	r3, [r2, #8]
     
     /*  PLL configuration */
     RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_PLLSRC | RCC_CFGR_PLLMUL |
- 800286a:	4a18      	ldr	r2, [pc, #96]	; (80028cc <SetSysClock+0x114>)
- 800286c:	4b17      	ldr	r3, [pc, #92]	; (80028cc <SetSysClock+0x114>)
- 800286e:	689b      	ldr	r3, [r3, #8]
- 8002870:	f423 037d 	bic.w	r3, r3, #16580608	; 0xfd0000
- 8002874:	6093      	str	r3, [r2, #8]
+ 8002866:	4a18      	ldr	r2, [pc, #96]	; (80028c8 <SetSysClock+0x114>)
+ 8002868:	4b17      	ldr	r3, [pc, #92]	; (80028c8 <SetSysClock+0x114>)
+ 800286a:	689b      	ldr	r3, [r3, #8]
+ 800286c:	f423 037d 	bic.w	r3, r3, #16580608	; 0xfd0000
+ 8002870:	6093      	str	r3, [r2, #8]
                                         RCC_CFGR_PLLDIV));
     RCC->CFGR |= (uint32_t)(RCC_CFGR_PLLSRC_HSE | RCC_CFGR_PLLMUL12 | RCC_CFGR_PLLDIV3);
- 8002876:	4a15      	ldr	r2, [pc, #84]	; (80028cc <SetSysClock+0x114>)
- 8002878:	4b14      	ldr	r3, [pc, #80]	; (80028cc <SetSysClock+0x114>)
- 800287a:	689b      	ldr	r3, [r3, #8]
- 800287c:	f443 0311 	orr.w	r3, r3, #9502720	; 0x910000
- 8002880:	6093      	str	r3, [r2, #8]
+ 8002872:	4a15      	ldr	r2, [pc, #84]	; (80028c8 <SetSysClock+0x114>)
+ 8002874:	4b14      	ldr	r3, [pc, #80]	; (80028c8 <SetSysClock+0x114>)
+ 8002876:	689b      	ldr	r3, [r3, #8]
+ 8002878:	f443 0311 	orr.w	r3, r3, #9502720	; 0x910000
+ 800287c:	6093      	str	r3, [r2, #8]
 
     /* Enable PLL */
     RCC->CR |= RCC_CR_PLLON;
- 8002882:	4a12      	ldr	r2, [pc, #72]	; (80028cc <SetSysClock+0x114>)
- 8002884:	4b11      	ldr	r3, [pc, #68]	; (80028cc <SetSysClock+0x114>)
- 8002886:	681b      	ldr	r3, [r3, #0]
- 8002888:	f043 7380 	orr.w	r3, r3, #16777216	; 0x1000000
- 800288c:	6013      	str	r3, [r2, #0]
+ 800287e:	4a12      	ldr	r2, [pc, #72]	; (80028c8 <SetSysClock+0x114>)
+ 8002880:	4b11      	ldr	r3, [pc, #68]	; (80028c8 <SetSysClock+0x114>)
+ 8002882:	681b      	ldr	r3, [r3, #0]
+ 8002884:	f043 7380 	orr.w	r3, r3, #16777216	; 0x1000000
+ 8002888:	6013      	str	r3, [r2, #0]
 
     /* Wait till PLL is ready */
     while((RCC->CR & RCC_CR_PLLRDY) == 0)
- 800288e:	bf00      	nop
- 8002890:	4b0e      	ldr	r3, [pc, #56]	; (80028cc <SetSysClock+0x114>)
- 8002892:	681b      	ldr	r3, [r3, #0]
- 8002894:	f003 7300 	and.w	r3, r3, #33554432	; 0x2000000
- 8002898:	2b00      	cmp	r3, #0
- 800289a:	d0f9      	beq.n	8002890 <SetSysClock+0xd8>
+ 800288a:	bf00      	nop
+ 800288c:	4b0e      	ldr	r3, [pc, #56]	; (80028c8 <SetSysClock+0x114>)
+ 800288e:	681b      	ldr	r3, [r3, #0]
+ 8002890:	f003 7300 	and.w	r3, r3, #33554432	; 0x2000000
+ 8002894:	2b00      	cmp	r3, #0
+ 8002896:	d0f9      	beq.n	800288c <SetSysClock+0xd8>
     {
     }
         
     /* Select PLL as system clock source */
     RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
- 800289c:	4a0b      	ldr	r2, [pc, #44]	; (80028cc <SetSysClock+0x114>)
- 800289e:	4b0b      	ldr	r3, [pc, #44]	; (80028cc <SetSysClock+0x114>)
- 80028a0:	689b      	ldr	r3, [r3, #8]
- 80028a2:	f023 0303 	bic.w	r3, r3, #3
- 80028a6:	6093      	str	r3, [r2, #8]
+ 8002898:	4a0b      	ldr	r2, [pc, #44]	; (80028c8 <SetSysClock+0x114>)
+ 800289a:	4b0b      	ldr	r3, [pc, #44]	; (80028c8 <SetSysClock+0x114>)
+ 800289c:	689b      	ldr	r3, [r3, #8]
+ 800289e:	f023 0303 	bic.w	r3, r3, #3
+ 80028a2:	6093      	str	r3, [r2, #8]
     RCC->CFGR |= (uint32_t)RCC_CFGR_SW_PLL;
- 80028a8:	4a08      	ldr	r2, [pc, #32]	; (80028cc <SetSysClock+0x114>)
- 80028aa:	4b08      	ldr	r3, [pc, #32]	; (80028cc <SetSysClock+0x114>)
- 80028ac:	689b      	ldr	r3, [r3, #8]
- 80028ae:	f043 0303 	orr.w	r3, r3, #3
- 80028b2:	6093      	str	r3, [r2, #8]
+ 80028a4:	4a08      	ldr	r2, [pc, #32]	; (80028c8 <SetSysClock+0x114>)
+ 80028a6:	4b08      	ldr	r3, [pc, #32]	; (80028c8 <SetSysClock+0x114>)
+ 80028a8:	689b      	ldr	r3, [r3, #8]
+ 80028aa:	f043 0303 	orr.w	r3, r3, #3
+ 80028ae:	6093      	str	r3, [r2, #8]
 
     /* Wait till PLL is used as system clock source */
     while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS) != (uint32_t)RCC_CFGR_SWS_PLL)
- 80028b4:	bf00      	nop
- 80028b6:	4b05      	ldr	r3, [pc, #20]	; (80028cc <SetSysClock+0x114>)
- 80028b8:	689b      	ldr	r3, [r3, #8]
- 80028ba:	f003 030c 	and.w	r3, r3, #12
- 80028be:	2b0c      	cmp	r3, #12
- 80028c0:	d1f9      	bne.n	80028b6 <SetSysClock+0xfe>
+ 80028b0:	bf00      	nop
+ 80028b2:	4b05      	ldr	r3, [pc, #20]	; (80028c8 <SetSysClock+0x114>)
+ 80028b4:	689b      	ldr	r3, [r3, #8]
+ 80028b6:	f003 030c 	and.w	r3, r3, #12
+ 80028ba:	2b0c      	cmp	r3, #12
+ 80028bc:	d1f9      	bne.n	80028b2 <SetSysClock+0xfe>
   else
   {
     /* If HSE fails to start-up, the application will have wrong clock
        configuration. User can add here some code to deal with this error */
   }
 }
- 80028c2:	bf00      	nop
- 80028c4:	370c      	adds	r7, #12
- 80028c6:	46bd      	mov	sp, r7
- 80028c8:	bc80      	pop	{r7}
- 80028ca:	4770      	bx	lr
- 80028cc:	40023800 	.word	0x40023800
- 80028d0:	40023c00 	.word	0x40023c00
- 80028d4:	40007000 	.word	0x40007000
+ 80028be:	bf00      	nop
+ 80028c0:	370c      	adds	r7, #12
+ 80028c2:	46bd      	mov	sp, r7
+ 80028c4:	bc80      	pop	{r7}
+ 80028c6:	4770      	bx	lr
+ 80028c8:	40023800 	.word	0x40023800
+ 80028cc:	40023c00 	.word	0x40023c00
+ 80028d0:	40007000 	.word	0x40007000
 
-080028d8 <ts_itoa>:
+080028d4 <ts_itoa>:
 **  Abstract: Convert integer to ascii
 **  Returns:  void
 **---------------------------------------------------------------------------
 */
 void ts_itoa(char **buf, unsigned int d, int base)
 {
- 80028d8:	b480      	push	{r7}
- 80028da:	b087      	sub	sp, #28
- 80028dc:	af00      	add	r7, sp, #0
- 80028de:	60f8      	str	r0, [r7, #12]
- 80028e0:	60b9      	str	r1, [r7, #8]
- 80028e2:	607a      	str	r2, [r7, #4]
+ 80028d4:	b480      	push	{r7}
+ 80028d6:	b087      	sub	sp, #28
+ 80028d8:	af00      	add	r7, sp, #0
+ 80028da:	60f8      	str	r0, [r7, #12]
+ 80028dc:	60b9      	str	r1, [r7, #8]
+ 80028de:	607a      	str	r2, [r7, #4]
 	int div = 1;
- 80028e4:	2301      	movs	r3, #1
- 80028e6:	617b      	str	r3, [r7, #20]
+ 80028e0:	2301      	movs	r3, #1
+ 80028e2:	617b      	str	r3, [r7, #20]
 	while (d/div >= base)
- 80028e8:	e004      	b.n	80028f4 <ts_itoa+0x1c>
+ 80028e4:	e004      	b.n	80028f0 <ts_itoa+0x1c>
 		div *= base;
- 80028ea:	697b      	ldr	r3, [r7, #20]
- 80028ec:	687a      	ldr	r2, [r7, #4]
- 80028ee:	fb02 f303 	mul.w	r3, r2, r3
- 80028f2:	617b      	str	r3, [r7, #20]
+ 80028e6:	697b      	ldr	r3, [r7, #20]
+ 80028e8:	687a      	ldr	r2, [r7, #4]
+ 80028ea:	fb02 f303 	mul.w	r3, r2, r3
+ 80028ee:	617b      	str	r3, [r7, #20]
 **---------------------------------------------------------------------------
 */
 void ts_itoa(char **buf, unsigned int d, int base)
 {
 	int div = 1;
 	while (d/div >= base)
- 80028f4:	697b      	ldr	r3, [r7, #20]
- 80028f6:	68ba      	ldr	r2, [r7, #8]
- 80028f8:	fbb2 f2f3 	udiv	r2, r2, r3
- 80028fc:	687b      	ldr	r3, [r7, #4]
- 80028fe:	429a      	cmp	r2, r3
- 8002900:	d2f3      	bcs.n	80028ea <ts_itoa+0x12>
+ 80028f0:	697b      	ldr	r3, [r7, #20]
+ 80028f2:	68ba      	ldr	r2, [r7, #8]
+ 80028f4:	fbb2 f2f3 	udiv	r2, r2, r3
+ 80028f8:	687b      	ldr	r3, [r7, #4]
+ 80028fa:	429a      	cmp	r2, r3
+ 80028fc:	d2f3      	bcs.n	80028e6 <ts_itoa+0x12>
 		div *= base;
 
 	while (div != 0)
- 8002902:	e029      	b.n	8002958 <ts_itoa+0x80>
+ 80028fe:	e029      	b.n	8002954 <ts_itoa+0x80>
 	{
 		int num = d/div;
- 8002904:	697b      	ldr	r3, [r7, #20]
- 8002906:	68ba      	ldr	r2, [r7, #8]
- 8002908:	fbb2 f3f3 	udiv	r3, r2, r3
- 800290c:	613b      	str	r3, [r7, #16]
+ 8002900:	697b      	ldr	r3, [r7, #20]
+ 8002902:	68ba      	ldr	r2, [r7, #8]
+ 8002904:	fbb2 f3f3 	udiv	r3, r2, r3
+ 8002908:	613b      	str	r3, [r7, #16]
 		d = d%div;
- 800290e:	697a      	ldr	r2, [r7, #20]
- 8002910:	68bb      	ldr	r3, [r7, #8]
- 8002912:	fbb3 f1f2 	udiv	r1, r3, r2
- 8002916:	fb02 f201 	mul.w	r2, r2, r1
- 800291a:	1a9b      	subs	r3, r3, r2
- 800291c:	60bb      	str	r3, [r7, #8]
+ 800290a:	697a      	ldr	r2, [r7, #20]
+ 800290c:	68bb      	ldr	r3, [r7, #8]
+ 800290e:	fbb3 f1f2 	udiv	r1, r3, r2
+ 8002912:	fb02 f201 	mul.w	r2, r2, r1
+ 8002916:	1a9b      	subs	r3, r3, r2
+ 8002918:	60bb      	str	r3, [r7, #8]
 		div /= base;
- 800291e:	697a      	ldr	r2, [r7, #20]
- 8002920:	687b      	ldr	r3, [r7, #4]
- 8002922:	fb92 f3f3 	sdiv	r3, r2, r3
- 8002926:	617b      	str	r3, [r7, #20]
+ 800291a:	697a      	ldr	r2, [r7, #20]
+ 800291c:	687b      	ldr	r3, [r7, #4]
+ 800291e:	fb92 f3f3 	sdiv	r3, r2, r3
+ 8002922:	617b      	str	r3, [r7, #20]
 		if (num > 9)
- 8002928:	693b      	ldr	r3, [r7, #16]
- 800292a:	2b09      	cmp	r3, #9
- 800292c:	dd0a      	ble.n	8002944 <ts_itoa+0x6c>
+ 8002924:	693b      	ldr	r3, [r7, #16]
+ 8002926:	2b09      	cmp	r3, #9
+ 8002928:	dd0a      	ble.n	8002940 <ts_itoa+0x6c>
 			*((*buf)++) = (num-10) + 'A';
- 800292e:	68fb      	ldr	r3, [r7, #12]
- 8002930:	681b      	ldr	r3, [r3, #0]
- 8002932:	1c59      	adds	r1, r3, #1
- 8002934:	68fa      	ldr	r2, [r7, #12]
- 8002936:	6011      	str	r1, [r2, #0]
- 8002938:	693a      	ldr	r2, [r7, #16]
+ 800292a:	68fb      	ldr	r3, [r7, #12]
+ 800292c:	681b      	ldr	r3, [r3, #0]
+ 800292e:	1c59      	adds	r1, r3, #1
+ 8002930:	68fa      	ldr	r2, [r7, #12]
+ 8002932:	6011      	str	r1, [r2, #0]
+ 8002934:	693a      	ldr	r2, [r7, #16]
+ 8002936:	b2d2      	uxtb	r2, r2
+ 8002938:	3237      	adds	r2, #55	; 0x37
  800293a:	b2d2      	uxtb	r2, r2
- 800293c:	3237      	adds	r2, #55	; 0x37
- 800293e:	b2d2      	uxtb	r2, r2
- 8002940:	701a      	strb	r2, [r3, #0]
- 8002942:	e009      	b.n	8002958 <ts_itoa+0x80>
+ 800293c:	701a      	strb	r2, [r3, #0]
+ 800293e:	e009      	b.n	8002954 <ts_itoa+0x80>
 		else
 			*((*buf)++) = num + '0';
- 8002944:	68fb      	ldr	r3, [r7, #12]
- 8002946:	681b      	ldr	r3, [r3, #0]
- 8002948:	1c59      	adds	r1, r3, #1
- 800294a:	68fa      	ldr	r2, [r7, #12]
- 800294c:	6011      	str	r1, [r2, #0]
- 800294e:	693a      	ldr	r2, [r7, #16]
+ 8002940:	68fb      	ldr	r3, [r7, #12]
+ 8002942:	681b      	ldr	r3, [r3, #0]
+ 8002944:	1c59      	adds	r1, r3, #1
+ 8002946:	68fa      	ldr	r2, [r7, #12]
+ 8002948:	6011      	str	r1, [r2, #0]
+ 800294a:	693a      	ldr	r2, [r7, #16]
+ 800294c:	b2d2      	uxtb	r2, r2
+ 800294e:	3230      	adds	r2, #48	; 0x30
  8002950:	b2d2      	uxtb	r2, r2
- 8002952:	3230      	adds	r2, #48	; 0x30
- 8002954:	b2d2      	uxtb	r2, r2
- 8002956:	701a      	strb	r2, [r3, #0]
+ 8002952:	701a      	strb	r2, [r3, #0]
 {
 	int div = 1;
 	while (d/div >= base)
 		div *= base;
 
 	while (div != 0)
- 8002958:	697b      	ldr	r3, [r7, #20]
- 800295a:	2b00      	cmp	r3, #0
- 800295c:	d1d2      	bne.n	8002904 <ts_itoa+0x2c>
+ 8002954:	697b      	ldr	r3, [r7, #20]
+ 8002956:	2b00      	cmp	r3, #0
+ 8002958:	d1d2      	bne.n	8002900 <ts_itoa+0x2c>
 		if (num > 9)
 			*((*buf)++) = (num-10) + 'A';
 		else
 			*((*buf)++) = num + '0';
 	}
 }
- 800295e:	bf00      	nop
- 8002960:	371c      	adds	r7, #28
- 8002962:	46bd      	mov	sp, r7
- 8002964:	bc80      	pop	{r7}
- 8002966:	4770      	bx	lr
+ 800295a:	bf00      	nop
+ 800295c:	371c      	adds	r7, #28
+ 800295e:	46bd      	mov	sp, r7
+ 8002960:	bc80      	pop	{r7}
+ 8002962:	4770      	bx	lr
 
-08002968 <ts_formatstring>:
+08002964 <ts_formatstring>:
 **  Abstract: Writes arguments va to buffer buf according to format fmt
 **  Returns:  Length of string
 **---------------------------------------------------------------------------
 */
 int ts_formatstring(char *buf, const char *fmt, va_list va)
 {
- 8002968:	b580      	push	{r7, lr}
- 800296a:	b088      	sub	sp, #32
- 800296c:	af00      	add	r7, sp, #0
- 800296e:	60f8      	str	r0, [r7, #12]
- 8002970:	60b9      	str	r1, [r7, #8]
- 8002972:	607a      	str	r2, [r7, #4]
+ 8002964:	b580      	push	{r7, lr}
+ 8002966:	b088      	sub	sp, #32
+ 8002968:	af00      	add	r7, sp, #0
+ 800296a:	60f8      	str	r0, [r7, #12]
+ 800296c:	60b9      	str	r1, [r7, #8]
+ 800296e:	607a      	str	r2, [r7, #4]
 	char *start_buf = buf;
- 8002974:	68fb      	ldr	r3, [r7, #12]
- 8002976:	617b      	str	r3, [r7, #20]
+ 8002970:	68fb      	ldr	r3, [r7, #12]
+ 8002972:	617b      	str	r3, [r7, #20]
 	while(*fmt)
- 8002978:	e07d      	b.n	8002a76 <ts_formatstring+0x10e>
+ 8002974:	e07d      	b.n	8002a72 <ts_formatstring+0x10e>
 	{
 		/* Character needs formating? */
 		if (*fmt == '%')
- 800297a:	68bb      	ldr	r3, [r7, #8]
- 800297c:	781b      	ldrb	r3, [r3, #0]
- 800297e:	2b25      	cmp	r3, #37	; 0x25
- 8002980:	d171      	bne.n	8002a66 <ts_formatstring+0xfe>
+ 8002976:	68bb      	ldr	r3, [r7, #8]
+ 8002978:	781b      	ldrb	r3, [r3, #0]
+ 800297a:	2b25      	cmp	r3, #37	; 0x25
+ 800297c:	d171      	bne.n	8002a62 <ts_formatstring+0xfe>
 		{
 			switch (*(++fmt))
- 8002982:	68bb      	ldr	r3, [r7, #8]
- 8002984:	3301      	adds	r3, #1
- 8002986:	60bb      	str	r3, [r7, #8]
- 8002988:	68bb      	ldr	r3, [r7, #8]
- 800298a:	781b      	ldrb	r3, [r3, #0]
+ 800297e:	68bb      	ldr	r3, [r7, #8]
+ 8002980:	3301      	adds	r3, #1
+ 8002982:	60bb      	str	r3, [r7, #8]
+ 8002984:	68bb      	ldr	r3, [r7, #8]
+ 8002986:	781b      	ldrb	r3, [r3, #0]
+ 8002988:	2b64      	cmp	r3, #100	; 0x64
+ 800298a:	d01e      	beq.n	80029ca <ts_formatstring+0x66>
  800298c:	2b64      	cmp	r3, #100	; 0x64
- 800298e:	d01e      	beq.n	80029ce <ts_formatstring+0x66>
- 8002990:	2b64      	cmp	r3, #100	; 0x64
- 8002992:	dc06      	bgt.n	80029a2 <ts_formatstring+0x3a>
- 8002994:	2b58      	cmp	r3, #88	; 0x58
- 8002996:	d050      	beq.n	8002a3a <ts_formatstring+0xd2>
- 8002998:	2b63      	cmp	r3, #99	; 0x63
- 800299a:	d00e      	beq.n	80029ba <ts_formatstring+0x52>
- 800299c:	2b25      	cmp	r3, #37	; 0x25
- 800299e:	d058      	beq.n	8002a52 <ts_formatstring+0xea>
- 80029a0:	e05d      	b.n	8002a5e <ts_formatstring+0xf6>
+ 800298e:	dc06      	bgt.n	800299e <ts_formatstring+0x3a>
+ 8002990:	2b58      	cmp	r3, #88	; 0x58
+ 8002992:	d050      	beq.n	8002a36 <ts_formatstring+0xd2>
+ 8002994:	2b63      	cmp	r3, #99	; 0x63
+ 8002996:	d00e      	beq.n	80029b6 <ts_formatstring+0x52>
+ 8002998:	2b25      	cmp	r3, #37	; 0x25
+ 800299a:	d058      	beq.n	8002a4e <ts_formatstring+0xea>
+ 800299c:	e05d      	b.n	8002a5a <ts_formatstring+0xf6>
+ 800299e:	2b73      	cmp	r3, #115	; 0x73
+ 80029a0:	d02b      	beq.n	80029fa <ts_formatstring+0x96>
  80029a2:	2b73      	cmp	r3, #115	; 0x73
- 80029a4:	d02b      	beq.n	80029fe <ts_formatstring+0x96>
- 80029a6:	2b73      	cmp	r3, #115	; 0x73
- 80029a8:	dc02      	bgt.n	80029b0 <ts_formatstring+0x48>
- 80029aa:	2b69      	cmp	r3, #105	; 0x69
- 80029ac:	d00f      	beq.n	80029ce <ts_formatstring+0x66>
- 80029ae:	e056      	b.n	8002a5e <ts_formatstring+0xf6>
- 80029b0:	2b75      	cmp	r3, #117	; 0x75
- 80029b2:	d037      	beq.n	8002a24 <ts_formatstring+0xbc>
- 80029b4:	2b78      	cmp	r3, #120	; 0x78
- 80029b6:	d040      	beq.n	8002a3a <ts_formatstring+0xd2>
- 80029b8:	e051      	b.n	8002a5e <ts_formatstring+0xf6>
+ 80029a4:	dc02      	bgt.n	80029ac <ts_formatstring+0x48>
+ 80029a6:	2b69      	cmp	r3, #105	; 0x69
+ 80029a8:	d00f      	beq.n	80029ca <ts_formatstring+0x66>
+ 80029aa:	e056      	b.n	8002a5a <ts_formatstring+0xf6>
+ 80029ac:	2b75      	cmp	r3, #117	; 0x75
+ 80029ae:	d037      	beq.n	8002a20 <ts_formatstring+0xbc>
+ 80029b0:	2b78      	cmp	r3, #120	; 0x78
+ 80029b2:	d040      	beq.n	8002a36 <ts_formatstring+0xd2>
+ 80029b4:	e051      	b.n	8002a5a <ts_formatstring+0xf6>
 			{
 			  case 'c':
 				*buf++ = va_arg(va, int);
- 80029ba:	68fb      	ldr	r3, [r7, #12]
- 80029bc:	1c5a      	adds	r2, r3, #1
- 80029be:	60fa      	str	r2, [r7, #12]
- 80029c0:	687a      	ldr	r2, [r7, #4]
- 80029c2:	1d11      	adds	r1, r2, #4
- 80029c4:	6079      	str	r1, [r7, #4]
- 80029c6:	6812      	ldr	r2, [r2, #0]
- 80029c8:	b2d2      	uxtb	r2, r2
- 80029ca:	701a      	strb	r2, [r3, #0]
+ 80029b6:	68fb      	ldr	r3, [r7, #12]
+ 80029b8:	1c5a      	adds	r2, r3, #1
+ 80029ba:	60fa      	str	r2, [r7, #12]
+ 80029bc:	687a      	ldr	r2, [r7, #4]
+ 80029be:	1d11      	adds	r1, r2, #4
+ 80029c0:	6079      	str	r1, [r7, #4]
+ 80029c2:	6812      	ldr	r2, [r2, #0]
+ 80029c4:	b2d2      	uxtb	r2, r2
+ 80029c6:	701a      	strb	r2, [r3, #0]
 				break;
- 80029cc:	e047      	b.n	8002a5e <ts_formatstring+0xf6>
+ 80029c8:	e047      	b.n	8002a5a <ts_formatstring+0xf6>
 			  case 'd':
 			  case 'i':
 				{
 					signed int val = va_arg(va, signed int);
- 80029ce:	687b      	ldr	r3, [r7, #4]
- 80029d0:	1d1a      	adds	r2, r3, #4
- 80029d2:	607a      	str	r2, [r7, #4]
- 80029d4:	681b      	ldr	r3, [r3, #0]
- 80029d6:	61fb      	str	r3, [r7, #28]
+ 80029ca:	687b      	ldr	r3, [r7, #4]
+ 80029cc:	1d1a      	adds	r2, r3, #4
+ 80029ce:	607a      	str	r2, [r7, #4]
+ 80029d0:	681b      	ldr	r3, [r3, #0]
+ 80029d2:	61fb      	str	r3, [r7, #28]
 					if (val < 0)
- 80029d8:	69fb      	ldr	r3, [r7, #28]
- 80029da:	2b00      	cmp	r3, #0
- 80029dc:	da07      	bge.n	80029ee <ts_formatstring+0x86>
+ 80029d4:	69fb      	ldr	r3, [r7, #28]
+ 80029d6:	2b00      	cmp	r3, #0
+ 80029d8:	da07      	bge.n	80029ea <ts_formatstring+0x86>
 					{
 						val *= -1;
- 80029de:	69fb      	ldr	r3, [r7, #28]
- 80029e0:	425b      	negs	r3, r3
- 80029e2:	61fb      	str	r3, [r7, #28]
+ 80029da:	69fb      	ldr	r3, [r7, #28]
+ 80029dc:	425b      	negs	r3, r3
+ 80029de:	61fb      	str	r3, [r7, #28]
 						*buf++ = '-';
- 80029e4:	68fb      	ldr	r3, [r7, #12]
- 80029e6:	1c5a      	adds	r2, r3, #1
- 80029e8:	60fa      	str	r2, [r7, #12]
- 80029ea:	222d      	movs	r2, #45	; 0x2d
- 80029ec:	701a      	strb	r2, [r3, #0]
+ 80029e0:	68fb      	ldr	r3, [r7, #12]
+ 80029e2:	1c5a      	adds	r2, r3, #1
+ 80029e4:	60fa      	str	r2, [r7, #12]
+ 80029e6:	222d      	movs	r2, #45	; 0x2d
+ 80029e8:	701a      	strb	r2, [r3, #0]
 					}
 					ts_itoa(&buf, val, 10);
- 80029ee:	69f9      	ldr	r1, [r7, #28]
- 80029f0:	f107 030c 	add.w	r3, r7, #12
- 80029f4:	220a      	movs	r2, #10
- 80029f6:	4618      	mov	r0, r3
- 80029f8:	f7ff ff6e 	bl	80028d8 <ts_itoa>
+ 80029ea:	69f9      	ldr	r1, [r7, #28]
+ 80029ec:	f107 030c 	add.w	r3, r7, #12
+ 80029f0:	220a      	movs	r2, #10
+ 80029f2:	4618      	mov	r0, r3
+ 80029f4:	f7ff ff6e 	bl	80028d4 <ts_itoa>
 				}
 				break;
- 80029fc:	e02f      	b.n	8002a5e <ts_formatstring+0xf6>
+ 80029f8:	e02f      	b.n	8002a5a <ts_formatstring+0xf6>
 			  case 's':
 				{
 					char * arg = va_arg(va, char *);
- 80029fe:	687b      	ldr	r3, [r7, #4]
- 8002a00:	1d1a      	adds	r2, r3, #4
- 8002a02:	607a      	str	r2, [r7, #4]
- 8002a04:	681b      	ldr	r3, [r3, #0]
- 8002a06:	61bb      	str	r3, [r7, #24]
+ 80029fa:	687b      	ldr	r3, [r7, #4]
+ 80029fc:	1d1a      	adds	r2, r3, #4
+ 80029fe:	607a      	str	r2, [r7, #4]
+ 8002a00:	681b      	ldr	r3, [r3, #0]
+ 8002a02:	61bb      	str	r3, [r7, #24]
 					while (*arg)
- 8002a08:	e007      	b.n	8002a1a <ts_formatstring+0xb2>
+ 8002a04:	e007      	b.n	8002a16 <ts_formatstring+0xb2>
 					{
 						*buf++ = *arg++;
- 8002a0a:	68fb      	ldr	r3, [r7, #12]
- 8002a0c:	1c5a      	adds	r2, r3, #1
- 8002a0e:	60fa      	str	r2, [r7, #12]
- 8002a10:	69ba      	ldr	r2, [r7, #24]
- 8002a12:	1c51      	adds	r1, r2, #1
- 8002a14:	61b9      	str	r1, [r7, #24]
- 8002a16:	7812      	ldrb	r2, [r2, #0]
- 8002a18:	701a      	strb	r2, [r3, #0]
+ 8002a06:	68fb      	ldr	r3, [r7, #12]
+ 8002a08:	1c5a      	adds	r2, r3, #1
+ 8002a0a:	60fa      	str	r2, [r7, #12]
+ 8002a0c:	69ba      	ldr	r2, [r7, #24]
+ 8002a0e:	1c51      	adds	r1, r2, #1
+ 8002a10:	61b9      	str	r1, [r7, #24]
+ 8002a12:	7812      	ldrb	r2, [r2, #0]
+ 8002a14:	701a      	strb	r2, [r3, #0]
 				}
 				break;
 			  case 's':
 				{
 					char * arg = va_arg(va, char *);
 					while (*arg)
- 8002a1a:	69bb      	ldr	r3, [r7, #24]
- 8002a1c:	781b      	ldrb	r3, [r3, #0]
- 8002a1e:	2b00      	cmp	r3, #0
- 8002a20:	d1f3      	bne.n	8002a0a <ts_formatstring+0xa2>
+ 8002a16:	69bb      	ldr	r3, [r7, #24]
+ 8002a18:	781b      	ldrb	r3, [r3, #0]
+ 8002a1a:	2b00      	cmp	r3, #0
+ 8002a1c:	d1f3      	bne.n	8002a06 <ts_formatstring+0xa2>
 					{
 						*buf++ = *arg++;
 					}
 				}
 				break;
- 8002a22:	e01c      	b.n	8002a5e <ts_formatstring+0xf6>
+ 8002a1e:	e01c      	b.n	8002a5a <ts_formatstring+0xf6>
 			  case 'u':
 					ts_itoa(&buf, va_arg(va, unsigned int), 10);
- 8002a24:	687b      	ldr	r3, [r7, #4]
- 8002a26:	1d1a      	adds	r2, r3, #4
- 8002a28:	607a      	str	r2, [r7, #4]
- 8002a2a:	6819      	ldr	r1, [r3, #0]
- 8002a2c:	f107 030c 	add.w	r3, r7, #12
- 8002a30:	220a      	movs	r2, #10
- 8002a32:	4618      	mov	r0, r3
- 8002a34:	f7ff ff50 	bl	80028d8 <ts_itoa>
+ 8002a20:	687b      	ldr	r3, [r7, #4]
+ 8002a22:	1d1a      	adds	r2, r3, #4
+ 8002a24:	607a      	str	r2, [r7, #4]
+ 8002a26:	6819      	ldr	r1, [r3, #0]
+ 8002a28:	f107 030c 	add.w	r3, r7, #12
+ 8002a2c:	220a      	movs	r2, #10
+ 8002a2e:	4618      	mov	r0, r3
+ 8002a30:	f7ff ff50 	bl	80028d4 <ts_itoa>
 				break;
- 8002a38:	e011      	b.n	8002a5e <ts_formatstring+0xf6>
+ 8002a34:	e011      	b.n	8002a5a <ts_formatstring+0xf6>
 			  case 'x':
 			  case 'X':
 					ts_itoa(&buf, va_arg(va, int), 16);
- 8002a3a:	687b      	ldr	r3, [r7, #4]
- 8002a3c:	1d1a      	adds	r2, r3, #4
- 8002a3e:	607a      	str	r2, [r7, #4]
- 8002a40:	681b      	ldr	r3, [r3, #0]
- 8002a42:	4619      	mov	r1, r3
- 8002a44:	f107 030c 	add.w	r3, r7, #12
- 8002a48:	2210      	movs	r2, #16
- 8002a4a:	4618      	mov	r0, r3
- 8002a4c:	f7ff ff44 	bl	80028d8 <ts_itoa>
+ 8002a36:	687b      	ldr	r3, [r7, #4]
+ 8002a38:	1d1a      	adds	r2, r3, #4
+ 8002a3a:	607a      	str	r2, [r7, #4]
+ 8002a3c:	681b      	ldr	r3, [r3, #0]
+ 8002a3e:	4619      	mov	r1, r3
+ 8002a40:	f107 030c 	add.w	r3, r7, #12
+ 8002a44:	2210      	movs	r2, #16
+ 8002a46:	4618      	mov	r0, r3
+ 8002a48:	f7ff ff44 	bl	80028d4 <ts_itoa>
 				break;
- 8002a50:	e005      	b.n	8002a5e <ts_formatstring+0xf6>
+ 8002a4c:	e005      	b.n	8002a5a <ts_formatstring+0xf6>
 			  case '%':
 				  *buf++ = '%';
- 8002a52:	68fb      	ldr	r3, [r7, #12]
- 8002a54:	1c5a      	adds	r2, r3, #1
- 8002a56:	60fa      	str	r2, [r7, #12]
- 8002a58:	2225      	movs	r2, #37	; 0x25
- 8002a5a:	701a      	strb	r2, [r3, #0]
+ 8002a4e:	68fb      	ldr	r3, [r7, #12]
+ 8002a50:	1c5a      	adds	r2, r3, #1
+ 8002a52:	60fa      	str	r2, [r7, #12]
+ 8002a54:	2225      	movs	r2, #37	; 0x25
+ 8002a56:	701a      	strb	r2, [r3, #0]
 				  break;
- 8002a5c:	bf00      	nop
+ 8002a58:	bf00      	nop
 			}
 			fmt++;
- 8002a5e:	68bb      	ldr	r3, [r7, #8]
- 8002a60:	3301      	adds	r3, #1
- 8002a62:	60bb      	str	r3, [r7, #8]
- 8002a64:	e007      	b.n	8002a76 <ts_formatstring+0x10e>
+ 8002a5a:	68bb      	ldr	r3, [r7, #8]
+ 8002a5c:	3301      	adds	r3, #1
+ 8002a5e:	60bb      	str	r3, [r7, #8]
+ 8002a60:	e007      	b.n	8002a72 <ts_formatstring+0x10e>
 		}
 		/* Else just copy */
 		else
 		{
 			*buf++ = *fmt++;
- 8002a66:	68fb      	ldr	r3, [r7, #12]
- 8002a68:	1c5a      	adds	r2, r3, #1
- 8002a6a:	60fa      	str	r2, [r7, #12]
- 8002a6c:	68ba      	ldr	r2, [r7, #8]
- 8002a6e:	1c51      	adds	r1, r2, #1
- 8002a70:	60b9      	str	r1, [r7, #8]
- 8002a72:	7812      	ldrb	r2, [r2, #0]
- 8002a74:	701a      	strb	r2, [r3, #0]
+ 8002a62:	68fb      	ldr	r3, [r7, #12]
+ 8002a64:	1c5a      	adds	r2, r3, #1
+ 8002a66:	60fa      	str	r2, [r7, #12]
+ 8002a68:	68ba      	ldr	r2, [r7, #8]
+ 8002a6a:	1c51      	adds	r1, r2, #1
+ 8002a6c:	60b9      	str	r1, [r7, #8]
+ 8002a6e:	7812      	ldrb	r2, [r2, #0]
+ 8002a70:	701a      	strb	r2, [r3, #0]
 **---------------------------------------------------------------------------
 */
 int ts_formatstring(char *buf, const char *fmt, va_list va)
 {
 	char *start_buf = buf;
 	while(*fmt)
- 8002a76:	68bb      	ldr	r3, [r7, #8]
- 8002a78:	781b      	ldrb	r3, [r3, #0]
- 8002a7a:	2b00      	cmp	r3, #0
- 8002a7c:	f47f af7d 	bne.w	800297a <ts_formatstring+0x12>
+ 8002a72:	68bb      	ldr	r3, [r7, #8]
+ 8002a74:	781b      	ldrb	r3, [r3, #0]
+ 8002a76:	2b00      	cmp	r3, #0
+ 8002a78:	f47f af7d 	bne.w	8002976 <ts_formatstring+0x12>
 		else
 		{
 			*buf++ = *fmt++;
 		}
 	}
 	*buf = 0;
- 8002a80:	68fb      	ldr	r3, [r7, #12]
- 8002a82:	2200      	movs	r2, #0
- 8002a84:	701a      	strb	r2, [r3, #0]
+ 8002a7c:	68fb      	ldr	r3, [r7, #12]
+ 8002a7e:	2200      	movs	r2, #0
+ 8002a80:	701a      	strb	r2, [r3, #0]
 
 	return (int)(buf - start_buf);
- 8002a86:	68fb      	ldr	r3, [r7, #12]
- 8002a88:	461a      	mov	r2, r3
- 8002a8a:	697b      	ldr	r3, [r7, #20]
- 8002a8c:	1ad3      	subs	r3, r2, r3
+ 8002a82:	68fb      	ldr	r3, [r7, #12]
+ 8002a84:	461a      	mov	r2, r3
+ 8002a86:	697b      	ldr	r3, [r7, #20]
+ 8002a88:	1ad3      	subs	r3, r2, r3
 }
- 8002a8e:	4618      	mov	r0, r3
- 8002a90:	3720      	adds	r7, #32
- 8002a92:	46bd      	mov	sp, r7
- 8002a94:	bd80      	pop	{r7, pc}
- 8002a96:	bf00      	nop
+ 8002a8a:	4618      	mov	r0, r3
+ 8002a8c:	3720      	adds	r7, #32
+ 8002a8e:	46bd      	mov	sp, r7
+ 8002a90:	bd80      	pop	{r7, pc}
+ 8002a92:	bf00      	nop
 
-08002a98 <siprintf>:
+08002a94 <siprintf>:
 **            given character string according to the format parameter.
 **  Returns:  Number of bytes written
 **===========================================================================
 */
 int siprintf(char *buf, const char *fmt, ...)
 {
- 8002a98:	b40e      	push	{r1, r2, r3}
- 8002a9a:	b580      	push	{r7, lr}
- 8002a9c:	b085      	sub	sp, #20
- 8002a9e:	af00      	add	r7, sp, #0
- 8002aa0:	6078      	str	r0, [r7, #4]
+ 8002a94:	b40e      	push	{r1, r2, r3}
+ 8002a96:	b580      	push	{r7, lr}
+ 8002a98:	b085      	sub	sp, #20
+ 8002a9a:	af00      	add	r7, sp, #0
+ 8002a9c:	6078      	str	r0, [r7, #4]
 	int length;
 	va_list va;
 	va_start(va, fmt);
- 8002aa2:	f107 0320 	add.w	r3, r7, #32
- 8002aa6:	60bb      	str	r3, [r7, #8]
+ 8002a9e:	f107 0320 	add.w	r3, r7, #32
+ 8002aa2:	60bb      	str	r3, [r7, #8]
 	length = ts_formatstring(buf, fmt, va);
- 8002aa8:	68ba      	ldr	r2, [r7, #8]
- 8002aaa:	69f9      	ldr	r1, [r7, #28]
- 8002aac:	6878      	ldr	r0, [r7, #4]
- 8002aae:	f7ff ff5b 	bl	8002968 <ts_formatstring>
- 8002ab2:	60f8      	str	r0, [r7, #12]
+ 8002aa4:	68ba      	ldr	r2, [r7, #8]
+ 8002aa6:	69f9      	ldr	r1, [r7, #28]
+ 8002aa8:	6878      	ldr	r0, [r7, #4]
+ 8002aaa:	f7ff ff5b 	bl	8002964 <ts_formatstring>
+ 8002aae:	60f8      	str	r0, [r7, #12]
 	va_end(va);
 	return length;
- 8002ab4:	68fb      	ldr	r3, [r7, #12]
+ 8002ab0:	68fb      	ldr	r3, [r7, #12]
 }
- 8002ab6:	4618      	mov	r0, r3
- 8002ab8:	3714      	adds	r7, #20
- 8002aba:	46bd      	mov	sp, r7
- 8002abc:	e8bd 4080 	ldmia.w	sp!, {r7, lr}
- 8002ac0:	b003      	add	sp, #12
- 8002ac2:	4770      	bx	lr
+ 8002ab2:	4618      	mov	r0, r3
+ 8002ab4:	3714      	adds	r7, #20
+ 8002ab6:	46bd      	mov	sp, r7
+ 8002ab8:	e8bd 4080 	ldmia.w	sp!, {r7, lr}
+ 8002abc:	b003      	add	sp, #12
+ 8002abe:	4770      	bx	lr
 
-08002ac4 <__libc_init_array>:
- 8002ac4:	4b0e      	ldr	r3, [pc, #56]	; (8002b00 <__libc_init_array+0x3c>)
- 8002ac6:	b570      	push	{r4, r5, r6, lr}
- 8002ac8:	461e      	mov	r6, r3
- 8002aca:	4c0e      	ldr	r4, [pc, #56]	; (8002b04 <__libc_init_array+0x40>)
- 8002acc:	2500      	movs	r5, #0
- 8002ace:	1ae4      	subs	r4, r4, r3
- 8002ad0:	10a4      	asrs	r4, r4, #2
- 8002ad2:	42a5      	cmp	r5, r4
- 8002ad4:	d004      	beq.n	8002ae0 <__libc_init_array+0x1c>
- 8002ad6:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
- 8002ada:	4798      	blx	r3
- 8002adc:	3501      	adds	r5, #1
- 8002ade:	e7f8      	b.n	8002ad2 <__libc_init_array+0xe>
- 8002ae0:	f000 f816 	bl	8002b10 <_init>
- 8002ae4:	4b08      	ldr	r3, [pc, #32]	; (8002b08 <__libc_init_array+0x44>)
- 8002ae6:	4c09      	ldr	r4, [pc, #36]	; (8002b0c <__libc_init_array+0x48>)
- 8002ae8:	461e      	mov	r6, r3
- 8002aea:	1ae4      	subs	r4, r4, r3
- 8002aec:	10a4      	asrs	r4, r4, #2
- 8002aee:	2500      	movs	r5, #0
- 8002af0:	42a5      	cmp	r5, r4
- 8002af2:	d004      	beq.n	8002afe <__libc_init_array+0x3a>
- 8002af4:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
- 8002af8:	4798      	blx	r3
- 8002afa:	3501      	adds	r5, #1
- 8002afc:	e7f8      	b.n	8002af0 <__libc_init_array+0x2c>
- 8002afe:	bd70      	pop	{r4, r5, r6, pc}
- 8002b00:	08002b58 	.word	0x08002b58
- 8002b04:	08002b58 	.word	0x08002b58
+08002ac0 <__libc_init_array>:
+ 8002ac0:	4b0e      	ldr	r3, [pc, #56]	; (8002afc <__libc_init_array+0x3c>)
+ 8002ac2:	b570      	push	{r4, r5, r6, lr}
+ 8002ac4:	461e      	mov	r6, r3
+ 8002ac6:	4c0e      	ldr	r4, [pc, #56]	; (8002b00 <__libc_init_array+0x40>)
+ 8002ac8:	2500      	movs	r5, #0
+ 8002aca:	1ae4      	subs	r4, r4, r3
+ 8002acc:	10a4      	asrs	r4, r4, #2
+ 8002ace:	42a5      	cmp	r5, r4
+ 8002ad0:	d004      	beq.n	8002adc <__libc_init_array+0x1c>
+ 8002ad2:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 8002ad6:	4798      	blx	r3
+ 8002ad8:	3501      	adds	r5, #1
+ 8002ada:	e7f8      	b.n	8002ace <__libc_init_array+0xe>
+ 8002adc:	f000 f816 	bl	8002b0c <_init>
+ 8002ae0:	4b08      	ldr	r3, [pc, #32]	; (8002b04 <__libc_init_array+0x44>)
+ 8002ae2:	4c09      	ldr	r4, [pc, #36]	; (8002b08 <__libc_init_array+0x48>)
+ 8002ae4:	461e      	mov	r6, r3
+ 8002ae6:	1ae4      	subs	r4, r4, r3
+ 8002ae8:	10a4      	asrs	r4, r4, #2
+ 8002aea:	2500      	movs	r5, #0
+ 8002aec:	42a5      	cmp	r5, r4
+ 8002aee:	d004      	beq.n	8002afa <__libc_init_array+0x3a>
+ 8002af0:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 8002af4:	4798      	blx	r3
+ 8002af6:	3501      	adds	r5, #1
+ 8002af8:	e7f8      	b.n	8002aec <__libc_init_array+0x2c>
+ 8002afa:	bd70      	pop	{r4, r5, r6, pc}
+ 8002afc:	08002b54 	.word	0x08002b54
+ 8002b00:	08002b54 	.word	0x08002b54
+ 8002b04:	08002b54 	.word	0x08002b54
  8002b08:	08002b58 	.word	0x08002b58
- 8002b0c:	08002b5c 	.word	0x08002b5c
 
-08002b10 <_init>:
- 8002b10:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8002b12:	bf00      	nop
- 8002b14:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8002b16:	bc08      	pop	{r3}
- 8002b18:	469e      	mov	lr, r3
- 8002b1a:	4770      	bx	lr
+08002b0c <_init>:
+ 8002b0c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8002b0e:	bf00      	nop
+ 8002b10:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8002b12:	bc08      	pop	{r3}
+ 8002b14:	469e      	mov	lr, r3
+ 8002b16:	4770      	bx	lr
 
-08002b1c <_fini>:
- 8002b1c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8002b1e:	bf00      	nop
- 8002b20:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8002b22:	bc08      	pop	{r3}
- 8002b24:	469e      	mov	lr, r3
- 8002b26:	4770      	bx	lr
+08002b18 <_fini>:
+ 8002b18:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8002b1a:	bf00      	nop
+ 8002b1c:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8002b1e:	bc08      	pop	{r3}
+ 8002b20:	469e      	mov	lr, r3
+ 8002b22:	4770      	bx	lr

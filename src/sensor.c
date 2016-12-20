@@ -18,16 +18,13 @@
 //variables
 void (*sensorCaptureHandler)(void);//smernik na funkciu ktora spracuje prerusenie CAPTURE_TIM
 
-volatile uint32_t leftCaptureStep = 0;//krokovanie nabezna/dobezna hrana
-volatile uint32_t rightCaptureStep = 0;
-volatile uint32_t forwardCaptureStep = 0;
-
-volatile uint32_t leftRisingTime = 0;
-volatile uint32_t rightRisingTime = 0;
-volatile uint32_t forwardRisingTime = 0;
-volatile uint32_t leftFallingTime = 0;
-volatile uint32_t rightFallingTime = 0;
-volatile uint32_t forwardFallingTime = 0;
+struct SensorCaptureStruc
+{
+	volatile uint32_t captureStep;//krokovanie nabezna/dobezna hrana
+	volatile uint32_t risingTimeCapturing;
+	volatile uint32_t risingTime;
+	volatile uint32_t fallingTime;
+}LeftSensorCaptureStruc, RightSensorCaptureStruc, ForwardSensorCaptureStruc;
 
 volatile int selectSensor = 0;
 
@@ -76,13 +73,32 @@ volatile int selectSensor = 0;
 //inicializacia senzorov vzdialenosti
 void sensorInit(void)
 {
+	initSensorCaptureStruc();
 	sensorInitTriggerTimer();
 	sensorInitTriggerPin();
 	sensorInitCapturePins();
 	sensorInitCaptureTimer();
 	sensorInitCallTimer();
 }
+//inicializacia struktur merania vzdialenosti
+void initSensorCaptureStruc(void)
+{
+	LeftSensorCaptureStruc.captureStep = 0;
+	LeftSensorCaptureStruc.risingTimeCapturing = 0;
+	LeftSensorCaptureStruc.risingTime = 0;
+	LeftSensorCaptureStruc.fallingTime = 0;
 
+	RightSensorCaptureStruc.captureStep = 0;
+	RightSensorCaptureStruc.risingTimeCapturing = 0;
+	RightSensorCaptureStruc.risingTime = 0;
+	RightSensorCaptureStruc.fallingTime = 0;
+
+	ForwardSensorCaptureStruc.captureStep = 0;
+	ForwardSensorCaptureStruc.risingTimeCapturing = 0;
+	ForwardSensorCaptureStruc.risingTime = 0;
+	ForwardSensorCaptureStruc.fallingTime = 0;
+
+}
 //inicializacia casovaca pravidelne volajuceho meranie vzdialenosti
 void sensorInitCallTimer(void)
 {
@@ -265,7 +281,7 @@ void leftSensorMeasure(void)
 	//spustenie trig impulzu
 	GPIO_WriteBit(TRIG_PORT, LEFT_TRIG_PIN, Bit_SET);
 	//nulovanie CaptureStep ak by nahodou meranie zblblo
-	leftCaptureStep = 0;
+	LeftSensorCaptureStruc.captureStep = 0;
 	//pridelenie funkcie spracovanie prerusenia capture
 	sensorCaptureHandler = leftSensorCaptureHandler;
 }
@@ -277,7 +293,7 @@ void rightSensorMeasure(void)
 	//spustenie trig impulzu
 	GPIO_WriteBit(TRIG_PORT, RIGHT_TRIG_PIN, Bit_SET);
 	//nulovanie CaptureStep ak by nahodou meranie zblblo
-	rightCaptureStep = 0;
+	RightSensorCaptureStruc.captureStep = 0;
 	//pridelenie funkcie spracovanie prerusenia capture
 	sensorCaptureHandler = rightSensorCaptureHandler;
 }
@@ -289,7 +305,7 @@ void forwardSensorMeasure(void)
 	//spustenie trig impulzu
 	GPIO_WriteBit(TRIG_PORT, FORWARD_TRIG_PIN, Bit_SET);
 	//nulovanie CaptureStep ak by nahodou meranie zblblo
-	forwardCaptureStep = 0;
+	ForwardSensorCaptureStruc.captureStep = 0;
 	//pridelenie funkcie spracovanie prerusenia capture
 	sensorCaptureHandler = forwardSensorCaptureHandler;
 }
@@ -364,16 +380,17 @@ void leftSensorCaptureHandler(void)
 		//zmaz CAPTURE_TIM priznak prerusenia
 		TIM_ClearITPendingBit(CAPTURE_TIM, LEFT_TIM_CC);
 
-		if(leftCaptureStep == 0)
+		if(LeftSensorCaptureStruc.captureStep == 0)
 		{
 			//zachyt cas nabeznej hrany
-			leftRisingTime = LEFT_TIM_GETCAPTURE;
-			leftCaptureStep = 1;
+			LeftSensorCaptureStruc.risingTimeCapturing = LEFT_TIM_GETCAPTURE;
+			LeftSensorCaptureStruc.captureStep = 1;
 		}
-		else if(leftCaptureStep == 1)
+		else if(LeftSensorCaptureStruc.captureStep == 1)
 		{
 			//zachyt cas dobeznej hrany
-			leftFallingTime = LEFT_TIM_GETCAPTURE;
+			LeftSensorCaptureStruc.fallingTime = LEFT_TIM_GETCAPTURE;
+			LeftSensorCaptureStruc.risingTime = LeftSensorCaptureStruc.risingTimeCapturing;
 		}
 	}
 }
@@ -385,16 +402,17 @@ void rightSensorCaptureHandler(void)
 		//zmaz CAPTURE_TIM priznak prerusenia
 		TIM_ClearITPendingBit(CAPTURE_TIM, RIGHT_TIM_CC);
 
-		if(rightCaptureStep == 0)
+		if(RightSensorCaptureStruc.captureStep == 0)
 		{
 			//zachyt cas nabeznej hrany
-			rightRisingTime = RIGHT_TIM_GETCAPTURE;
-			rightCaptureStep = 1;
+			RightSensorCaptureStruc.risingTimeCapturing = RIGHT_TIM_GETCAPTURE;
+			RightSensorCaptureStruc.captureStep = 1;
 		}
-		else if(rightCaptureStep == 1)
+		else if(RightSensorCaptureStruc.captureStep == 1)
 		{
 			//zachyt cas dobeznej hrany
-			rightFallingTime = RIGHT_TIM_GETCAPTURE;
+			RightSensorCaptureStruc.fallingTime = RIGHT_TIM_GETCAPTURE;
+			RightSensorCaptureStruc.risingTime = RightSensorCaptureStruc.risingTimeCapturing;
 		}
 	}
 }
@@ -406,16 +424,17 @@ void forwardSensorCaptureHandler(void)
 		//zmaz CAPTURE_TIM priznak prerusenia
 		TIM_ClearITPendingBit(CAPTURE_TIM, FORWARD_TIM_CC);
 
-		if(forwardCaptureStep == 0)
+		if(ForwardSensorCaptureStruc.captureStep == 0)
 		{
 			//zachyt cas nabeznej hrany
-			forwardRisingTime = FORWARD_TIM_GETCAPTURE;
-			forwardCaptureStep = 1;
+			ForwardSensorCaptureStruc.risingTimeCapturing = FORWARD_TIM_GETCAPTURE;
+			ForwardSensorCaptureStruc.captureStep = 1;
 		}
-		else if(forwardCaptureStep == 1)
+		else if(ForwardSensorCaptureStruc.captureStep == 1)
 		{
 			//zachyt cas dobeznej hrany
-			forwardFallingTime = FORWARD_TIM_GETCAPTURE;
+			ForwardSensorCaptureStruc.fallingTime = FORWARD_TIM_GETCAPTURE;
+			ForwardSensorCaptureStruc.risingTime = ForwardSensorCaptureStruc.risingTimeCapturing;
 		}
 	}
 }
@@ -427,7 +446,7 @@ double leftSensorGetDistance(void)
 	double distance = 0;//konecna vzdialenost
 
 	//vypocet trvania impulzu
-	leftDistanceTime = computeEchoDuration(leftRisingTime, leftFallingTime);
+	leftDistanceTime = computeEchoDuration(LeftSensorCaptureStruc.risingTime, LeftSensorCaptureStruc.fallingTime);
 
 	//vypocet vzdialenosti z laveho senzoru
 	distance = leftDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
@@ -448,7 +467,7 @@ double rightSensorGetDistance(void)
 	double distance = 0;//konecna vzdialenost
 
 	//vypocet trvania impulzu
-	rightDistanceTime = computeEchoDuration(rightRisingTime, rightFallingTime);
+	rightDistanceTime = computeEchoDuration(RightSensorCaptureStruc.risingTime, RightSensorCaptureStruc.fallingTime);
 
 	//vypocet vzdialenosti z praveho senzoru
 	distance = rightDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;
@@ -469,7 +488,7 @@ double forwardSensorGetDistance(void)
 	double distance = 0;//konecna vzdialenost
 
 	//vypocet trvania impulzu
-	forwardDistanceTime = computeEchoDuration(forwardRisingTime, forwardFallingTime);
+	forwardDistanceTime = computeEchoDuration(ForwardSensorCaptureStruc.risingTime, ForwardSensorCaptureStruc.fallingTime);
 
 	//vypocet vzdialenosti z predneho senzoru
 	distance = forwardDistanceTime/DISTANCE_CLC_CONST/DISTANCE_ENV_CONST;

@@ -14,6 +14,8 @@
 //inicializacia senzorov vzdialenosti
 void sensorInit(void);
 
+//inicializacia struktur merania vzdialenosti
+void initSensorCaptureStruc(void);
 //inicializacia casovaca pravidelne volajuceho meranie vzdialenosti
 void sensorInitCallTimer(void);
 //inicializacia casovaca, ktory generuje spustaci impulz

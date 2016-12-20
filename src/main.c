@@ -35,7 +35,7 @@ SOFTWARE.
 #include "kontrolka.h"
 
 /* Global variables*/
-long long gTimeStamp = 0;
+
 
 /* Private typedef */
 /* Private define  */
@@ -44,10 +44,6 @@ long long gTimeStamp = 0;
 /* Private function prototypes */
 /* Private functions */
 
-int leftInit(int cislo)
-{
-	return cislo + 1;
-}
 
 /**
 **===========================================================================
