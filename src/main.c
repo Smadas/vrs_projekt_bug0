@@ -31,6 +31,7 @@ SOFTWARE.
 #include "stm32l1xx.h"
 //#include "dialkomer.h"
 #include "sensor.h"
+#include "serial.h"
 #include "kontrolka.h"
 
 /* Global variables*/
@@ -98,40 +99,9 @@ int main(void)
 
 		}
 		vzdialenostF = forwardSensorGetDistance();//183; 70
-		//leftSensorMeasure();
-
-		for (int i = 0; i < autobus; i++)
-		{
-
-		}
 		vzdialenostL = leftSensorGetDistance();//183; 70
-		//rightSensorMeasure();
-		for (int i = 0; i < autobus; i++)
-		{
-
-		}
 		vzdialenostR = rightSensorGetDistance();//183; 70
-		//forwardSensorMeasure();
-		for (int i = 0; i < autobus; i++)
-		{
-
-		}
-		vzdialenostF = forwardSensorGetDistance();//183; 70
-		//leftSensorMeasure();
-
-		for (int i = 0; i < autobus; i++)
-		{
-
-		}
-		vzdialenostL = leftSensorGetDistance();//183; 70
-		//rightSensorMeasure();
-		for (int i = 0; i < autobus; i++)
-		{
-
-		}
-		vzdialenostR = rightSensorGetDistance();//183; 70
-		//forwardSensorMeasure();
-
+		sensorMessageAll(leftSensorGetDistance(),rightSensorGetDistance(),forwardSensorGetDistance());
 	}
 	return 0;
 }

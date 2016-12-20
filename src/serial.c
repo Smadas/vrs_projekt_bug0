@@ -16,11 +16,11 @@
 #define JOIN_DEF(X,Y,Z) PRE_JOIN_DEF(X,Y,Z)
 
 //USART PRINT TO CONSOLE
-#define PRN_USART_NUM 3//3//2
-#define PRN_USART_TXDPIN 10//10//2
-#define PRN_USART_RXDPIN 11//11//3
-#define PRN_USART_GPIOPORT_LETTER B//B//A
-#define PRN_USART_RCC_NUM 1//1//1
+#define PRN_USART_NUM 3//3//3//2
+#define PRN_USART_TXDPIN 10//10//10//2
+#define PRN_USART_RXDPIN 11//11//11//3
+#define PRN_USART_GPIOPORT_LETTER C//C//B//A
+#define PRN_USART_RCC_NUM 1//1//1//1
 
 #define PRN_USART_GPIOPORT JOIN_DEF(GPIO,PRN_USART_GPIOPORT_LETTER, )
 #define PRN_USART_TXDPIN_SOURCE JOIN_DEF(GPIO_PinSource,PRN_USART_TXDPIN, )
@@ -116,7 +116,67 @@ int sensorMessage(double distance, int sensorNum)
 	return 0;
 }
 
+int sensorMessageAll(double leftDistance, double rightDistance, double forwardDistance)
+{
+	char message[1000];
 
+	//rozdelenie vzdialenosti na celu a desatinnu cast
+	int leftDecimalPart = 0;
+	int leftIntegerPart = 0;
+	int rightDecimalPart = 0;
+	int rightIntegerPart = 0;
+	int forwardDecimalPart = 0;
+	int forwardIntegerPart = 0;
+
+	leftIntegerPart = (int)leftDistance;
+	leftDecimalPart = (int)(leftDistance*NUM_DEC_CONST) - leftIntegerPart*NUM_DEC_CONST;
+	rightIntegerPart = (int)rightDistance;
+	rightDecimalPart = (int)(rightDistance*NUM_DEC_CONST) - rightIntegerPart*NUM_DEC_CONST;
+	forwardIntegerPart = (int)forwardDistance;
+	forwardDecimalPart = (int)(forwardDistance*NUM_DEC_CONST) - forwardIntegerPart*NUM_DEC_CONST;
+	//osetrenie prichodu -1 - teda mimo rozsah
+	if (leftDistance < 0)
+	{
+		leftDecimalPart = 0;
+		leftIntegerPart = -1;
+	}
+	if (rightDistance < 0)
+	{
+		rightDecimalPart = 0;
+		rightIntegerPart = -1;
+	}
+	if (forwardDistance < 0)
+	{
+		forwardDecimalPart = 0;
+		forwardIntegerPart = -1;
+	}
+
+	sprintf(message, "L: %d.%d F: %d.%d R: %d.%d",leftIntegerPart, leftDecimalPart, forwardIntegerPart, forwardDecimalPart, rightIntegerPart, rightDecimalPart );
+
+	//pridanie noveho riadku
+	int increment = 0;
+	while (message[increment] != 0)
+	{
+		//hladanie konca spravy
+		increment++;
+	}
+	message[increment + 1] = 13;//carriage return
+	message[increment] = 10;//new line
+	message[increment + 2] = 0;
+
+	//odoslanie prveho znaku
+	switch (printToUSARTbuffer(message))
+	{
+	case -1:
+		return -1;//USART buffer nie je pripraveny
+		break;
+	case -2:
+		return -2;//prazdna sprava
+		break;
+	}
+
+	return 0;
+}
 
 void PRN_USART_IRQHANDLER(void)
 {

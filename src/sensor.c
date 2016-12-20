@@ -41,10 +41,10 @@ volatile int selectSensor = 0;
 #define DISTANCE_MAX 400
 
 	//trig
-#define LEFT_TRIG_PIN GPIO_Pin_10
-#define RIGHT_TRIG_PIN GPIO_Pin_12
-#define FORWARD_TRIG_PIN GPIO_Pin_11
-#define TRIG_PORT GPIOC
+#define LEFT_TRIG_PIN GPIO_Pin_13
+#define RIGHT_TRIG_PIN GPIO_Pin_15
+#define FORWARD_TRIG_PIN GPIO_Pin_14
+#define TRIG_PORT GPIOA
 #define TRIG_TIM_FREQ 100000
 #define TRIG_TIM TIM7
 
@@ -263,7 +263,7 @@ void leftSensorMeasure(void)
 	//spustenie casovaca
 	TIM_Cmd(TRIG_TIM, ENABLE);
 	//spustenie trig impulzu
-	GPIO_WriteBit(GPIOC, LEFT_TRIG_PIN, Bit_SET);
+	GPIO_WriteBit(TRIG_PORT, LEFT_TRIG_PIN, Bit_SET);
 	//nulovanie CaptureStep ak by nahodou meranie zblblo
 	leftCaptureStep = 0;
 	//pridelenie funkcie spracovanie prerusenia capture
@@ -275,7 +275,7 @@ void rightSensorMeasure(void)
 	//spustenie casovaca
 	TIM_Cmd(TRIG_TIM, ENABLE);
 	//spustenie trig impulzu
-	GPIO_WriteBit(GPIOC, RIGHT_TRIG_PIN, Bit_SET);
+	GPIO_WriteBit(TRIG_PORT, RIGHT_TRIG_PIN, Bit_SET);
 	//nulovanie CaptureStep ak by nahodou meranie zblblo
 	rightCaptureStep = 0;
 	//pridelenie funkcie spracovanie prerusenia capture
@@ -287,7 +287,7 @@ void forwardSensorMeasure(void)
 	//spustenie casovaca
 	TIM_Cmd(TRIG_TIM, ENABLE);
 	//spustenie trig impulzu
-	GPIO_WriteBit(GPIOC, FORWARD_TRIG_PIN, Bit_SET);
+	GPIO_WriteBit(TRIG_PORT, FORWARD_TRIG_PIN, Bit_SET);
 	//nulovanie CaptureStep ak by nahodou meranie zblblo
 	forwardCaptureStep = 0;
 	//pridelenie funkcie spracovanie prerusenia capture
@@ -374,8 +374,6 @@ void leftSensorCaptureHandler(void)
 		{
 			//zachyt cas dobeznej hrany
 			leftFallingTime = LEFT_TIM_GETCAPTURE;
-			//TMP vypis na seriovku
-			sensorMessage(leftSensorGetDistance(), 1);
 		}
 	}
 }
@@ -397,8 +395,6 @@ void rightSensorCaptureHandler(void)
 		{
 			//zachyt cas dobeznej hrany
 			rightFallingTime = RIGHT_TIM_GETCAPTURE;
-			//TMP vypis na seriovku
-			sensorMessage(rightSensorGetDistance(), 3);
 		}
 	}
 }
@@ -420,8 +416,6 @@ void forwardSensorCaptureHandler(void)
 		{
 			//zachyt cas dobeznej hrany
 			forwardFallingTime = FORWARD_TIM_GETCAPTURE;
-			//TMP vypis na seriovku
-			sensorMessage(forwardSensorGetDistance(), 2);
 		}
 	}
 }

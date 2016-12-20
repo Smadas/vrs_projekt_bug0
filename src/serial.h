@@ -22,5 +22,6 @@ int odoslanieRetazca(int tvarVypisu);
 
 //dialkomer - vytvorenie spravy so vzdialenostou
 int sensorMessage(double distance, int sensorNum);
+int sensorMessageAll(double leftDistance, double rightDistance, double forwardDistance);
 
 #endif /* SERIAL_H_ */
