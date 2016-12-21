@@ -45,3 +45,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+/Release/
+.settings/language.settings.xml
+Debug/vrs_projekt_bug0.elf.list
