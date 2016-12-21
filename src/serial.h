@@ -3,7 +3,11 @@
  *
  *  Created on: Dec 11, 2016
  *      Author: Adam Sojka
+ *
+ *      Tato kniznica sluzi na spustenie overenie funkcnosti dialkomerov. Namerane vzdialenosti
+ *      sa odosielaju na USART.
  */
+
 
 #ifndef SERIAL_H_
 #define SERIAL_H_

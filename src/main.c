@@ -29,10 +29,7 @@ SOFTWARE.
 /* Includes */
 #include <stddef.h>
 #include "stm32l1xx.h"
-//#include "dialkomer.h"
-#include "sensor.h"
-#include "serial.h"
-#include "kontrolka.h"
+
 
 /* Global variables*/
 
@@ -73,31 +70,11 @@ int main(void)
   */
 
   /* TODO - Add your application code here */
-	double vzdialenostF = 0;
-	double vzdialenostL = 0;
-	double vzdialenostR = 0;
-
-	init_cas_blikanie();
-	init_kontrolka();
-	sensorInit();
-
-	inicializaciaPrerusenieUSART();
-	inicializaciaUSART();
-
-	long autobus = 100000;
-	forwardSensorMeasure();
 
   /* Infinite loop */
 	while (1)
 	{
-		for (int i = 0; i < autobus; i++)
-		{
 
-		}
-		vzdialenostF = forwardSensorGetDistance();//183; 70
-		vzdialenostL = leftSensorGetDistance();//183; 70
-		vzdialenostR = rightSensorGetDistance();//183; 70
-		sensorMessageAll(leftSensorGetDistance(),rightSensorGetDistance(),forwardSensorGetDistance());
 	}
 	return 0;
 }

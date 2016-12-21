@@ -69,6 +69,14 @@ volatile int selectSensor = 0;
 #define FORWARD_TIM_GETCAPTURE TIM_GetCapture4(CAPTURE_TIM)
 #define CAPTURE_CLC_PRESCALER (unsigned short)159
 
+	//volanie senzorov
+#define SENSOR_CALL_TIM TIM10
+#define SENSOR_CALL_TIM_PERIOD 65
+#define SENSOR_CALL_TIM_PRESCALE (unsigned short) (16000000 / 1000) - 1
+#define SENSOR_CALL_TIM_CLOCKDIVISION 0
+#define SENSOR_CALL_TIM_PREEMPTPRIORITY 3
+#define SENSOR_CALL_TIM_SUBPRIORITY 3
+
 //Functions
 //inicializacia senzorov vzdialenosti
 void sensorInit(void)
@@ -103,27 +111,27 @@ void initSensorCaptureStruc(void)
 void sensorInitCallTimer(void)
 {
 	selectSensor = 0;
-	unsigned short prescalerValue = (unsigned short) (16000000 / 1000) - 1;
 	//Structure for timer settings
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
-	// TIM10 clock enable
+	//  clock enable
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM10, ENABLE);
-	// Enable the TIM10 gloabal Interrupt
+	// Enable the gloabal Interrupt
 	NVIC_InitStructure.NVIC_IRQChannel = TIM10_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = SENSOR_CALL_TIM_PREEMPTPRIORITY;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = SENSOR_CALL_TIM_SUBPRIORITY;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
-	TIM_TimeBaseStructure.TIM_Period = 99;
-	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+
+	TIM_TimeBaseStructure.TIM_Period = SENSOR_CALL_TIM_PERIOD;
+	TIM_TimeBaseStructure.TIM_ClockDivision = SENSOR_CALL_TIM_CLOCKDIVISION;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
-	TIM_TimeBaseInit(TIM10, &TIM_TimeBaseStructure);
+	TIM_TimeBaseStructure.TIM_Prescaler = SENSOR_CALL_TIM_PRESCALE;
+	TIM_TimeBaseInit(SENSOR_CALL_TIM, &TIM_TimeBaseStructure);
 	// TIM Interrupts enable
-	TIM_ITConfig(TIM10, TIM_IT_Update, ENABLE);
-	// TIM10 enable counter
-	TIM_Cmd(TIM10, ENABLE);
+	TIM_ITConfig(SENSOR_CALL_TIM, TIM_IT_Update, ENABLE);
+	// enable counter
+	TIM_Cmd(SENSOR_CALL_TIM, ENABLE);
 }
 
 //inicializacia casovaca, ktory generuje spustaci impulz
@@ -231,6 +239,7 @@ void sensorInitCaptureTimer(void)
 	//CAPTURE_TIM prerusenie init
 	sensorInitCaptureTimerInterrup();
 }
+
 //inicializacia preruseni casovaca pre meranie dlzky impulzu z dialkomera
 void sensorInitCaptureTimerInterrup(void)
 {
@@ -344,10 +353,10 @@ void TIM3_IRQHandler(void)
 		sensorCaptureHandler();
 	}
 }
-//spracovanie prerusenia z TIM10, casovaca pre volanie merania vzdialenosti
+//spracovanie prerusenia z casovaca pre volanie merania vzdialenosti
 void TIM10_IRQHandler(void)
 {
-	if (TIM_GetITStatus(TIM10, TIM_IT_Update) == SET)
+	if (TIM_GetITStatus(SENSOR_CALL_TIM, TIM_IT_Update) == SET)
 	{
 		//volanie merania senzora, ktory je na rade
 		switch (selectSensor)
@@ -368,7 +377,7 @@ void TIM10_IRQHandler(void)
 		{
 			selectSensor = 0;
 		}
-		TIM_ClearITPendingBit(TIM10, TIM_IT_Update);
+		TIM_ClearITPendingBit(SENSOR_CALL_TIM, TIM_IT_Update);
 	}
 }
 
