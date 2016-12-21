@@ -15,5 +15,5 @@
 void InitializeLEDs();
 void InitializeTimer();
 void EnableTimerInterrupt();
-void pmspd(int a);
-void lmspd(int a);
+void left_motor_set_speed(int a);
+void right_motor_set_speed(int a);

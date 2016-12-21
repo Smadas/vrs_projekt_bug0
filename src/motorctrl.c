@@ -64,14 +64,14 @@ void EnableTimerInterrupt()
    // TIM4->DIER = TIM_DIER_UIE;
 }
 
-void pmspd(int a){
+void right_motor_set_speed(int a){
 
 	if(a>5){a=5;}
 	if(a<-5){a=-5;}
 	PM=74-a;
 }
 
-void lmspd(int a){
+void left_motor_set_speed(int a){
 	if(a>5){a=5;}
 	if(a<-5){a=-5;}
 	LM=74+a;
