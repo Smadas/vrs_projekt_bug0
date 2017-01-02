@@ -1,5 +1,5 @@
 /*
- * kontrolka.c
+ * runIndicatorLED.c
  *
  *  Created on: Dec 1, 2016
  *      Author: Adam Sojka
@@ -23,7 +23,6 @@ long long indicatorTimeStamp;
 #define TIM_INTERRUPT_SUB 2
 #define TIM_PERIOD 1000 - 1
 #define TIM_CLC_DIV 0
-
 
 /* Private function prototypes */
 
@@ -54,34 +53,30 @@ void init_indicator_LED_pin()
 void init_indicator_LED_trigtim()
 {
 	indicatorTimeStamp = 0;
-	//unsigned short prescalerValue = (unsigned short) (SystemCoreClock / 1000) - 1;
 	unsigned short prescalerValue = (unsigned short) TIM_CLC_PRESCALER;
-	//Structure for timer settings
+
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	NVIC_InitTypeDef NVIC_InitStructure;
-	// TIM6 clock enable
+
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
-	// Enable the TIM6 gloabal Interrupt
-	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = TIM_INTERRUPT_PREEMP;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = TIM_INTERRUPT_SUB;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
 	TIM_TimeBaseStructure.TIM_Period = TIM_PERIOD;
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CLC_DIV;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
 	TIM_TimeBaseInit(TIM6, &TIM_TimeBaseStructure);
-	// TIM Interrupts enable
 	TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
-	// TIM6 enable counter
 	TIM_Cmd(TIM6, ENABLE);
 }
 
 //inicializacia prerusenia casovaca
 void init_indicator_LED_trigtim_interrupt()
 {
+	NVIC_InitTypeDef NVIC_InitStructure;
 
+	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = TIM_INTERRUPT_PREEMP;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = TIM_INTERRUPT_SUB;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
 }
 
 //spracovanie prerusenia z TIM6, casovaca pre kontrolku

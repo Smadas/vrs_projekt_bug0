@@ -1,5 +1,5 @@
 /*
- * kontrolka.h
+ * runIndicatorLED.h
  *
  *  Created on: Dec 1, 2016
  *      Author: Adam Sojka
