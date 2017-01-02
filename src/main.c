@@ -24,7 +24,7 @@ SOFTWARE.
 
 /* Includes */
 #include <bug_0.h>
-
+#include "runIndicatorLED.h"
 
 
 /* Private typedef */
@@ -45,7 +45,8 @@ SOFTWARE.
 int main(void)
 
 {
-	init();
+	init_indicator_LED();
+	//init();
   /**
   *  IMPORTANT NOTE!
   *  See the <system_*.c> file and how/if the SystemInit() function updates
@@ -75,7 +76,7 @@ int main(void)
 	  else stop();*/
 
 
-	sendValue();
+	//sendValue();
 	//PutcUART2(48);
   }
   return 0;
