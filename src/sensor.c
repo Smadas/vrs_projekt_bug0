@@ -113,15 +113,12 @@ void sensorInitCallTimer(void)
 	selectSensor = 0;
 	//Structure for timer settings
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	NVIC_InitTypeDef NVIC_InitStructure;
+
 	//  clock enable
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM10, ENABLE);
-	// Enable the gloabal Interrupt
-	NVIC_InitStructure.NVIC_IRQChannel = TIM10_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = SENSOR_CALL_TIM_PREEMPTPRIORITY;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = SENSOR_CALL_TIM_SUBPRIORITY;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+
+	//CALL_TIM init prerusenie
+	sensorInitCallTimerInterrupt();
 
 	TIM_TimeBaseStructure.TIM_Period = SENSOR_CALL_TIM_PERIOD;
 	TIM_TimeBaseStructure.TIM_ClockDivision = SENSOR_CALL_TIM_CLOCKDIVISION;
@@ -132,6 +129,17 @@ void sensorInitCallTimer(void)
 	TIM_ITConfig(SENSOR_CALL_TIM, TIM_IT_Update, ENABLE);
 	// enable counter
 	TIM_Cmd(SENSOR_CALL_TIM, ENABLE);
+}
+//inicializacia preruseni casovaca volajuceho meranie dialkomermy
+void sensorInitCallTimerInterrupt(void)
+{
+	NVIC_InitTypeDef NVIC_InitStructure;
+
+	NVIC_InitStructure.NVIC_IRQChannel = TIM10_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = SENSOR_CALL_TIM_PREEMPTPRIORITY;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = SENSOR_CALL_TIM_SUBPRIORITY;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
 }
 
 //inicializacia casovaca, ktory generuje spustaci impulz
