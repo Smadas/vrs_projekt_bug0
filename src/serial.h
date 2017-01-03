@@ -19,8 +19,6 @@ volatile int USARTbufferInkr;
 
 void inicializaciaPrerusenieUSART(void);
 void inicializaciaUSART(void);
-int rychlostBlikaniaLED(int blikacRychlost,uint16_t value);
-void PutcUART2(char *ch);
 void USART2_IRQHandler(void);
 int odoslanieRetazca(int tvarVypisu);
 

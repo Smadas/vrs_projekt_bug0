@@ -38,9 +38,9 @@ volatile int selectSensor = 0;
 #define DISTANCE_MAX 400
 
 	//trig
-#define LEFT_TRIG_PIN GPIO_Pin_13
-#define RIGHT_TRIG_PIN GPIO_Pin_15
-#define FORWARD_TRIG_PIN GPIO_Pin_14
+#define LEFT_TRIG_PIN GPIO_Pin_9
+#define RIGHT_TRIG_PIN GPIO_Pin_12
+#define FORWARD_TRIG_PIN GPIO_Pin_11
 #define TRIG_PORT GPIOA
 #define TRIG_TIM_FREQ 100000
 #define TRIG_TIM TIM7
@@ -113,15 +113,12 @@ void sensorInitCallTimer(void)
 	selectSensor = 0;
 	//Structure for timer settings
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	NVIC_InitTypeDef NVIC_InitStructure;
+
 	//  clock enable
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM10, ENABLE);
-	// Enable the gloabal Interrupt
-	NVIC_InitStructure.NVIC_IRQChannel = TIM10_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = SENSOR_CALL_TIM_PREEMPTPRIORITY;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = SENSOR_CALL_TIM_SUBPRIORITY;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+
+	//CALL_TIM init prerusenie
+	sensorInitCallTimerInterrupt();
 
 	TIM_TimeBaseStructure.TIM_Period = SENSOR_CALL_TIM_PERIOD;
 	TIM_TimeBaseStructure.TIM_ClockDivision = SENSOR_CALL_TIM_CLOCKDIVISION;
@@ -132,6 +129,17 @@ void sensorInitCallTimer(void)
 	TIM_ITConfig(SENSOR_CALL_TIM, TIM_IT_Update, ENABLE);
 	// enable counter
 	TIM_Cmd(SENSOR_CALL_TIM, ENABLE);
+}
+//inicializacia preruseni casovaca volajuceho meranie dialkomermy
+void sensorInitCallTimerInterrupt(void)
+{
+	NVIC_InitTypeDef NVIC_InitStructure;
+
+	NVIC_InitStructure.NVIC_IRQChannel = TIM10_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = SENSOR_CALL_TIM_PREEMPTPRIORITY;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = SENSOR_CALL_TIM_SUBPRIORITY;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
 }
 
 //inicializacia casovaca, ktory generuje spustaci impulz
@@ -175,8 +183,8 @@ void sensorInitTriggerTimerInterrup(void)
 //inicializacia pinov pre spustanie dialkomerov
 void sensorInitTriggerPin(void)
 {
-	//spusti hodiny pre port C
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);//spusti hodiny pre port C
+	//spusti hodiny pre port A
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 
 	//vytvorenie struktury GPIO
 	GPIO_InitTypeDef gpioInitStruc;
@@ -186,7 +194,7 @@ void sensorInitTriggerPin(void)
 
 	//zapisanie inicializacnej struktury - left
 	gpioInitStruc.GPIO_Pin = LEFT_TRIG_PIN;
-	GPIO_Init(TRIG_PORT, &gpioInitStruc);
+	GPIO_Init(TRIG_PORT, &gpioInitStruc);//errror - remote failure E31
 
 	//zapisanie inicializacnej struktury - right
 	gpioInitStruc.GPIO_Pin = RIGHT_TRIG_PIN;
@@ -195,6 +203,7 @@ void sensorInitTriggerPin(void)
 	//zapisanie inicializacnej struktury - forward
 	gpioInitStruc.GPIO_Pin = FORWARD_TRIG_PIN;
 	GPIO_Init(TRIG_PORT, &gpioInitStruc);
+
 }
 //inicializacia casovaca pre meranie dlzky impulzu z dialkomera
 void sensorInitCaptureTimer(void)
