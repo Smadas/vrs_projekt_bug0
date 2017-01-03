@@ -25,6 +25,9 @@ SOFTWARE.
 /* Includes */
 #include <bug_0.h>
 #include "runIndicatorLED.h"
+#include "sensor.h"
+
+#include "serial.h"
 
 
 /* Private typedef */
@@ -46,6 +49,12 @@ int main(void)
 
 {
 	init_indicator_LED();
+	sensorInit();
+
+	inicializaciaPrerusenieUSART();
+	inicializaciaUSART();
+
+
 	//init();
   /**
   *  IMPORTANT NOTE!
@@ -68,8 +77,16 @@ int main(void)
 
 
   /* Infinite loop */
+	volatile long i = 0;
   while (1)
   {
+
+	  i++;
+	  if (i > 100000)
+	  {
+		  i = 0;
+		  sensorMessageAll(leftSensorGetDistance(), rightSensorGetDistance(), forwardSensorGetDistance());
+	  }
 
 	 /* if (running)
 		  run();

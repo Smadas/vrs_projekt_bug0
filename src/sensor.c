@@ -38,9 +38,9 @@ volatile int selectSensor = 0;
 #define DISTANCE_MAX 400
 
 	//trig
-#define LEFT_TRIG_PIN GPIO_Pin_13
-#define RIGHT_TRIG_PIN GPIO_Pin_15
-#define FORWARD_TRIG_PIN GPIO_Pin_14
+#define LEFT_TRIG_PIN GPIO_Pin_9
+#define RIGHT_TRIG_PIN GPIO_Pin_12
+#define FORWARD_TRIG_PIN GPIO_Pin_11
 #define TRIG_PORT GPIOA
 #define TRIG_TIM_FREQ 100000
 #define TRIG_TIM TIM7
@@ -175,8 +175,8 @@ void sensorInitTriggerTimerInterrup(void)
 //inicializacia pinov pre spustanie dialkomerov
 void sensorInitTriggerPin(void)
 {
-	//spusti hodiny pre port C
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);//spusti hodiny pre port C
+	//spusti hodiny pre port A
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 
 	//vytvorenie struktury GPIO
 	GPIO_InitTypeDef gpioInitStruc;
@@ -186,7 +186,7 @@ void sensorInitTriggerPin(void)
 
 	//zapisanie inicializacnej struktury - left
 	gpioInitStruc.GPIO_Pin = LEFT_TRIG_PIN;
-	GPIO_Init(TRIG_PORT, &gpioInitStruc);
+	GPIO_Init(TRIG_PORT, &gpioInitStruc);//errror - remote failure E31
 
 	//zapisanie inicializacnej struktury - right
 	gpioInitStruc.GPIO_Pin = RIGHT_TRIG_PIN;
@@ -195,6 +195,7 @@ void sensorInitTriggerPin(void)
 	//zapisanie inicializacnej struktury - forward
 	gpioInitStruc.GPIO_Pin = FORWARD_TRIG_PIN;
 	GPIO_Init(TRIG_PORT, &gpioInitStruc);
+
 }
 //inicializacia casovaca pre meranie dlzky impulzu z dialkomera
 void sensorInitCaptureTimer(void)
