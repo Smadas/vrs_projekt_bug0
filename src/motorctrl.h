@@ -12,8 +12,9 @@
 
 #endif /* MOTORCTRL_H_ */
 
-void InitializeLEDs();
+void InitializeOutput();
+void Motor_init();
 void InitializeTimer();
-void EnableTimerInterrupt();
+
 void left_motor_set_speed(int a);
 void right_motor_set_speed(int a);
