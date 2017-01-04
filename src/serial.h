@@ -19,13 +19,14 @@ volatile int USARTbufferInkr;
 
 void inicializaciaPrerusenieUSART(void);
 void inicializaciaUSART(void);
-int rychlostBlikaniaLED(int blikacRychlost,uint16_t value);
-void PutcUART2(char *ch);
 void USART2_IRQHandler(void);
 int odoslanieRetazca(int tvarVypisu);
 
 //dialkomer - vytvorenie spravy so vzdialenostou
 int sensorMessage(double distance, int sensorNum);
 int sensorMessageAll(double leftDistance, double rightDistance, double forwardDistance);
+
+int magnetometerMessage(unsigned int value, int regAddr, int errStat);
+int compassMessage(int xForce, int yForce, int zForce, int heading);
 
 #endif /* SERIAL_H_ */

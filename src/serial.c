@@ -178,6 +178,70 @@ int sensorMessageAll(double leftDistance, double rightDistance, double forwardDi
 	return 0;
 }
 
+//dialkomer - vytvorenie spravy so vzdialenostou
+int magnetometerMessage(unsigned int value, int regAddr, int errStat)
+{
+	char message[100];
+
+	sprintf(message, "register: %d errStat: %d value: %x", regAddr, errStat, value);
+
+	//pridanie noveho riadku
+	int increment = 0;
+	while (message[increment] != 0)
+	{
+		//hladanie konca spravy
+		increment++;
+	}
+	message[increment + 1] = 13;//carriage return
+	message[increment] = 10;//new line
+	message[increment + 2] = 0;
+
+	//odoslanie prveho znaku
+	switch (printToUSARTbuffer(message))
+	{
+	case -1:
+		return -1;//USART buffer nie je pripraveny
+		break;
+	case -2:
+		return -2;//prazdna sprava
+		break;
+	}
+
+	return 0;
+}
+
+//dialkomer - vytvorenie spravy so vzdialenostou
+int compassMessage(int xForce, int yForce, int zForce, int heading)
+{
+	char message[100];
+
+	sprintf(message, "x: %d y: %d z: %d heading: %d", xForce, yForce, zForce, heading);
+
+	//pridanie noveho riadku
+	int increment = 0;
+	while (message[increment] != 0)
+	{
+		//hladanie konca spravy
+		increment++;
+	}
+	message[increment + 1] = 13;//carriage return
+	message[increment] = 10;//new line
+	message[increment + 2] = 0;
+
+	//odoslanie prveho znaku
+	switch (printToUSARTbuffer(message))
+	{
+	case -1:
+		return -1;//USART buffer nie je pripraveny
+		break;
+	case -2:
+		return -2;//prazdna sprava
+		break;
+	}
+
+	return 0;
+}
+
 void PRN_USART_IRQHANDLER(void)
 {
 	if(USART_GetITStatus(PRN_USART, USART_IT_RXNE) != RESET)
