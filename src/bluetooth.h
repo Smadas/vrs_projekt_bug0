@@ -14,13 +14,14 @@
 #include "stm32l1xx.h"
 #include "stm32l1xx_gpio.h"
 
+
 int running;
 int change_goal_request;
 int goal_bearing;
 
-void initUSART2();
-void PutcUART2(char ch);
-void USART2_IRQHandler(void);
+void initUSART3();
+void PutcUART3(char ch);
+void USART3_IRQHandler(void);
 
 void sendValue();
 

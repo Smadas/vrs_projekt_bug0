@@ -17,7 +17,7 @@ int init(){
 	bearing = 0;
 	bearing_error = 0;
 
-	  initUSART2();
+	  initUSART3();
 	//inicializacia zvukacov, kompasu a motorov
 	return 1;
 }
