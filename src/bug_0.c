@@ -6,6 +6,7 @@
  */
 
 #include <bug_0.h>
+#include <sensor.h>
 
 
 int init(){
@@ -18,6 +19,8 @@ int init(){
 	bearing_error = 0;
 
 	  initUSART3();
+	  //inicializacia motorov
+	  Motor_init();
 	//inicializacia zvukacov, kompasu a motorov
 	return 1;
 }
@@ -25,7 +28,23 @@ int init(){
 void run(){
 
 	//bluetooth.start();
-	while (1){
+	if (running){
+		obstacle_forward = forwardSensorGetDistance();
+		sendValue(obstacle_forward);
+
+		if (obstacle_forward > MIN_DISTANCE){
+			go_forward();
+
+		}
+		else stop();
+	}
+	else{
+
+		stop();
+		sendValue(0);
+	}
+
+	/*while (1){
 
 		//bluetooth.getGoal();
 		//sensor.getDistance();
@@ -47,19 +66,19 @@ void run(){
 		} else {
 			turn(90);
 		}
-	}
+	}*/
 }
 
 void stop(){
 
-	//leftMotor.setSpeed(0);
-	//rightMotor.setSpeed(0);
+	left_motor_set_speed(0);
+	right_motor_set_speed(0);
 }
 
 void go_forward(){
 
-	//leftMotor.setSpeed(x);
-	//rightMotor.setSpeed(x);
+	left_motor_set_speed(10);
+	right_motor_set_speed(10);
 
 }
 

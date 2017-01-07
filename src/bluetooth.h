@@ -23,7 +23,7 @@ void initUSART3();
 void PutcUART3(char ch);
 void USART3_IRQHandler(void);
 
-void sendValue();
+void sendValue(double prekazka);
 
 
 #endif /* BLUETOOTH_H_ */

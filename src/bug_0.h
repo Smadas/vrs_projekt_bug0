@@ -6,13 +6,13 @@
  */
 
 #include <bluetooth.h>
-
+#include <motorctrl.h>
 
 #ifndef BUG_0_H_
 #define BUG_0_H_
 
 //minimalna vzdialenost prekazky
-#define MIN_DISTANCE 0.05
+#define MIN_DISTANCE 30
 
 int init();
 void run();

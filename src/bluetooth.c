@@ -107,15 +107,17 @@ void USART3_IRQHandler(void){
     }
 }
 
-void sendValue(){
+void sendValue(double prekazka){
 	//PutcUART3('m');
 
+
+
 	if (running)
-		PutcUART3(goal_bearing);
+		PutcUART3((char)prekazka);
 	else
 		PutcUART3(0xFF);
 
 	//sleep
-	for (int i = 0; i < 500000; i++);
+	for (int i = 0; i < 250000; i++);
 }
 

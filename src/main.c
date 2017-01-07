@@ -79,7 +79,8 @@ int main(void)
 	volatile long i = 0;
   while (1)
   {
-	  sendValue();
+
+	  run();
 	  i++;
 	  if (i > 100000)
 	  {
