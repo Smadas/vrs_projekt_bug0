@@ -78,8 +78,8 @@ void USART3_IRQHandler(void){
 		if (change_goal_request){
 
 			if (znak >= '0' && znak <= '7')
-			goal_bearing = znak;
-
+			goal_bearing = (znak - 48) * 45; //ASCII 0 = 48
+											//rozsah ziadanych hodnot 0-7, cize 360/8 = 45 stupnov
 			change_goal_request = 0;
 		}
 

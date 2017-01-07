@@ -95,9 +95,12 @@ void right_motor_set_speed(int a){
 
 	if(a>20){a=20;}
 	if(a<-20){a=-20;}
-
+if (a!=counter){
 	  TIM_OCInitStructure.TIM_Pulse = 150-a;
 	  TIM_OC3Init(TIM2, &TIM_OCInitStructure);//pravy pwm update
+	  counter=a;
+}
+
 }
 
 void left_motor_set_speed(int a){
@@ -109,7 +112,12 @@ void left_motor_set_speed(int a){
 			  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	if(a>20){a=20;}
 	if(a<-20){a=-20;}
+	if (a!=counter2){
 	 TIM_OCInitStructure.TIM_Pulse = 150+a;
 	 TIM_OC4Init(TIM2, &TIM_OCInitStructure);//lavy pwm update
+	 counter2=a;
+	}
+
+
 }
 

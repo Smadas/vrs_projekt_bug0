@@ -54,6 +54,8 @@ int main(void)
 
 
 
+
+
 	//init();
   /**
   *  IMPORTANT NOTE!
@@ -77,9 +79,11 @@ int main(void)
 
   /* Infinite loop */
 	volatile long i = 0;
+	//left_motor_set_speed(10);
+	//right_motor_set_speed(-10);
+
   while (1)
   {
-
 	  run();
 	  i++;
 	  if (i > 100000)
@@ -92,7 +96,6 @@ int main(void)
 	  else stop();*/
 
 
-	//sendValue();
 	//PutcUART2(48);
   }
   return 0;
