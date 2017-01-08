@@ -471,7 +471,7 @@ double leftSensorGetDistance(void)
 	if (distance > DISTANCE_MAX)
 	{
 		//senzor nic nezachytil
-		return -1;
+		return DISTANCE_MAX;
 	}
 	else
 	{
@@ -492,7 +492,7 @@ double rightSensorGetDistance(void)
 	if (distance > DISTANCE_MAX)
 	{
 		//senzor nic nezachytil
-		return -1;
+		return DISTANCE_MAX;
 	}
 	else
 	{
@@ -513,7 +513,7 @@ double forwardSensorGetDistance(void)
 	if (distance > DISTANCE_MAX)
 	{
 		//senzor nic nezachytil
-		return -1;
+		return DISTANCE_MAX;
 	}
 	else
 	{

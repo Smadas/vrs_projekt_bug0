@@ -14,8 +14,8 @@
 #define BUG_0_H_
 
 //minimalna vzdialenost prekazky
-#define MIN_FRONT_DISTANCE 30
-#define MIN_SIDE_DISTANCE 20
+#define MIN_FRONT_DISTANCE 10
+#define MIN_SIDE_DISTANCE 25
 
 #define BEARING_ACCURACY 10
 
@@ -25,11 +25,9 @@ int init();
 void run();
 void stop();
 void go_forward();
-void turn_left(int x);
-void turn_right(int x);
-void turn(int angle_new);
-void calibrate_movement();
-
+void turn_left(int speed);
+void turn_right(int speed);
+void turn(int angle_new, int speed);
 
 //vzdialenosti od prekazok, data zo zvukacov
 double obstacle_forward;
@@ -38,6 +36,8 @@ double obstacle_left;
 
 //uhol z kompasu
 int bearing;
+
+int obstacle_aktiv;
 
 //pomocna premenna, ktora detekuje kolko krat sa robot musel otacat
 int bearing_error;

@@ -17,6 +17,7 @@ int init(){
 	obstacle_left = 0;
 	bearing = 0;
 	bearing_error = 0;
+	obstacle_aktiv = 0;
 
 	  initUSART3();
 	  //inicializacia motorov
@@ -30,58 +31,66 @@ int init(){
 
 void run(){
 
-	bearing = readDataCompass();
 
-	sendValue(bearing);
+	obstacle_forward = forwardSensorGetDistance();
+	obstacle_right = rightSensorGetDistance();
+	obstacle_left = leftSensorGetDistance();
+	//bearing = readDataCompass();
+	//go_forward();
 
-	//bluetooth.start();
-	if (running){
-		/*obstacle_forward = forwardSensorGetDistance();
-		obstacle_right = rightSensorGetDistance();
-		sendValue(obstacle_right);
+	if (obstacle_aktiv){
 
-		if (obstacle_right > MIN_SIDE_DISTANCE){
-			stop();
-		}
+		 if (obstacle_forward < MIN_FRONT_DISTANCE){
+			 turn_left(8);
+		 }
+		 else if (obstacle_right > MIN_SIDE_DISTANCE + 30){
 
-		else if (obstacle_forward > MIN_FRONT_DISTANCE){
-			//turn();
+			 obstacle_aktiv = 0;
+			 }
+		 else if (obstacle_right < MIN_SIDE_DISTANCE - 20){
+			 turn_left(8);
+		 }
+		 else{
 			go_forward();
 		}
-		else stop();*/
+	} else {
 
-		turn(160);
-		turn(250);
+		 if (obstacle_forward > MIN_FRONT_DISTANCE){
+			 turn(290, 7);
+			go_forward();
 
+		 }
+		 else{
+			 stop();
+			 obstacle_aktiv = 1;
+		 }
 	}
-	else{
-		stop();
-		sendValue(0);
-	}
 
-	/*while (1){
+		/*if (bearing_error < 0 && obstacle_left > MIN_SIDE_DISTANCE){
 
-		//bluetooth.getGoal();
-		//sensor.getDistance();
-		if (bearing_error > 0 && obstacleLeft > MIN_DISTANCE){
+			bearing = readDataCompass();
+			turn(bearing + 90, 7); //otocenie vlavo o 90 stupnov
+			bearing_error++;
 
-			turn(-90);
+		} else if (bearing_error > 0 && obstacle_right > MIN_SIDE_DISTANCE){
 
-		} else if (bearing_error < 0 && obstacleRight > MIN_DISTANCE){
+			bearing = readDataCompass();
+			turn(bearing - 90, 7); //otocenie vpravo o 90 stupnov
+			bearing_error--;
 
-			turn(90);
-
-		} else{
+		} else if (bearing_error == 0){
 			//ak by bol robot vychyleny od ziadeneho uhlu, tak sa dostane naspat na ziadany uhol
-			calibrate_movement();
+			turn(goal_bearing, 7);
 		}
 
-		if (obstacle_forward > MIN_DISTANCE){
+		if (obstacle_forward > MIN_FRONT_DISTANCE){
 			go_forward();
 		} else {
-			turn(90);
-		}
-	}*/
+			bearing = readDataCompass();
+			turn(bearing + 90, 7); //otocenie vlavo o 90 stupnov
+			bearing_error++;
+		}*/
+
 }
 
 void stop(){
@@ -97,88 +106,71 @@ void go_forward(){
 
 }
 
-void turn_left(int x){
-	left_motor_set_speed(x);
-	right_motor_set_speed(-x);
+void turn_left(int speed){
+	left_motor_set_speed(-speed + 1);
+	right_motor_set_speed(speed);
 }
 
-void turn_right(int x){
-	left_motor_set_speed(-x);
-	right_motor_set_speed(x);
+void turn_right(int speed){
+	left_motor_set_speed(speed + 1);
+	right_motor_set_speed(-speed);
 }
 
-void turn(int request_angle){
+void turn(int request_angle, int speed){
 
 	bearing = readDataCompass();
-	//int request_angle = bearing + angle_change;
 
-/*	if (request_angle > 360)
+	if (request_angle > 360)
 		request_angle -= 360;
-*/
 
-	//int angle_diff = request_angle - bearing; //treba vyriesit problem, ked sa bude otacat cez sever, 360-0.
 
 	int angle_diff = bearing - request_angle;
-	//int angle_diff_2 =
-	int error;
 
+	int error;
 	if (angle_diff > BEARING_ACCURACY || angle_diff < -BEARING_ACCURACY)
 		error = 1;
-	else error = 0;
+	else {
+		return;
+		error = 0;
+	}
 
 	while (error){
 
-		if (angle_diff > 180)
-			turn_right(4);
-		else if (angle_diff <= 180 && angle_diff > 0)
-			turn_left(4);
-		else if (angle_diff <= 0 && angle_diff > - 180)
-			turn_right(4);
-		else turn_left(4);
+		if (!running) //v pripade, ze pocas otacania pride poziadavka na zastavenie,
+			break;    //tak treba ist von z cyklu
 
 		bearing = readDataCompass();
-		//sendValue(bearing);
 		angle_diff = bearing - request_angle;
 
-		if (angle_diff > BEARING_ACCURACY || angle_diff < -BEARING_ACCURACY)
+	//	if (angle_diff < 0)
+		//	PutcUART3('-');
+
+		sendValue(abs((char)angle_diff));
+
+		if (angle_diff > BEARING_ACCURACY || angle_diff < -BEARING_ACCURACY){
 			error = 1;
-		else error = 0;
+		}
+		else{
+			error = 0;
+			break;
+		}
 
-		/*if (rotation > 0){
-			left_motor_set_speed(-8);
-			right_motor_set_speed(8);
-
-			if (angle_diff > BEARING_ACCURACY) error = 1;
-			else error = 0;
-		} else {
-			left_motor_set_speed(8);
-			right_motor_set_speed(-8);
-
-			if (angle_diff < -BEARING_ACCURACY) error = 1;
-			else error = 0;
-		}*/
-
-	}
+		//obstacle_forward = forwardSensorGetDistance();
+		obstacle_right = rightSensorGetDistance();
+		// if (obstacle_forward < MIN_FRONT_DISTANCE + 10){
+		if (obstacle_right < MIN_SIDE_DISTANCE){
+			obstacle_aktiv = 1;
+			break;
+		 }
+			if (angle_diff > 180)
+				turn_left(speed);
+			else if (angle_diff <= 180 && angle_diff > 0)
+				turn_right(speed);
+			else if (angle_diff <= 0 && angle_diff > - 180)
+				turn_left(speed);
+			else turn_right(speed);
+			 }
 
 	stop();
-	/*if (angle_change > 0){
-		bearing_error++;
-	}
-	else bearing_error--;*/
-
-}
-
-void calibrate_movement(){
-
-	int angle_diff = goal_bearing - bearing; //treba vyriesit problem, ked sa bude otacat cez sever, 360-0.
-
-	while (angle_diff > 1 || angle_diff < -1){ //1 a -1 stupen znamena pozadovanu presnost otacania
-		//leftMotor.setSpeed(x);
-		//rightMotor.setSpeed(-x);
-		angle_diff = goal_bearing - bearing;
-	}
-
-	bearing_error = 0;
-
 }
 

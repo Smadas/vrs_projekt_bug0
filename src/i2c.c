@@ -1017,36 +1017,19 @@ int readDataCompass(){
 
 		int16_t xForce = 0;
 		int16_t yForce = 0;
-		int16_t zForce = 0;
 		int heading = 0;
 		Status errStat;
-
-				for(readAddres = 0; readAddres <= 12; readAddres++)
+				int i=0;
+				for(readAddres = 3; readAddres <= 8; readAddres++)
 				{
-
 					errStat = readDataHMC5883L(&data, readAddres);
-					readData[readAddres] = data;
-
+					readData[i] = data;
+					i++;
 				}
-		        xForce = (int16_t)(readData[4] | (readData[3] << 8));
-		        yForce = (int16_t)(readData[6] | (readData[5] << 8));
-		        zForce = (int16_t)(readData[8] | (readData[7] << 8));
-		        heading = 180 * atan2((double)xForce,(double)zForce)/M_PI;
-//		        int heading2 = 180 * atan2((double)xForce,(double)yForce)/M_PI;
-//		        int heading3 = 180 * atan2((double)zForce,(double)xForce)/M_PI;
-//				compassMessage(xForce, yForce,zForce, heading);
-//
-//				 float X=xForce;
-//				 float Y=zForce;
-				 	// 	 X=source[ctr];
-				    //    Y=source[ctr2];
-				    //      printf("X %ld, Y %ld, angle %5.1f\n\r", X,Y,angle(X,Y));
-
-//				 float angle2 = angle(X,Y);
-//				 //if (ctr2<7)
-//				 //         ctr2++;
-//				 //      else
-//				 //         ctr2=0;
+				i=0;
+		        xForce = (int16_t)(readData[1] | (readData[0] << 8));
+		        yForce = (int16_t)(readData[5] | (readData[4] << 8));
+		        heading = 180 * atan2((double)xForce,(double)yForce)/M_PI;
 
 		        if (heading < 0)
 		        	heading += 360;

@@ -52,10 +52,6 @@ int main(void)
 	sensorInit();
 
 
-
-
-
-
 	//init();
   /**
   *  IMPORTANT NOTE!
@@ -78,25 +74,20 @@ int main(void)
 
 
   /* Infinite loop */
-	volatile long i = 0;
+	//volatile long i = 0;
 	//left_motor_set_speed(10);
 	//right_motor_set_speed(-10);
 
   while (1)
   {
-	  run();
-	  i++;
-	  if (i > 100000)
-	  {
-		  i = 0;
-	  }
-
-	 /* if (running)
+	  if (running){
 		  run();
-	  else stop();*/
-
-
-	//PutcUART2(48);
+	  } else {
+		  bearing_error = 0; //nulovanie pocitadla
+		  stop();
+		  sendValue(bearing_error);
+	  }
+	  //sendValue(bearing_error);
   }
   return 0;
 }

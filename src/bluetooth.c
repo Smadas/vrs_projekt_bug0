@@ -121,3 +121,4 @@ void sendValue(double prekazka){
 	for (int i = 0; i < 250000; i++);
 }
 
+
