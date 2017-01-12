@@ -18,7 +18,7 @@
 #define MIN_SIDE_DISTANCE 25
 #define MIN_SIDE_CRASH_DISTANCE 10
 
-#define BEARING_ACCURACY 10
+#define BEARING_ACCURACY 20
 
 #define abs(x)  (x<0)?-x:x
 
@@ -27,7 +27,9 @@ void run();
 void stop();
 void go_forward();
 void turn_left(int speed);
+void turn_left_one_wheel(int speed);
 void turn_right(int speed);
+void turn_right_one_wheel(int speed);
 int turn(int angle_new, int speed);
 
 //vzdialenosti od prekazok, data zo zvukacov

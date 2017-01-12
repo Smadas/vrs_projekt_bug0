@@ -87,7 +87,6 @@ int main(void)
 		  stop();
 		  sendValue(0);
 	  }
-	  //sendValue(bearing_error);
   }
   return 0;
 }

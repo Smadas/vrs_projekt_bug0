@@ -37,46 +37,65 @@ void run(){
 	obstacle_right = rightSensorGetDistance();
 	obstacle_left = leftSensorGetDistance();
 
-	if (obstacle_right < MIN_SIDE_CRASH_DISTANCE)
-		 turn_left(8);
 
-	if (obstacle_left < MIN_SIDE_CRASH_DISTANCE)
-		 turn_right(8);
+
+	if (obstacle_right < MIN_SIDE_CRASH_DISTANCE){
+		 turn_left_one_wheel(15);
+		 sendValue(5);
+		 return;
+	}
+
+	if (obstacle_left < MIN_SIDE_CRASH_DISTANCE){
+		 turn_right_one_wheel(15);
+		 sendValue(5);
+		 return;
+	}
+
 
 	if (avoidance_aktiv){
 
 		 if (obstacle_forward < MIN_FRONT_DISTANCE){
-			 turn_left(8);
+			 turn_left(12);
+			 sendValue(4);
+
 		 }
 		 else if (obstacle_right > MIN_SIDE_DISTANCE + 30){
 
+			// stop();
 			 avoidance_aktiv = 0;
+			 sendValue(2);
 			 }
-		 //else if (obstacle_right < MIN_SIDE_CRASH_DISTANCE){
-		//	 turn_left(8);
-		// }
-		 else{
-			go_forward();
+
+		 else if (obstacle_right > MIN_SIDE_CRASH_DISTANCE && obstacle_left > MIN_SIDE_CRASH_DISTANCE){
+		// else{
+		 go_forward();
+		 sendValue(3);
+		 return;
 		}
 	} else {
 
 		 if (obstacle_forward > MIN_FRONT_DISTANCE){
 			int ret = turn(290, 7); //pokus o vratenie sa na ziadany smer
 
-			 if (ret > 0)
+
+			 if (ret > 0){
 				go_forward();
-			else if (ret == 0)     // pri otacani zdetekoval prekazku, cize musi prejst
+				sendValue(0);
+			 }
+			else if (ret == 0){     // pri otacani zdetekoval prekazku, cize musi prejst
 				avoidance_aktiv = 1; //cize musi prejst do modu avoidance
-			else return;
+				sendValue(1);
+			}else{
 
-
-
+				return;
+			}
 		 }
 		 else{
 			 stop();
 			 avoidance_aktiv = 1;
 		 }
 	}
+
 
 		/*if (bearing_error < 0 && obstacle_left > MIN_SIDE_DISTANCE){
 
@@ -112,10 +131,8 @@ void stop(){
 }
 
 void go_forward(){
-
 	left_motor_set_speed(10);
 	right_motor_set_speed(10);
-
 }
 
 void turn_left(int speed){
@@ -123,14 +140,27 @@ void turn_left(int speed){
 	right_motor_set_speed(speed);
 }
 
+void turn_left_one_wheel(int speed){
+	right_motor_set_speed(speed);
+	left_motor_set_speed(0);
+
+}
+
 void turn_right(int speed){
 	left_motor_set_speed(speed + 1);
 	right_motor_set_speed(-speed);
 }
 
+void turn_right_one_wheel(int speed){
+	left_motor_set_speed(speed + 1);
+	right_motor_set_speed(0);
+}
+
+
 int turn(int request_angle, int speed){
 
-	bearing = readDataCompass();
+	//bearing = readDataCompass();
+	bearing = compass_get_heading();
 
 	if (request_angle > 360)
 		request_angle -= 360;
@@ -153,7 +183,7 @@ int turn(int request_angle, int speed){
 			stop();     //tak treba ist von z cyklu
 			return -1;
 		}
-		bearing = readDataCompass();
+		bearing = compass_get_heading();
 		angle_diff = bearing - request_angle;
 
 	//	if (angle_diff < 0)
