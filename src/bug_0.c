@@ -17,52 +17,64 @@ int init(){
 	obstacle_left = 0;
 	bearing = 0;
 	bearing_error = 0;
-	obstacle_aktiv = 0;
+	avoidance_aktiv = 0;
 
 	  initUSART3();
 	  //inicializacia motorov
 	  Motor_init();
 	  //inicializacia i2c a kompasu
 	initI2C1();
-	Status errStat1 =writeBytesToCompass();
+	//Status errStat1 =writeBytesToCompass();
+
+	writeBytesToCompass();
 	return 1;
 }
 
 
 void run(){
 
-
 	obstacle_forward = forwardSensorGetDistance();
 	obstacle_right = rightSensorGetDistance();
 	obstacle_left = leftSensorGetDistance();
-	//bearing = readDataCompass();
-	//go_forward();
 
-	if (obstacle_aktiv){
+	if (obstacle_right < MIN_SIDE_CRASH_DISTANCE)
+		 turn_left(8);
+
+	if (obstacle_left < MIN_SIDE_CRASH_DISTANCE)
+		 turn_right(8);
+
+	if (avoidance_aktiv){
 
 		 if (obstacle_forward < MIN_FRONT_DISTANCE){
 			 turn_left(8);
 		 }
 		 else if (obstacle_right > MIN_SIDE_DISTANCE + 30){
 
-			 obstacle_aktiv = 0;
+			 avoidance_aktiv = 0;
 			 }
-		 else if (obstacle_right < MIN_SIDE_DISTANCE - 20){
-			 turn_left(8);
-		 }
+		 //else if (obstacle_right < MIN_SIDE_CRASH_DISTANCE){
+		//	 turn_left(8);
+		// }
 		 else{
 			go_forward();
 		}
 	} else {
 
 		 if (obstacle_forward > MIN_FRONT_DISTANCE){
-			 turn(290, 7);
-			go_forward();
+			int ret = turn(290, 7); //pokus o vratenie sa na ziadany smer
+
+			 if (ret > 0)
+				go_forward();
+			else if (ret == 0)     // pri otacani zdetekoval prekazku, cize musi prejst
+				avoidance_aktiv = 1; //cize musi prejst do modu avoidance
+			else return;
+
+
 
 		 }
 		 else{
 			 stop();
-			 obstacle_aktiv = 1;
+			 avoidance_aktiv = 1;
 		 }
 	}
 
@@ -116,7 +128,7 @@ void turn_right(int speed){
 	right_motor_set_speed(-speed);
 }
 
-void turn(int request_angle, int speed){
+int turn(int request_angle, int speed){
 
 	bearing = readDataCompass();
 
@@ -130,15 +142,17 @@ void turn(int request_angle, int speed){
 	if (angle_diff > BEARING_ACCURACY || angle_diff < -BEARING_ACCURACY)
 		error = 1;
 	else {
-		return;
+		stop();
+		return 1;
 		error = 0;
 	}
 
 	while (error){
 
-		if (!running) //v pripade, ze pocas otacania pride poziadavka na zastavenie,
-			break;    //tak treba ist von z cyklu
-
+		if (!running){ //v pripade, ze pocas otacania pride poziadavka na zastavenie,
+			stop();     //tak treba ist von z cyklu
+			return -1;
+		}
 		bearing = readDataCompass();
 		angle_diff = bearing - request_angle;
 
@@ -152,15 +166,16 @@ void turn(int request_angle, int speed){
 		}
 		else{
 			error = 0;
-			break;
+			return 1;
 		}
 
 		//obstacle_forward = forwardSensorGetDistance();
 		obstacle_right = rightSensorGetDistance();
 		// if (obstacle_forward < MIN_FRONT_DISTANCE + 10){
 		if (obstacle_right < MIN_SIDE_DISTANCE){
-			obstacle_aktiv = 1;
-			break;
+			stop();
+			return 0;
+
 		 }
 			if (angle_diff > 180)
 				turn_left(speed);
@@ -169,8 +184,8 @@ void turn(int request_angle, int speed){
 			else if (angle_diff <= 0 && angle_diff > - 180)
 				turn_left(speed);
 			else turn_right(speed);
-			 }
+		}
 
-	stop();
+	return 1;
 }
 

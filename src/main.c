@@ -85,7 +85,7 @@ int main(void)
 	  } else {
 		  bearing_error = 0; //nulovanie pocitadla
 		  stop();
-		  sendValue(bearing_error);
+		  sendValue(0);
 	  }
 	  //sendValue(bearing_error);
   }
