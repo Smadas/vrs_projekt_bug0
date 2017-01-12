@@ -75,7 +75,7 @@ void run(){
 	} else {
 
 		 if (obstacle_forward > MIN_FRONT_DISTANCE){
-			int ret = turn(290, 7); //pokus o vratenie sa na ziadany smer
+			int ret = turn(goal_bearing, 7); //pokus o vratenie sa na ziadany smer
 
 
 			 if (ret > 0){
