@@ -22,19 +22,27 @@ SOFTWARE.
 ******************************************************************************
 */
 
+/* Authors:
+ *   Michal Dobis:
+ *   	bug_0.h
+ *      bug_0.c
+ *      bluetooth.h
+ *      bluetooth.c
+ *
+ *  Adam Sojka:
+ *  	dopiste si sem nazvy zdrojakov, ktore ste robili
+ *
+ *  Martin Ivan:
+ * 		dopiste si sem nazvy zdrojakov, ktore ste robili
+ *
+ *  Adrian Kuban:
+ *  	dopiste si sem nazvy zdrojakov, ktore ste robili
+ *
+ *
+ * */
+
 /* Includes */
 #include <bug_0.h>
-#include "runIndicatorLED.h"
-#include "sensor.h"
-
-
-
-/* Private typedef */
-/* Private define  */
-/* Private macro */
-/* Private variables */
-/* Private function prototypes */
-/* Private functions */
 
 
 /**
@@ -47,12 +55,9 @@ SOFTWARE.
 int main(void)
 
 {
+	//Inicializacia hardveru
 	init();
-	init_indicator_LED();
-	sensorInit();
 
-
-	//init();
   /**
   *  IMPORTANT NOTE!
   *  See the <system_*.c> file and how/if the SystemInit() function updates
@@ -70,22 +75,17 @@ int main(void)
   *  system_stm32l1xx.c file
   */
 
-  /* TODO - Add your application code here */
-
-
   /* Infinite loop */
-	//volatile long i = 0;
-	//left_motor_set_speed(10);
-	//right_motor_set_speed(-10);
 
   while (1)
   {
+	  //ak je v stave running (prevzate cez bluetooth prijatim hodnoty 'x')
+	  //tak sa vykona cyklus algoritmu
 	  if (running){
 		  run();
-	  } else {
-		  bearing_error = 0; //nulovanie pocitadla
+	  } else {	//ak nie je v stave running bude to indikovat na UART posielanim 0xFF
 		  stop();
-		  sendValue(0);
+		  sendValue(0xFF);
 	  }
   }
   return 0;

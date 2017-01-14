@@ -2,22 +2,50 @@
  * bluetooth.c
  *
  *  Created on: 11. 12. 2016
- *      Author: michal1
+ *      Author: Michal Dobis
+ *
+ *      Mail: miso.dobis@gmail.com
+ *      	  xdobis@stuba.sk
+ *
+ *  description:
+ *  Kniznica pre komunikaciu cez bluetooth resp. USART
+ *  Pre implementaciu je nutne zavolat len funkciu initUSART3()
+ *
+ *  Kniznica obsahuje komunikacny protokol:
+ *
+ *  receive (ASCII format):
+ *  x - aktivuje/deaktivuje running mode - v main programe nutne citat hodnotu running
+ *  c - po prijati tejto hodnoty sa bude ocakavat hodnota
+ * 	 	z rozsahu 0-7, ktora bude zadavat ziadany smer
+ * 	0-7 - ak bola prijata hodnota 'c' a nasledne cislo z rozsahu 0-7 nastavi sa
+ * 		  premenna goal_bearing = X*45 stupnov, kde X je hodnota 0-7
+ * d - aktivuje/deaktivuje debug mode. Blizsi popis pri funkcii sendValue()
+ *
+ * send (hex format)
+ * 0xFF - robot nie je v pohybe, caka na operatora kym neposle hodnotu 'x'
+ * goal_bearing - ak bude v pohybe, tak posiela pravidelne ziadany smer
+ * ine hodnoty - ak bude v mode debug
+ *
+ *   Popis komunikacneho protokolu najdete aj na wiki: https://github.com/Smadas/vrs_projekt_bug0/wiki
+ *
+ *   Blizsi popis k funkciam najdete priamo vo funkciach
+ *
  */
-
 
 #include <bluetooth.h>
 
 void initUSART3(){
 
+	//global variable init
 	running = 0;
 	change_goal_request = 0;
 	goal_bearing = 0;
+	debug = 0;
 
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 
-
+	/* GPIO INIT */
 	GPIO_InitTypeDef GPIO_usrt;
 
 	GPIO_usrt.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
@@ -31,9 +59,7 @@ void initUSART3(){
 
 	GPIO_Init(GPIOC, &GPIO_usrt);
 
-//	GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_USART1);
-	//GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_USART1);
-
+	/* USART INIT */
 	USART_InitTypeDef USART_InitStructure;
 	USART_InitStructure.USART_BaudRate = 19200;
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
@@ -46,9 +72,6 @@ void initUSART3(){
 
 	//interrupt
 	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
-	//USART_ITConfig(USART2, USART_IT_TC, ENABLE);
-
-	//NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 
 	  /* Enable the USARTx Interrupt */
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -58,7 +81,6 @@ void initUSART3(){
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
-	//USART_Cmd(USART1, ENABLE);
 }
 
 void PutcUART3(char ch){
@@ -74,7 +96,7 @@ void USART3_IRQHandler(void){
 		char znak = USART_ReceiveData(USART3);
 
 		//ak v predoslom byte bola poziadavka na zmenu ziadaneho uhla,
-		//tak ciel zmeni ak dalsi byte je v zadanom rozsahu
+		//tak ciel sa zmeni, ak dalsi byte je v zadanom rozsahu
 		if (change_goal_request){
 
 			if (znak >= '0' && znak <= '7')
@@ -85,37 +107,30 @@ void USART3_IRQHandler(void){
 
 		switch (znak){
 		case 'x':   // vypinanie/zapinanie pohybu
-			if (running)
-					running = 0;
-				else running = 1;
+			if (running) running = 0;
+			else running = 1;
 			break;
 		case 'c': //poziadavka na zmenu ciela, v dalsom byte sa precita, aky bude novy ciel
 			change_goal_request = 1;
 			break;
+		case 'd' :
+			if (debug) debug = 0; // vypinanie/zapinanie modu debug
+			else debug = 1;
 		default:
 			change_goal_request = 0;
 		}
-
-  /*  }else if(USART_GetITStatus(USART2, USART_IT_TC) != RESET)
-	{
-		USART_ClearITPendingBit(USART2, USART_IT_TC);
-
-		if (retazec[counter] != '\0'){
-			PutcUART2(retazec[counter]);
-			counter++;
-		}*/
     }
 }
 
-void sendValue(double prekazka){
-	//PutcUART3('m');
+void sendValue(double variable){
 
+	if (running){
+		if (debug){
+		PutcUART3((char)variable);
+		} else return;				//ak nie je debug, tak sa funkcia nema vykonavat
 
-
-	if (running)
-		PutcUART3((char)prekazka);
-	else
-		PutcUART3(0xFF);
+	}else PutcUART3(0xFF);			//pokial vozidlo nie je v stave running, tak to bude indikovat posielanim 0xFF
+									//toto posielanie treba implementovat v main programe
 
 	//sleep
 	for (int i = 0; i < 250000; i++);
