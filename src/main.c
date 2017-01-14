@@ -30,7 +30,10 @@ SOFTWARE.
  *      bluetooth.c
  *
  *  Adam Sojka:
- *  	dopiste si sem nazvy zdrojakov, ktore ste robili
+ *  	sensor.h
+ *  	sensor.c
+ *  	runIndicatorLED.h
+ *  	runIndicatorLED.c
  *
  *  Martin Ivan:
  * 		dopiste si sem nazvy zdrojakov, ktore ste robili
