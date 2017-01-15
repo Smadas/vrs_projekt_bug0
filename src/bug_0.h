@@ -66,6 +66,7 @@ int turn(int angle_new, int speed);	 //otacanie na ziadany smer podla kompasu
 									 // !!! POZOR !!! vo funkcii je while cyklus,
 									//ktory skonci v pripade, ze sa robot otoceni na ziadany
 									//smer, alebo zachyty prekazku pocas otacania
+void initSendBearingTimer();	//casovac pravidelneho odosielania smerovania na seriovu linku
 /*----------------------------------------*/
 
 

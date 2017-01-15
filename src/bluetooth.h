@@ -45,7 +45,7 @@
 
 /* global variables */
 /*----------------------------------------*/
-int running;				//indikuje, ci operator umoznil vykonavat algoritmus
+volatile int running;				//indikuje, ci operator umoznil vykonavat algoritmus
 int goal_bearing;			//ziadany smer od operatora
 int debug;					//debug mode
 

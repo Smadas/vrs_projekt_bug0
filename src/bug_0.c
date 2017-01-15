@@ -49,6 +49,10 @@ int init(){
 
 	//inicializacia dialkomerov
 	sensorInit();
+
+	//inicializacia posielania smerovania na USART
+	initSendBearingTimer();
+
 	return 1;
 }
 
@@ -119,7 +123,7 @@ void run(){
 		 }
 		 //robot ma pred sebou prekazku, musi zastavit a prepnut sa do modu avoidance
 		 else{
-			 stop();
+			 //stop();
 			 avoidance_aktiv = 1;
 		 }
 	}
@@ -178,7 +182,7 @@ int turn(int request_angle, int speed){
 
 	//ak sa robot nachadza v tolerancii, tak sa nemusi otacat
 	if (!(angle_diff > BEARING_ACCURACY || angle_diff < -BEARING_ACCURACY)){
-		stop();
+		//stop();
 		return 1;
 	}
 
@@ -207,7 +211,7 @@ int turn(int request_angle, int speed){
 		//v pripade ak pri otacani z detekoval prekazku na kraji treba zastavit
 		//a vratit nulu, aby sa robot mohol prepnut do avoidance modu
 		if (obstacle_right < MIN_SIDE_DISTANCE){
-			stop();
+			//stop();
 			return 0;
 		 }
 
@@ -224,3 +228,40 @@ int turn(int request_angle, int speed){
 	return 1;
 }
 
+//casovac pravidelneho odosielania smerovania na seriovu linku
+void initSendBearingTimer(void){
+	unsigned short prescalerValue = (unsigned short) (16000000/1000) - 1;
+
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM9, ENABLE);
+
+	TIM_TimeBaseStructure.TIM_Period = 500 - 1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_Prescaler = prescalerValue;
+	TIM_TimeBaseInit(TIM9, &TIM_TimeBaseStructure);
+	TIM_ITConfig(TIM9, TIM_IT_Update, ENABLE);
+	TIM_Cmd(TIM9, ENABLE);
+
+	NVIC_InitTypeDef NVIC_InitStructure;
+
+	NVIC_InitStructure.NVIC_IRQChannel = TIM9_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+}
+
+//spracovanie prerusenia z TIM6, casovaca pre kontrolku
+void TIM9_IRQHandler(void)
+{
+	if (TIM_GetITStatus(TIM9, TIM_IT_Update) == SET)
+	{
+		if(running)
+		{
+			PutcUART3((char)bearing);
+		}
+		TIM_ClearITPendingBit(TIM9, TIM_IT_Update);
+	}
+}
