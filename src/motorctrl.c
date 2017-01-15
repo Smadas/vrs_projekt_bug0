@@ -18,7 +18,7 @@
 #define SYS_FREQ 16000000
 #define PRESC 100000
 #define UP_LIMIT 20
-#define LOW_LIMIT -20
+#define LOW_LIMIT 20
 
 int volatile counter=0;
 int volatile counter2=0;
