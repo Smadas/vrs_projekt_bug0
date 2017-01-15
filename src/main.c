@@ -36,10 +36,14 @@ SOFTWARE.
  *  	runIndicatorLED.c
  *
  *  Martin Ivan:
- * 		dopiste si sem nazvy zdrojakov, ktore ste robili
+ * 		motorctrl.h
+ * 		motorctrl.c
  *
  *  Adrian Kuban:
- *  	dopiste si sem nazvy zdrojakov, ktore ste robili
+ *  	HMC5883L.h
+ *  	HMC5883L.c
+ *  	i2c.h - uprava
+ *  	i2c.c - uprava
  *
  *
  * */

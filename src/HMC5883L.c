@@ -2,7 +2,8 @@
  * HMC5883L.c
  *
  *  Created on: Dec 18, 2016
- *      Author: pozdr
+ *      Author:
+ *
  */
 
 #include "HMC5883L.h"
@@ -26,21 +27,13 @@ Status readDataHMC5883L(unsigned int*data, unsigned char registerAddress)
 
 Status writeBytesToCompass(void)
 {
-
 	Status errStat1 = writeByteI2C1(HMC5883L_ADDRESS_W, 0x00, 0x70); // Configuration Register A
 	Status errStat2 = writeByteI2C1(HMC5883L_ADDRESS_W, 0x01, 0x0A); // Configuration Register B
-	Status errStat3 = writeByteI2C1(HMC5883L_ADDRESS_W, 0x02, 0x00);	// Mode Register - Set Continuous-measurement mode
+	Status errStat3 = writeByteI2C1(HMC5883L_ADDRESS_W, 0x02, 0x00); // Mode Register - Set Continuous-measurement mode
 
 	initTimerMagnetometer();
 
 	return errStat3;
-//	if(errStat1 == 'Success' && errStat2 == 'Success' && errStat1 == 'Success'){
-//		return 'Success';
-//	}
-//	else{
-//		return 'Config error';
-//	}
-
 }
 
 //casovac pravidelne spustajuci meranie magnetometra

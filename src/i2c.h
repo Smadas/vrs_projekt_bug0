@@ -34,8 +34,8 @@
 #define CR1_START_Set           ((uint16_t)0x0100)
 #define CR1_START_Reset         ((uint16_t)0xFEFF)
 
-#define CR1_POS_Set           ((uint16_t)0x0800)
-#define CR1_POS_Reset         ((uint16_t)0xF7FF)
+#define CR1_POS_Set             ((uint16_t)0x0800)
+#define CR1_POS_Reset           ((uint16_t)0xF7FF)
 
 /* I2C STOP mask */
 #define CR1_STOP_Set            ((uint16_t)0x0200)
@@ -91,12 +91,12 @@
 #define ITEN_Mask               ((uint32_t)0x07000000)
 
 
-#define I2C_IT_BUF                      ((uint16_t)0x0400)
-#define I2C_IT_EVT                      ((uint16_t)0x0200)
-#define I2C_IT_ERR                      ((uint16_t)0x0100)
+#define I2C_IT_BUF              ((uint16_t)0x0400)
+#define I2C_IT_EVT              ((uint16_t)0x0200)
+#define I2C_IT_ERR              ((uint16_t)0x0100)
 
 
-#define  ClockSpeed            400000
+#define  ClockSpeed             400000
 
 #define I2C_DIRECTION_TX 0
 #define I2C_DIRECTION_RX 1
@@ -105,14 +105,14 @@
 #define OwnAddress2 0x30
 
 
-#define I2C1_DMA_CHANNEL_TX           DMA1_Channel6
-#define I2C1_DMA_CHANNEL_RX           DMA1_Channel7
+#define I2C1_DMA_CHANNEL_TX      DMA1_Channel6
+#define I2C1_DMA_CHANNEL_RX      DMA1_Channel7
 
-#define I2C2_DMA_CHANNEL_TX           DMA1_Channel4
-#define I2C2_DMA_CHANNEL_RX           DMA1_Channel5
+#define I2C2_DMA_CHANNEL_TX      DMA1_Channel4
+#define I2C2_DMA_CHANNEL_RX      DMA1_Channel5
 
-#define I2C1_DR_Address              0x40005410
-#define I2C2_DR_Address              0x40005810
+#define I2C1_DR_Address          0x40005410
+#define I2C2_DR_Address          0x40005810
 
 typedef enum
 {

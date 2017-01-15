@@ -916,126 +916,34 @@ Status I2C_Master_BufferWriteWithoutRegisterAddress(unsigned char* pBuffer,  uns
     return Success;
 }
 
-float angle(float X, float Y)
-{
-   //routine to give a fast solution for angle, from X/Y co-ordinates - result in degrees
-   float AX,AY,ival,oval,aival;
-   int quad;
-   AX=fabs(X);
-   AY=fabs(Y);
-   //Now the approximation used works for tan from -1 to 1, so we have to keep the
-   //values inside this range and adjust the input/output.
-   //Four 'quadrants' are decoded -1 to 1, (315 to 45 degrees), then 45 to 135,
-   //135 to 225, 225 to 315
-   if (X >= 0) //Right hand half of the circle
-   {
-      if (AY > X)
-      {
-         if (Y < 0)
-         {
-             quad = 4;
-             ival = -X / Y;
-         }
-         else
-         {
-             quad = 2;
-             ival = X / -Y;
-         }
-      }
-      else
-      {
-         if (AY > X)
-         {
-             quad = 4;
-             ival = -Y / X;
-         }
-         else
-         {
-             quad = 1;
-             ival = Y / X;
-         }
-      }
-   }
-   else
-   {
-      //Now the others
-      if (Y > AX)
-      {
-         quad = 2;
-         ival = X / -Y;
-      }
-      else
-      {
-         if (AY > AX)
-         {
-             quad = 4;
-             ival = -X / Y;
-         }
-         else
-         {
-             quad = 3;
-             ival = -Y / -X;
-         }
-      }
-   }
-   //A lot of lines of code, but small and quick really.....
-   //Now the solution
-   //Now approximation for atan from -1 to +1, giving an answer in degrees.
-
-   aival = fabs(ival);
-   oval = 45 * ival - ival * (aival - 1) * (14.02 + 3.79 * aival);
-
-   //Now solve back to the final result
-   if (quad != 1){
-      if (quad == 2)
-    		  {
-          oval = oval + 90;
-      }
-      else
-      {
-          if (quad == 3)
-        		  {
-        	  oval = oval + 180;
-          }
-          else
-		  {
-              oval = oval + 270;
-		  }
-      }
-   }
-   if (oval<0)
-      oval+=360;
-   return oval;
-}
-
 
 int readDataCompass(){
 	unsigned int data;
 	unsigned char readData[13];
+	unsigned char readAddres = 0;
+	int heading = 0;
+	int i=0;
+	int16_t xForce = 0; //X coordinate
+	int16_t yForce = 0; //Y coordinate
+	Status errStat;
 
-		unsigned char readAddres = 0;
+	for(readAddres = 3; readAddres <= 8; readAddres++)
+	{
+		errStat = readDataHMC5883L(&data, readAddres);
+		readData[i] = data; //Read all 12 registers HCM5883L
+		i++;
+	}
 
-		int16_t xForce = 0;
-		int16_t yForce = 0;
-		int heading = 0;
-		Status errStat;
-				int i=0;
-				for(readAddres = 3; readAddres <= 8; readAddres++)
-				{
-					errStat = readDataHMC5883L(&data, readAddres);
-					readData[i] = data;
-					i++;
-				}
-				i=0;
-		        xForce = (int16_t)(readData[1] | (readData[0] << 8));
-		        yForce = (int16_t)(readData[5] | (readData[4] << 8));
-		        heading = 180 * atan2((double)xForce,(double)yForce)/M_PI;
+	i=0;
 
-		        if (heading < 0)
-		        	heading += 360;
+	xForce = (int16_t)(readData[1] | (readData[0] << 8));
+	yForce = (int16_t)(readData[5] | (readData[4] << 8));
 
-				 return heading;
+	heading = 180 * atan2((double)xForce,(double)yForce)/M_PI; //Get direction from -180° to 180°
 
+	if (heading < 0)
+		heading += 360;
 
+	return heading; //Get direction from 0° to 360°
 }
 

@@ -2,7 +2,7 @@
  * HMC5883L.h
  *
  *  Created on: Dec 18, 2016
- *      Author: pozdr
+ *      Author:
  */
 
 #ifndef HMC5883L_H_
