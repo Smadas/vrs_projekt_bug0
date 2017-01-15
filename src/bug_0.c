@@ -64,6 +64,9 @@ void run(){
 	obstacle_right = rightSensorGetDistance();
 	obstacle_left = leftSensorGetDistance();
 
+	//prevzatie nameraneho smeru z kompasu
+	bearing = compass_get_heading();
+
 	//vozidlo je blizko pri prekazke na pravo, preto musi zacat zatacat do lava
 	if (obstacle_right < MIN_SIDE_CRASH_DISTANCE){
 		 turn_left_one_wheel(15);
