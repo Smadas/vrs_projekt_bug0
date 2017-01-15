@@ -22,20 +22,30 @@ SOFTWARE.
 ******************************************************************************
 */
 
+/* Authors:
+ *   Michal Dobis:
+ *   	bug_0.h
+ *      bug_0.c
+ *      bluetooth.h
+ *      bluetooth.c
+ *
+ *  Adam Sojka:
+ *  	sensor.h
+ *  	sensor.c
+ *  	runIndicatorLED.h
+ *  	runIndicatorLED.c
+ *
+ *  Martin Ivan:
+ * 		dopiste si sem nazvy zdrojakov, ktore ste robili
+ *
+ *  Adrian Kuban:
+ *  	dopiste si sem nazvy zdrojakov, ktore ste robili
+ *
+ *
+ * */
+
 /* Includes */
 #include <bug_0.h>
-#include "runIndicatorLED.h"
-#include "sensor.h"
-
-#include "serial.h"
-
-
-/* Private typedef */
-/* Private define  */
-/* Private macro */
-/* Private variables */
-/* Private function prototypes */
-/* Private functions */
 
 
 /**
@@ -48,14 +58,9 @@ SOFTWARE.
 int main(void)
 
 {
-	init_indicator_LED();
-	sensorInit();
+	//Inicializacia hardveru
+	init();
 
-	inicializaciaPrerusenieUSART();
-	inicializaciaUSART();
-
-
-	//init();
   /**
   *  IMPORTANT NOTE!
   *  See the <system_*.c> file and how/if the SystemInit() function updates
@@ -73,28 +78,18 @@ int main(void)
   *  system_stm32l1xx.c file
   */
 
-  /* TODO - Add your application code here */
-
-
   /* Infinite loop */
-	volatile long i = 0;
+
   while (1)
   {
-
-	  i++;
-	  if (i > 100000)
-	  {
-		  i = 0;
-		  sensorMessageAll(leftSensorGetDistance(), rightSensorGetDistance(), forwardSensorGetDistance());
-	  }
-
-	 /* if (running)
+	  //ak je v stave running (prevzate cez bluetooth prijatim hodnoty 'x')
+	  //tak sa vykona cyklus algoritmu
+	  if (running){
 		  run();
-	  else stop();*/
-
-
-	//sendValue();
-	//PutcUART2(48);
+	  } else {	//ak nie je v stave running bude to indikovat na UART posielanim 0xFF
+		  stop();
+		  sendValue(0xFF);
+	  }
   }
   return 0;
 }

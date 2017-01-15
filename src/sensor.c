@@ -13,7 +13,7 @@
 #include <string.h>
 #include "stm32l1xx.h"
 #include "sensor.h"
-#include "serial.h"
+
 
 //variables
 void (*sensorCaptureHandler)(void);//smernik na funkciu ktora spracuje prerusenie CAPTURE_TIM
@@ -471,7 +471,7 @@ double leftSensorGetDistance(void)
 	if (distance > DISTANCE_MAX)
 	{
 		//senzor nic nezachytil
-		return -1;
+		return DISTANCE_MAX;
 	}
 	else
 	{
@@ -492,7 +492,7 @@ double rightSensorGetDistance(void)
 	if (distance > DISTANCE_MAX)
 	{
 		//senzor nic nezachytil
-		return -1;
+		return DISTANCE_MAX;
 	}
 	else
 	{
@@ -513,7 +513,7 @@ double forwardSensorGetDistance(void)
 	if (distance > DISTANCE_MAX)
 	{
 		//senzor nic nezachytil
-		return -1;
+		return DISTANCE_MAX;
 	}
 	else
 	{
