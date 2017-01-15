@@ -4,8 +4,15 @@
  *  Created on: Dec 1, 2016
  *      Author: Adam Sojka
  *
+ *	Description:
  *	Kniznica, ktora pomocou casovaca TIM6 spusta LED pripojenu na port A pin PA5.
- *	Tato LED sa kazdu sekundu vypne alebo zapne.
+ *	Tato LED sa kazdu sekundu vypne alebo zapne. Blikanie LED sluzi na indikaciu
+ *	ci MCU pracuje spravne.
+ *
+ *	Peripherals:
+ *	PA5 - vystup na LED
+ *	TIM6 - spustaci casovac
+ *
  */
 
 /* Includes */

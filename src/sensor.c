@@ -4,8 +4,24 @@
  *  Created on: Dec 3, 2016
  *      Author: Adam Sojka
  *
+ * Description:
  * Tato kniznica obsahuje funkcie pre inicializaciu a obsluhu troch
  * ultrazvukovych dialkomerov so spustacim impulzom a impulzom ozveny.
+ * Po inicializacii sa dialkomery spustaju pravidelne casovacom kazdych
+ * 65ms jeden. Prislusnymi funkciami sa uz len prebera namerana hodnota.
+ *
+ * Dialkomery sa inicializuju spustenim funkcie sensorInit()
+ * Namerane hodnoty sa preberaju funkciami: leftSensorGetDistance(),
+ * rightSensorGetDistance(), forwardSensorGetDistance().
+ *
+ * Peripherals:
+ * PB0, PB1, PB4 - capture
+ * PA9, PA11, PA12 - trigger
+ *
+ * TIM3 - capture
+ * TIM7 - trigger
+ * TIM10 - calling
+ *
  */
 
 //Includes
